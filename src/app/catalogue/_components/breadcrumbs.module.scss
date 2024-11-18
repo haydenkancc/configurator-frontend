@@ -1,0 +1,22 @@
+@use '@/app/variables';
+
+.breadcrumbs {
+  @include variables.text-sm;
+  display: flex;
+  margin-inline: 3rem;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+  color: variables.$palette-text-tertiary;
+  font-weight: 500;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+
+  & > svg {
+    height: 0.625rem;
+    width: 0.625rem;
+  }
+}

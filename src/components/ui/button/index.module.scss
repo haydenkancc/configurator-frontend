@@ -1,0 +1,92 @@
+@use '@/app/variables';
+
+.button {
+  @include variables.focus;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  @include variables.text-md;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.danger {
+  background-color: variables.$palette-danger-solidBg;
+  color: variables.$palette-primary-solidColor;
+
+  &[data-hovered] {
+    background-color: variables.$palette-danger-solidActiveBg;
+  }
+
+  &[data-disabled] {
+    background-color: variables.$palette-danger-solidDisabledBg;
+    color: variables.$palette-danger-solidDisabledColor
+  }
+}
+
+.primary {
+  color: variables.$palette-primary-solidColor;
+  background-color: variables.$palette-primary-solidBg;
+
+  &[data-hovered] {
+    background-color: variables.$palette-primary-solidHoverBg;
+  }
+
+  &[data-disabled] {
+    background-color: variables.$palette-neutral-solidDisabledColor;
+    color: variables.$palette-neutral-solidDisabledColor
+  }
+}
+
+.neutral {
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  color: variables.$palette-neutral-outlinedColor;
+
+  &[data-hovered] {
+    background-color: variables.$palette-neutral-outlinedHoverBg;
+  }
+}
+
+.warning {
+  color: variables.$palette-primary-solidColor;
+  background-color: variables.$palette-warning-solidBg;
+
+  &[data-hovered] {
+    background-color: variables.$palette-warning-solidActiveBg;
+  }
+
+  &[data-disabled] {
+    background-color: variables.$palette-warning-solidDisabledBg;
+    color: variables.$palette-warning-solidDisabledColor
+  }
+}
+
+.success {
+  color: variables.$palette-primary-solidColor;
+  background-color: variables.$palette-success-solidBg;
+
+  &[data-hovered] {
+    background-color: variables.$palette-success-solidActiveBg;
+  }
+
+  &[data-disabled] {
+    background-color: variables.$palette-success-solidDisabledColor;
+    color: variables.$palette-success-solidDisabledColor
+  }
+}
+
+.plain {
+  color: variables.$palette-neutral-plainColor;
+
+  &[data-hovered] {
+    color: variables.$palette-neutral-plainHoverColor;
+    background-color: variables.$palette-neutral-plainHoverBg;
+  }
+
+  &[data-disabled] {
+    color: variables.$palette-neutral-plainDisabledColor;
+  }
+}

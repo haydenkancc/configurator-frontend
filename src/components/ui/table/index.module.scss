@@ -1,0 +1,128 @@
+@use '@/app/variables';
+
+.container {
+  height: 100%;
+  position: relative;
+}
+
+.wrapper {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  overflow-y: scroll;
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+}
+
+.tableFiller {
+  position: sticky;
+  display: block;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  flex: 1 0 auto;
+
+}
+
+.table {
+  position: relative;
+  width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  flex: 0 0 auto;
+  min-height: 0;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.tableBody {
+  @include variables.text-sm;
+  font-weight: 500;
+  color: variables.$palette-text-tertiary;
+}
+
+
+.tableHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+th.checkboxColumn {
+  width: 4rem;
+}
+
+th.spacingColumn {
+  width: unset;
+}
+
+th.operationsColumn {
+  width: 8.5rem;
+}
+
+.column {
+  padding: 0.75rem 0.375rem;
+  color: variables.$palette-text-secondary;
+  @include variables.text-md;
+  font-weight: 600;
+  width: 8.75rem;
+  text-align: start;
+  background: variables.$palette-background-level1;
+  border-bottom: 1px solid variables.$palette-neutral-outlinedBorder;
+
+  @include variables.focus;
+
+  &:first-child {
+    border-radius: 0.3125rem 0 0 0;
+  }
+  & .columnSpacer {
+    width: unset;
+  }
+}
+
+
+.row {
+  @include variables.focus;
+  position: relative;
+
+  &[data-hovered] {
+    background-color: variables.$palette-background-level1;
+  }
+}
+
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[data-selected] .checkboxBox{
+    background-color: variables.$palette-primary-solidBg;
+    border-color: variables.$palette-primary-solidBg;
+  }
+}
+
+.checkboxBox {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-radius: 0.25rem;
+  transition: all 200ms;
+}
+
+.checkboxIcon {
+  fill: variables.$palette-primary-solidColor;
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  height: 2rem;
+  padding: 0.25rem 0.5rem;
+  box-sizing: content-box;
+  border-bottom: 1px solid variables.$palette-neutral-outlinedBorder;
+  @include variables.focus;
+}
+
+

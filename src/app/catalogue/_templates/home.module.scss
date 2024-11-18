@@ -1,0 +1,99 @@
+@use '@/app/variables';
+
+.body {
+  width: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 3rem 0;
+}
+
+.controls {
+  padding: 0 0 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+
+th.checkboxColumn {
+  width: 4rem;
+}
+
+th.operationsColumn {
+  width: 8.5rem;
+}
+
+
+.operationsCell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__link {
+    color: variables.$palette-warning-plainColor;
+
+    @include variables.focus;
+
+    &[data-hovered] {
+      text-decoration: underline currentColor;
+    }
+
+    &:first-child {
+      color: variables.$palette-primary-plainColor;
+    }
+
+    &:last-child {
+      color: variables.$palette-danger-plainColor;
+    }
+  }
+}
+
+.pagination {
+  padding-top: 1.5rem;
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.paginationButtonIcon {
+  fill: variables.$palette-text-icon;
+}
+
+.paginationPages {
+  display: flex;
+  gap: 0.5rem;
+  @include variables.text-md;
+}
+
+.paginationPage, {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  color: variables.$palette-neutral-outlinedColor;
+}
+
+.paginationTextField {
+
+}
+
+.paginationInput {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: variables.$palette-neutral-outlinedColor;
+
+  &::placeholder {
+    opacity: variables.$placeholderOpacity;
+    color: unset;
+  }
+}

@@ -1,0 +1,307 @@
+
+
+//$font-h1: var(--joy-font-h1);
+//$font-h2: var(--joy-font-h2);
+//$font-h3: var(--joy-font-h3);
+//$font-h4: var(--joy-font-h4);
+//$font-title-lg: var(--joy-font-title-lg);
+//$font-title-md: var(--joy-font-title-md);
+//$font-title-sm: var(--joy-font-title-sm);
+//$font-body-lg: var(--joy-font-body-lg);
+//$font-body-md: var(--joy-font-body-md);
+//$font-body-sm: var(--joy-font-body-sm);
+//$font-body-xs: var(--joy-font-body-xs);
+//$fontSize-xs: var(--joy-fontSize-xs);
+//$fontSize-sm: var(--joy-fontSize-sm);
+//$fontSize-md: var(--joy-fontSize-md);
+//$fontSize-lg: var(--joy-fontSize-lg);
+//$fontSize-xl: var(--joy-fontSize-xl);
+//$fontSize-xl2: var(--joy-fontSize-xl2);
+//$fontSize-xl3: var(--joy-fontSize-xl3);
+//$fontSize-xl4: var(--joy-fontSize-xl4);
+$fontFamily-body: var(--joy-fontFamily-body);
+$fontFamily-display: var(--joy-fontFamily-display);
+$fontFamily-code: var(--joy-fontFamily-code);
+$fontFamily-fallback: var(--joy-fontFamily-fallback);
+$fontWeight-sm: var(--joy-fontWeight-sm);
+$fontWeight-md: var(--joy-fontWeight-md);
+$fontWeight-lg: var(--joy-fontWeight-lg);
+$fontWeight-xl: var(--joy-fontWeight-xl);
+$focus-thickness: var(--joy-focus-thickness);
+$lineHeight-xs: var(--joy-lineHeight-xs);
+$lineHeight-sm: var(--joy-lineHeight-sm);
+$lineHeight-md: var(--joy-lineHeight-md);
+$lineHeight-lg: var(--joy-lineHeight-lg);
+$lineHeight-xl: var(--joy-lineHeight-xl);
+$radius-xs: var(--joy-radius-xs);
+$radius-sm: var(--joy-radius-sm);
+$radius-md: var(--joy-radius-md);
+$radius-lg: var(--joy-radius-lg);
+$radius-xl: var(--joy-radius-xl);
+$shadow-xs: var(--joy-shadow-xs);
+$shadow-sm: var(--joy-shadow-sm);
+$shadow-md: var(--joy-shadow-md);
+$shadow-lg: var(--joy-shadow-lg);
+$shadow-xl: var(--joy-shadow-xl);
+$zIndex-badge: var(--joy-zIndex-badge);
+$zIndex-table: var(--joy-zIndex-table);
+$zIndex-popup: var(--joy-zIndex-popup);
+$zIndex-modal: var(--joy-zIndex-modal);
+$zIndex-snackbar: var(--joy-zIndex-snackbar);
+$zIndex-tooltip: var(--joy-zIndex-tooltip);
+$cssVarPrefix: var(--joy-cssVarPrefix);
+$spacing: var(--joy-spacing);
+$placeholderOpacity: 0.64;
+
+$palette-primary-50: var(--joy-palette-primary-50);
+$palette-primary-100: var(--joy-palette-primary-100);
+$palette-primary-200: var(--joy-palette-primary-200);
+$palette-primary-300: var(--joy-palette-primary-300);
+$palette-primary-400: var(--joy-palette-primary-400);
+$palette-primary-500: var(--joy-palette-primary-500);
+$palette-primary-600: var(--joy-palette-primary-600);
+$palette-primary-700: var(--joy-palette-primary-700);
+$palette-primary-800: var(--joy-palette-primary-800);
+$palette-primary-900: var(--joy-palette-primary-900);
+$palette-primary-plainColor: var(--joy-palette-primary-plainColor);
+$palette-primary-plainHoverBg: var(--joy-palette-primary-plainHoverBg);
+$palette-primary-plainActiveBg: var(--joy-palette-primary-plainActiveBg);
+$palette-primary-plainDisabledColor: var(--joy-palette-primary-plainDisabledColor);
+$palette-primary-outlinedColor: var(--joy-palette-primary-outlinedColor);
+$palette-primary-outlinedBorder: var(--joy-palette-primary-outlinedBorder);
+$palette-primary-outlinedHoverBg: var(--joy-palette-primary-outlinedHoverBg);
+$palette-primary-outlinedActiveBg: var(--joy-palette-primary-outlinedActiveBg);
+$palette-primary-outlinedDisabledColor: var(--joy-palette-primary-outlinedDisabledColor);
+$palette-primary-outlinedDisabledBorder: var(--joy-palette-primary-outlinedDisabledBorder);
+$palette-primary-softColor: var(--joy-palette-primary-softColor);
+$palette-primary-softBg: var(--joy-palette-primary-softBg);
+$palette-primary-softHoverBg: var(--joy-palette-primary-softHoverBg);
+$palette-primary-softActiveColor: var(--joy-palette-primary-softActiveColor);
+$palette-primary-softActiveBg: var(--joy-palette-primary-softActiveBg);
+$palette-primary-softDisabledColor: var(--joy-palette-primary-softDisabledColor);
+$palette-primary-softDisabledBg: var(--joy-palette-primary-softDisabledBg);
+$palette-primary-solidColor: var(--joy-palette-primary-solidColor);
+$palette-primary-solidBg: var(--joy-palette-primary-solidBg);
+$palette-primary-solidHoverBg: var(--joy-palette-primary-solidHoverBg);
+$palette-primary-solidActiveBg: var(--joy-palette-primary-solidActiveBg);
+$palette-primary-solidDisabledColor: var(--joy-palette-primary-solidDisabledColor);
+$palette-primary-solidDisabledBg: var(--joy-palette-primary-solidDisabledBg);
+$palette-primary-mainChannel: var(--joy-palette-primary-mainChannel);
+$palette-primary-lightChannel: var(--joy-palette-primary-lightChannel);
+$palette-primary-darkChannel: var(--joy-palette-primary-darkChannel);
+$palette-neutral-50: var(--joy-palette-neutral-50);
+$palette-neutral-100: var(--joy-palette-neutral-100);
+$palette-neutral-200: var(--joy-palette-neutral-200);
+$palette-neutral-300: var(--joy-palette-neutral-300);
+$palette-neutral-400: var(--joy-palette-neutral-400);
+$palette-neutral-500: var(--joy-palette-neutral-500);
+$palette-neutral-600: var(--joy-palette-neutral-600);
+$palette-neutral-700: var(--joy-palette-neutral-700);
+$palette-neutral-800: var(--joy-palette-neutral-800);
+$palette-neutral-900: var(--joy-palette-neutral-900);
+$palette-neutral-plainColor: var(--joy-palette-neutral-plainColor);
+$palette-neutral-plainHoverBg: var(--joy-palette-neutral-plainHoverBg);
+$palette-neutral-plainActiveBg: var(--joy-palette-neutral-plainActiveBg);
+$palette-neutral-plainDisabledColor: var(--joy-palette-neutral-plainDisabledColor);
+$palette-neutral-outlinedColor: var(--joy-palette-neutral-outlinedColor);
+$palette-neutral-outlinedBorder: var(--joy-palette-neutral-outlinedBorder);
+$palette-neutral-outlinedHoverBg: var(--joy-palette-neutral-outlinedHoverBg);
+$palette-neutral-outlinedActiveBg: var(--joy-palette-neutral-outlinedActiveBg);
+$palette-neutral-outlinedDisabledColor: var(--joy-palette-neutral-outlinedDisabledColor);
+$palette-neutral-outlinedDisabledBorder: var(--joy-palette-neutral-outlinedDisabledBorder);
+$palette-neutral-softColor: var(--joy-palette-neutral-softColor);
+$palette-neutral-softBg: var(--joy-palette-neutral-softBg);
+$palette-neutral-softHoverBg: var(--joy-palette-neutral-softHoverBg);
+$palette-neutral-softActiveColor: var(--joy-palette-neutral-softActiveColor);
+$palette-neutral-softActiveBg: var(--joy-palette-neutral-softActiveBg);
+$palette-neutral-softDisabledColor: var(--joy-palette-neutral-softDisabledColor);
+$palette-neutral-softDisabledBg: var(--joy-palette-neutral-softDisabledBg);
+$palette-neutral-solidColor: var(--joy-palette-neutral-solidColor);
+$palette-neutral-solidBg: var(--joy-palette-neutral-solidBg);
+$palette-neutral-solidHoverBg: var(--joy-palette-neutral-solidHoverBg);
+$palette-neutral-solidActiveBg: var(--joy-palette-neutral-solidActiveBg);
+$palette-neutral-solidDisabledColor: var(--joy-palette-neutral-solidDisabledColor);
+$palette-neutral-solidDisabledBg: var(--joy-palette-neutral-solidDisabledBg);
+$palette-neutral-plainHoverColor: var(--joy-palette-neutral-plainHoverColor);
+$palette-neutral-mainChannel: var(--joy-palette-neutral-mainChannel);
+$palette-neutral-lightChannel: var(--joy-palette-neutral-lightChannel);
+$palette-neutral-darkChannel: var(--joy-palette-neutral-darkChannel);
+$palette-danger-50: var(--joy-palette-danger-50);
+$palette-danger-100: var(--joy-palette-danger-100);
+$palette-danger-200: var(--joy-palette-danger-200);
+$palette-danger-300: var(--joy-palette-danger-300);
+$palette-danger-400: var(--joy-palette-danger-400);
+$palette-danger-500: var(--joy-palette-danger-500);
+$palette-danger-600: var(--joy-palette-danger-600);
+$palette-danger-700: var(--joy-palette-danger-700);
+$palette-danger-800: var(--joy-palette-danger-800);
+$palette-danger-900: var(--joy-palette-danger-900);
+$palette-danger-plainColor: var(--joy-palette-danger-plainColor);
+$palette-danger-plainHoverBg: var(--joy-palette-danger-plainHoverBg);
+$palette-danger-plainActiveBg: var(--joy-palette-danger-plainActiveBg);
+$palette-danger-plainDisabledColor: var(--joy-palette-danger-plainDisabledColor);
+$palette-danger-outlinedColor: var(--joy-palette-danger-outlinedColor);
+$palette-danger-outlinedBorder: var(--joy-palette-danger-outlinedBorder);
+$palette-danger-outlinedHoverBg: var(--joy-palette-danger-outlinedHoverBg);
+$palette-danger-outlinedActiveBg: var(--joy-palette-danger-outlinedActiveBg);
+$palette-danger-outlinedDisabledColor: var(--joy-palette-danger-outlinedDisabledColor);
+$palette-danger-outlinedDisabledBorder: var(--joy-palette-danger-outlinedDisabledBorder);
+$palette-danger-softColor: var(--joy-palette-danger-softColor);
+$palette-danger-softBg: var(--joy-palette-danger-softBg);
+$palette-danger-softHoverBg: var(--joy-palette-danger-softHoverBg);
+$palette-danger-softActiveColor: var(--joy-palette-danger-softActiveColor);
+$palette-danger-softActiveBg: var(--joy-palette-danger-softActiveBg);
+$palette-danger-softDisabledColor: var(--joy-palette-danger-softDisabledColor);
+$palette-danger-softDisabledBg: var(--joy-palette-danger-softDisabledBg);
+$palette-danger-solidColor: var(--joy-palette-danger-solidColor);
+$palette-danger-solidBg: var(--joy-palette-danger-solidBg);
+$palette-danger-solidHoverBg: var(--joy-palette-danger-solidHoverBg);
+$palette-danger-solidActiveBg: var(--joy-palette-danger-solidActiveBg);
+$palette-danger-solidDisabledColor: var(--joy-palette-danger-solidDisabledColor);
+$palette-danger-solidDisabledBg: var(--joy-palette-danger-solidDisabledBg);
+$palette-danger-mainChannel: var(--joy-palette-danger-mainChannel);
+$palette-danger-lightChannel: var(--joy-palette-danger-lightChannel);
+$palette-danger-darkChannel: var(--joy-palette-danger-darkChannel);
+$palette-success-50: var(--joy-palette-success-50);
+$palette-success-100: var(--joy-palette-success-100);
+$palette-success-200: var(--joy-palette-success-200);
+$palette-success-300: var(--joy-palette-success-300);
+$palette-success-400: var(--joy-palette-success-400);
+$palette-success-500: var(--joy-palette-success-500);
+$palette-success-600: var(--joy-palette-success-600);
+$palette-success-700: var(--joy-palette-success-700);
+$palette-success-800: var(--joy-palette-success-800);
+$palette-success-900: var(--joy-palette-success-900);
+$palette-success-plainColor: var(--joy-palette-success-plainColor);
+$palette-success-plainHoverBg: var(--joy-palette-success-plainHoverBg);
+$palette-success-plainActiveBg: var(--joy-palette-success-plainActiveBg);
+$palette-success-plainDisabledColor: var(--joy-palette-success-plainDisabledColor);
+$palette-success-outlinedColor: var(--joy-palette-success-outlinedColor);
+$palette-success-outlinedBorder: var(--joy-palette-success-outlinedBorder);
+$palette-success-outlinedHoverBg: var(--joy-palette-success-outlinedHoverBg);
+$palette-success-outlinedActiveBg: var(--joy-palette-success-outlinedActiveBg);
+$palette-success-outlinedDisabledColor: var(--joy-palette-success-outlinedDisabledColor);
+$palette-success-outlinedDisabledBorder: var(--joy-palette-success-outlinedDisabledBorder);
+$palette-success-softColor: var(--joy-palette-success-softColor);
+$palette-success-softBg: var(--joy-palette-success-softBg);
+$palette-success-softHoverBg: var(--joy-palette-success-softHoverBg);
+$palette-success-softActiveColor: var(--joy-palette-success-softActiveColor);
+$palette-success-softActiveBg: var(--joy-palette-success-softActiveBg);
+$palette-success-softDisabledColor: var(--joy-palette-success-softDisabledColor);
+$palette-success-softDisabledBg: var(--joy-palette-success-softDisabledBg);
+$palette-success-solidColor: var(--joy-palette-success-solidColor);
+$palette-success-solidBg: var(--joy-palette-success-solidBg);
+$palette-success-solidHoverBg: var(--joy-palette-success-solidHoverBg);
+$palette-success-solidActiveBg: var(--joy-palette-success-solidActiveBg);
+$palette-success-solidDisabledColor: var(--joy-palette-success-solidDisabledColor);
+$palette-success-solidDisabledBg: var(--joy-palette-success-solidDisabledBg);
+$palette-success-mainChannel: var(--joy-palette-success-mainChannel);
+$palette-success-lightChannel: var(--joy-palette-success-lightChannel);
+$palette-success-darkChannel: var(--joy-palette-success-darkChannel);
+$palette-warning-50: var(--joy-palette-warning-50);
+$palette-warning-100: var(--joy-palette-warning-100);
+$palette-warning-200: var(--joy-palette-warning-200);
+$palette-warning-300: var(--joy-palette-warning-300);
+$palette-warning-400: var(--joy-palette-warning-400);
+$palette-warning-500: var(--joy-palette-warning-500);
+$palette-warning-600: var(--joy-palette-warning-600);
+$palette-warning-700: var(--joy-palette-warning-700);
+$palette-warning-800: var(--joy-palette-warning-800);
+$palette-warning-900: var(--joy-palette-warning-900);
+$palette-warning-plainColor: var(--joy-palette-warning-plainColor);
+$palette-warning-plainHoverBg: var(--joy-palette-warning-plainHoverBg);
+$palette-warning-plainActiveBg: var(--joy-palette-warning-plainActiveBg);
+$palette-warning-plainDisabledColor: var(--joy-palette-warning-plainDisabledColor);
+$palette-warning-outlinedColor: var(--joy-palette-warning-outlinedColor);
+$palette-warning-outlinedBorder: var(--joy-palette-warning-outlinedBorder);
+$palette-warning-outlinedHoverBg: var(--joy-palette-warning-outlinedHoverBg);
+$palette-warning-outlinedActiveBg: var(--joy-palette-warning-outlinedActiveBg);
+$palette-warning-outlinedDisabledColor: var(--joy-palette-warning-outlinedDisabledColor);
+$palette-warning-outlinedDisabledBorder: var(--joy-palette-warning-outlinedDisabledBorder);
+$palette-warning-softColor: var(--joy-palette-warning-softColor);
+$palette-warning-softBg: var(--joy-palette-warning-softBg);
+$palette-warning-softHoverBg: var(--joy-palette-warning-softHoverBg);
+$palette-warning-softActiveColor: var(--joy-palette-warning-softActiveColor);
+$palette-warning-softActiveBg: var(--joy-palette-warning-softActiveBg);
+$palette-warning-softDisabledColor: var(--joy-palette-warning-softDisabledColor);
+$palette-warning-softDisabledBg: var(--joy-palette-warning-softDisabledBg);
+$palette-warning-solidColor: var(--joy-palette-warning-solidColor);
+$palette-warning-solidBg: var(--joy-palette-warning-solidBg);
+$palette-warning-solidHoverBg: var(--joy-palette-warning-solidHoverBg);
+$palette-warning-solidActiveBg: var(--joy-palette-warning-solidActiveBg);
+$palette-warning-solidDisabledColor: var(--joy-palette-warning-solidDisabledColor);
+$palette-warning-solidDisabledBg: var(--joy-palette-warning-solidDisabledBg);
+$palette-warning-mainChannel: var(--joy-palette-warning-mainChannel);
+$palette-warning-lightChannel: var(--joy-palette-warning-lightChannel);
+$palette-warning-darkChannel: var(--joy-palette-warning-darkChannel);
+$palette-common-white: var(--joy-palette-common-white);
+$palette-common-black: var(--joy-palette-common-black);
+$palette-text-primary: var(--joy-palette-text-primary);
+$palette-text-secondary: var(--joy-palette-text-secondary);
+$palette-text-tertiary: var(--joy-palette-text-tertiary);
+$palette-text-icon: var(--joy-palette-text-icon);
+$palette-background-body: var(--joy-palette-background-body);
+$palette-background-surface: var(--joy-palette-background-surface);
+$palette-background-popup: var(--joy-palette-background-popup);
+$palette-background-level1: var(--joy-palette-background-level1);
+$palette-background-level2: var(--joy-palette-background-level2);
+$palette-background-level3: var(--joy-palette-background-level3);
+$palette-background-tooltip: var(--joy-palette-background-tooltip);
+$palette-background-backdrop: var(--joy-palette-background-backdrop);
+$palette-divider: var(--joy-palette-divider);
+$palette-focusVisible: var(--joy-palette-focusVisible);
+$shadowRing: var(--joy-shadowRing);
+$shadowChannel: var(--joy-shadowChannel);
+$shadowOpacity: var(--joy-shadowOpacity);
+
+@mixin focus {
+  outline: none;
+
+  &[data-focus-visible] {
+    outline: $palette-focusVisible auto 1px;
+  }
+}
+
+@mixin box-shadow {
+  box-shadow: $shadowRing, 0 1px 2px 0 rgba($shadowChannel / $shadowOpacity);
+}
+
+@mixin text-xs {
+  font-size: 0.625rem;
+  line-height: 0.875rem;
+}
+
+@mixin text-sm {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+@mixin text-md {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+@mixin text-lg {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+@mixin text-xl {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+@mixin text-2xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+@mixin text-3xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+@mixin text-4xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
