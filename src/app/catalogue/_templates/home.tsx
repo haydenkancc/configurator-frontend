@@ -10,19 +10,22 @@ import {
     TableBody,
     TableHeader
 } from '@/components/ui/table'
-import { LineVertical, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
+import {CaretLeft, CaretRight, LineVertical} from '@phosphor-icons/react/dist/ssr';
 import {
     Button as AriaButton,
     Collection,
     DialogTrigger,
+    Form,
     Input,
     Link as AriaLink,
-    TextField,
-    Form,
-    ButtonProps, LinkProps
+    LinkProps,
+    Tab,
+    TabList,
+    Tabs,
+    TextField
 } from 'react-aria-components';
 import AlertDialog from '@/components/ui/dialog/alert-dialog';
-import { Link } from '@/components/ui/button';
+import {Link} from '@/components/ui/button';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {useCallback} from 'react';
 
@@ -105,11 +108,18 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
 }
 
 interface PaginationProps {
-    pageCount: number;
+    pageCount?: number;
+    pageIndex?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
 }
 
-export function Pagination({ pageCount } : PaginationProps) {
-    const router = useRouter();
+interface PaginationPageProps {
+    pageCount: number;
+    pageIndex: number;
+}
+
+export function Pagination({ pageCount = 1, pageIndex = 1, hasPreviousPage = false, hasNextPage = false} : PaginationProps) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const createQueryString = useCallback(
@@ -124,50 +134,126 @@ export function Pagination({ pageCount } : PaginationProps) {
 
     return (
         <div className={s.pagination}>
-            <Link variant="neutral"
+            <Link variant="neutral" isDisabled={!hasPreviousPage}
                   href={pathname + '?' + createQueryString('page', `${searchParams.get('page') ? parseInt(searchParams.get('page')!) - 1 : ''}`)}
             >
-                <CaretLeft className={s.paginationButton__icon} />Previous
+                <CaretLeft weight="bold" />Previous
             </Link>
             <div className={s.paginationPages}>
-                {pageCount <= 6 ?
-                    <>
-                        {[...Array(pageCount).keys()].map((number) => (
-                            <AriaLink key={number} className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${number + 1}`)}>
-                                {number + 1}
-                            </AriaLink>
-                        ))}
-                    </>
-                    :
-                    <>
-                        {[...Array(3).keys()].map((number) => (
-                            <AriaLink key={number} className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${number + 1}`)}>
-                                {number + 1}
-                            </AriaLink>
-                        ))}
-                        <Form
-                            onSubmit={(e) => {
-                                router.push(pathname + '?' + createQueryString('page', (e.currentTarget.elements[0] as HTMLInputElement).value))
-                            }}
-                            aria-label="page select"
-                        >
-                            <TextField aria-label="page number" className={s.paginationTextField}>
-                                <Input name="pageNumber" type="tel" className={s.paginationInput} placeholder="..." size={0} />
-                            </TextField>
-                        </Form>
-                        {[...Array(3).keys()].map((number) => (
-                            <AriaLink key={number} className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${number + pageCount - 2}`)}>
-                                {number + pageCount - 2}
-                            </AriaLink>
-                        ))}
-                    </>
-                }
+                <PaginationPages pageCount={pageCount} pageIndex={pageIndex} />
             </div>
-            <Link variant="neutral"
+            <Link variant="neutral" isDisabled={!hasNextPage}
                   href={pathname + '?' + createQueryString('page', `${searchParams.get('page') ? parseInt(searchParams.get('page')!) + 1 : ''}`)}
             >
-                Next<CaretRight className={s.paginationButtonIcon} />
+                Next<CaretRight weight="bold" />
             </Link>
         </div>
     )
+}
+
+function PaginationPages({ pageCount, pageIndex } : PaginationPageProps) {
+    const pathname = usePathname();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString())
+            params.set(name, value)
+
+            return params.toString()
+        },
+        [searchParams]
+    )
+
+    if (pageCount <= 6) {
+        return (
+            <Tabs selectedKey={pageIndex} orientation="horizontal">
+                <TabList className={s.paginationPages} items={Array.from(Array(pageCount)).map((e, i) => ({ id: ++i }))}>
+                    {item => (
+                        <Tab className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${item.id}`)}>
+                            {item.id}
+                        </Tab>
+                    )}
+                </TabList>
+            </Tabs>
+        )
+    }
+    else
+    {
+        if (pageIndex <= 3 || pageCount - pageIndex < 3) {
+            return (
+                <>
+                    <Tabs selectedKey={pageIndex} orientation="horizontal">
+                        <TabList className={s.paginationPages} items={Array.from(Array(3)).map((e, i) => ({ id: ++i }))}>
+                            {item => (
+                                <Tab className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${item.id}`)}>
+                                    {item.id}
+                                </Tab>
+                            )}
+                        </TabList>
+                    </Tabs>
+                    <Form
+                        onSubmit={(e) => {
+                            router.push(pathname + '?' + createQueryString('page', (e.currentTarget.elements[0] as HTMLInputElement).value))
+                        }}
+                        aria-label="page select"
+                    >
+                        <TextField aria-label="page number" className={s.paginationTextField}>
+                            <Input name="pageNumber" type="tel" pattern="\d*" className={s.paginationInput} placeholder="..." size={0} />
+                        </TextField>
+                    </Form>
+                    <Tabs selectedKey={pageIndex} orientation="horizontal">
+                        <TabList className={s.paginationPages} items={Array.from(Array(3)).map((e, i) => ({ id: i + pageCount - 2 }))}>
+                            {item => (
+                                <Tab className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${item.id}`)}>
+                                    {item.id}
+                                </Tab>
+                            )}
+                        </TabList>
+                    </Tabs>
+                </>
+
+            )
+        } else {
+            return (
+                <>
+                    <AriaLink className={s.paginationPage} href={pathname + '?' + createQueryString('page', '1')}>
+                        1
+                    </AriaLink>
+                    <Form
+                        onSubmit={(e) => {
+                            router.push(pathname + '?' + createQueryString('page', (e.currentTarget.elements[0] as HTMLInputElement).value))
+                        }}
+                        aria-label="page select"
+                    >
+                        <TextField aria-label="page number" className={s.paginationTextField}>
+                            <Input name="pageNumber" type="tel" pattern="\d*" className={s.paginationInput} placeholder="..." size={0} />
+                        </TextField>
+                    </Form>
+                    <Tabs selectedKey={pageIndex} orientation="horizontal">
+                        <TabList className={s.paginationPages} items={Array.from(Array(3)).map((e, i) => ({ id: i + pageIndex - 1 }))}>
+                            {item => (
+                                <Tab className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${item.id}`)}>
+                                    {item.id}
+                                </Tab>
+                            )}
+                        </TabList>
+                    </Tabs>
+                    <Form
+                        onSubmit={(e) => {
+                            router.push(pathname + '?' + createQueryString('page', (e.currentTarget.elements[0] as HTMLInputElement).value))
+                        }}
+                        aria-label="page select"
+                    >
+                        <TextField aria-label="page number" className={s.paginationTextField}>
+                            <Input name="pageNumber" type="tel" pattern="\d*" className={s.paginationInput} placeholder="..." size={0} />
+                        </TextField>
+                    </Form>
+                    <AriaLink className={s.paginationPage} href={pathname + '?' + createQueryString('page', `${pageCount}`)}>
+                        {pageCount}
+                    </AriaLink>
+                </>
+            )
+        }
+    }
 }

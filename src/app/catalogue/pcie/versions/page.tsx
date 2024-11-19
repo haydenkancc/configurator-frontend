@@ -1,11 +1,12 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {PCIeVersionColumns} from '@/server/models';
-import {ListPCIeSizes} from '@/server/catalogue/pcie/pcie-sizes';
+import {PCIeVersionColumns, SearchParams} from '@/server/models';
 import {DeletePCIeVersion, ListPCIeVersions} from '@/server/catalogue/pcie/pcie-versions';
+import {ReadPaginationData} from '@/server/catalogue';
 
 
-export default async function Page() {
-    const rows = await ListPCIeVersions(1, 20);
+export default async function Page({ searchParams } : { searchParams: SearchParams}) {
+    const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
+    const paginatedList = await ListPCIeVersions(pageIndex, pageSize);
     return (
         <Body>
             <Controls>
@@ -13,8 +14,8 @@ export default async function Page() {
                     Specify new version
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeVersionColumns} rows={rows} deleteAction={DeletePCIeVersion}/>
-            <Pagination pageCount={13} />
+            <Table columns={PCIeVersionColumns} rows={paginatedList?.items} deleteAction={DeletePCIeVersion}/>
+            <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )
 }

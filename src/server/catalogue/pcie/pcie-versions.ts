@@ -6,9 +6,7 @@ import {redirect} from 'next/navigation';
 import {PCIeVersion, PCIeVersionRow} from '@/server/models';
 
 
-
-
-const baseController = new BaseController(`${process.env.apiHost}/api/PCIeVersions`)
+const baseController = new BaseController(`${process.env.apiHost}/api/PCIe/PCIeVersions`)
 
 export async function ListPCIeVersions(pageIndex: number, pageVersion: number) {
     return await baseController._list<PCIeVersionRow>(pageIndex, pageVersion);
@@ -29,7 +27,7 @@ export async function PutPCIeVersion(id: number, formData: FormData): Promise<vo
 
 export async function PostPCIeVersion(formData: FormData): Promise<void> {
     console.log(JSON.stringify(Object.fromEntries(formData)))
-    const response = await baseController._post<PCIeVersion>(JSON.stringify(Object.fromEntries(formData)))
+    const response = await baseController._post(JSON.stringify(Object.fromEntries(formData)))
     if (response) {
         revalidatePath('/catalogue/pcie/versions', 'layout');
         redirect(`/catalogue/pcie/versions/${response.id}`)

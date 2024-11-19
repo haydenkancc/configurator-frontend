@@ -1,7 +1,5 @@
 import s from './layout.module.scss';
 import Breadcrumbs from './_components/breadcrumbs';
-import Title from './_components/title';
-import Tabs from './_components/tabs';
 import Navigation from './_components/navigation';
 
 interface LayoutProps {

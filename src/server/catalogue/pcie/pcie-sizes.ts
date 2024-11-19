@@ -2,13 +2,11 @@
 
 import {BaseController} from '@/server/catalogue';
 import {revalidatePath} from 'next/cache';
-import {redirect, RedirectType} from 'next/navigation';
+import {redirect} from 'next/navigation';
 import {PCIeSize, PCIeSizeRow} from '@/server/models';
 
 
-
-
-const baseController = new BaseController(`${process.env.apiHost}/api/PCIeSizes`)
+const baseController = new BaseController(`${process.env.apiHost}/api/PCIe/PCIeSizes`)
 
 export async function ListPCIeSizes(pageIndex: number, pageSize: number) {
     return await baseController._list<PCIeSizeRow>(pageIndex, pageSize);
@@ -29,7 +27,7 @@ export async function PutPCIeSize(id: number, formData: FormData): Promise<void>
 
 export async function PostPCIeSize(formData: FormData): Promise<void> {
     console.log(JSON.stringify(Object.fromEntries(formData)))
-    const response = await baseController._post<PCIeSize>(JSON.stringify(Object.fromEntries(formData)))
+    const response = await baseController._post(JSON.stringify(Object.fromEntries(formData)))
     if (response) {
         revalidatePath('/catalogue/pcie/sizes', 'layout');
         redirect(`/catalogue/pcie/sizes/${response.id}`)

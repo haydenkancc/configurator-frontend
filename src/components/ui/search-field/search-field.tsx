@@ -1,14 +1,14 @@
 'use client';
 import s from './search-field.module.scss';
 import {
-    SearchField as AriaSearchField,
-    FieldError,
-    Input,
     Button,
-    Text,
+    FieldError,
+    Group,
+    Input,
+    SearchField as AriaSearchField,
     SearchFieldProps,
-    ValidationResult,
-    Group
+    Text,
+    ValidationResult
 } from 'react-aria-components';
 import Label from '@/components/ui/label';
 import {MagnifyingGlass, X} from '@phosphor-icons/react/dist/ssr';

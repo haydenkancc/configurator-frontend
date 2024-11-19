@@ -1,3 +1,5 @@
+import {PaginatedList, SearchParams} from '@/server/models';
+
 export class BaseController {
     protected baseRoute : string;
 
@@ -5,23 +7,46 @@ export class BaseController {
         this.baseRoute = baseRoute;
     }
 
-    public async _list<T>(pageIndex: number, pageSize: number): Promise<T[]> {
-        return await (await fetch(`${this.baseRoute}?pageIndex=${pageIndex}&pageSize=${pageSize}`,{
+    public async _list<T>(pageIndex: number, pageSize: number): Promise<PaginatedList<T> | undefined> {
+        try {
+            const response = await fetch(`${this.baseRoute}?pageIndex=${pageIndex}&pageSize=${pageSize}`,{
+                method: "GET",
+                cache: 'force-cache'
+            })
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            return await response.json()
+        } catch (error: any) {
+            console.error(error.message);
+        }
+    }
+
+    public async _get<T>(id: number): Promise<T> {
+        return await (await fetch(`${this.baseRoute}/id/${id}`,{
             method: "GET",
-            cache: 'force-cache'
+            // cache: 'force-cache'
         })).json()
     }
 
-    async _get<T>(id: number): Promise<T> {
-        return await (await fetch(`${this.baseRoute}/${id}`,{
-            method: "GET",
-            cache: 'force-cache'
-        })).json()
+    public async _params<T>(): Promise<T | undefined> {
+        try {
+            const response = await fetch(`${this.baseRoute}/params`,{
+                method: "GET",
+            })
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            return await response.json()
+        } catch (error: any) {
+            console.error(error.message);
+        }
     }
+
     public async _put(id: number, body: string): Promise<boolean> {
         console.log(body)
         try {
-            const response = await fetch(`${this.baseRoute}/${id}`,{
+            const response = await fetch(`${this.baseRoute}/id/${id}`,{
                 method: "PUT",
                 headers: [
                     ["Content-Type", "application/json"]
@@ -38,7 +63,7 @@ export class BaseController {
         }
     }
 
-    public async _post<T>(body: string): Promise<T | null> {
+    public async _post(body: string): Promise<{ id: number } | null> {
         try {
             const response = await fetch(`${this.baseRoute}`,{
                 method: "POST",
@@ -50,7 +75,7 @@ export class BaseController {
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-            return (await response.json() as T);
+            return (await response.json());
         } catch (error: any) {
             console.error(error.message);
             return null;
@@ -60,7 +85,7 @@ export class BaseController {
 
     public async _delete(id: number): Promise<boolean> {
         try {
-            const response = await fetch(`${this.baseRoute}/${id}`,{
+            const response = await fetch(`${this.baseRoute}/id/${id}`,{
                 method: "DELETE",
             })
             if (!response.ok) {
@@ -74,3 +99,10 @@ export class BaseController {
     }
 }
 
+export async function ReadPaginationData(searchParams : SearchParams) {
+    const pageIndexParam = (await searchParams)["page"]
+    const pageSizeParam = (await searchParams)["pageSize"]
+    const pageIndex = pageIndexParam ? Array.isArray(pageIndexParam) ? 1 : parseInt(pageIndexParam) : 1;
+    const pageSize = pageSizeParam ? Array.isArray(pageSizeParam) ? 20 : parseInt(pageSizeParam) : 20;
+    return [ pageIndex, pageSize ]
+}

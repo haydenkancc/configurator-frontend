@@ -1,5 +1,17 @@
 @use '@/app/variables';
 
+.listBox {
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0;
+  overflow: auto;
+  @include variables.box-shadow;
+}
+
+.grow {
+  flex: 1 1 100%;
+}
+
 .listBoxItem {
   min-height: 2rem;
   display: flex;
@@ -8,14 +20,14 @@
   color: variables.$palette-neutral-plainColor;
   @include variables.text-md;
 
-  &[data-selected] {
-    font-weight: 500;
-    background-color: variables.$palette-neutral-plainActiveBg;
-  }
 
   &[data-hovered], &[data-focused] {
     background-color: variables.$palette-neutral-plainHoverBg;
     outline: none;
   }
 
+  &[data-selected] {
+    font-weight: 500;
+    background-color: variables.$palette-neutral-plainActiveBg;
+  }
 }

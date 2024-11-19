@@ -3,11 +3,16 @@ import s from './navigation.module.scss';
 import {Tab, TabList, Tabs} from 'react-aria-components';
 import {
     CarBattery,
-    Circuitry, Cpu, Fan, GraphicsCard, HardDrives,
-    ListBullets,
+    Circuitry,
+    Cpu,
+    Fan,
+    GraphicsCard,
+    HardDrives,
     List,
+    ListBullets,
     Memory,
-    Plugs, Snowflake,
+    Plugs,
+    Snowflake,
     TreeStructure
 } from '@phosphor-icons/react';
 import {usePathname} from 'next/navigation';
@@ -91,8 +96,7 @@ export default function Navigation() {
     let paths = usePathname().split('/')
     let basePath = (paths.slice(0, 2)).join('/');
     let pathname = paths[2]
-    console.log(pathname);
-    console.log(basePath);
+
     return (
         <div className={s.navigation}>
             <Tabs selectedKey={pathname} orientation="vertical">

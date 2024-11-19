@@ -1,13 +1,5 @@
-import {
-    BackButton,
-    Content,
-    Controls,
-    DetailsBody,
-    DetailsModule, Footer,
-    Row
-} from '@/app/catalogue/_templates/view';
+import {BackLink, Content, Controls, DetailsBody, DetailsModule, Footer, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
-import TextField from '@/components/ui/text-field';
 import NumberField from '@/components/ui/number-field';
 import {GetPCIeSize, PutPCIeSize} from '@/server/catalogue/pcie/pcie-sizes';
 
@@ -18,7 +10,7 @@ export default async function Page({ params } : { params: Promise<{ id: string }
     return (
         <DetailsBody>
             <Controls>
-                <BackButton />
+                <BackLink />
             </Controls>
             <DetailsModule title="PCIe size details" subtitle="View and modify this PCIe size's details." id={id} submitAction={PutPCIeSize}>
                 <Content>

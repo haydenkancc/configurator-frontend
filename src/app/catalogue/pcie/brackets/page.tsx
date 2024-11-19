@@ -1,10 +1,12 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
 import {DeletePCIeBracket, ListPCIeBrackets} from '@/server/catalogue/pcie/pcie-brackets';
-import {PCIeBracketColumns} from '@/server/models';
+import {PCIeBracketColumns, SearchParams} from '@/server/models';
+import {ReadPaginationData} from '@/server/catalogue';
 
 
-export default async function Page() {
-    const rows = await ListPCIeBrackets(1, 20);
+export default async function Page({ searchParams } : { searchParams: SearchParams}) {
+    const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
+    const paginatedList = await ListPCIeBrackets(pageIndex, pageSize);
     return (
         <Body>
             <Controls>
@@ -12,8 +14,8 @@ export default async function Page() {
                     Specify new bracket
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeBracketColumns} rows={rows} deleteAction={DeletePCIeBracket}/>
-            <Pagination pageCount={13} />
+            <Table columns={PCIeBracketColumns} rows={paginatedList?.items} deleteAction={DeletePCIeBracket}/>
+            <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )
 }

@@ -1,39 +1,27 @@
-import {BackLink, CreateBody, Content, Controls, CreateModule, Row} from '@/app/catalogue/_templates/view';
-import TextField from '@/components/ui/text-field';
+import {BackLink, Content, Controls, CreateBody, CreateModule, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
-import {PostPCIeBracket} from '@/server/catalogue/pcie/pcie-brackets';
-import ComboBox from "@/components/ui/combo-box";
-import SelectItem from "@/components/ui/select-item";
+import {PCIeSizeSelect, PCIeVersionSelect} from '@/app/catalogue/pcie/slots/fields';
+import {GetPCIeSlotParams, PostPCIeSlot} from '@/server/catalogue/pcie/pcie-slots';
 
-export default function Page() {
+export default async function Page() {
+    const slotParams = await GetPCIeSlotParams();
+
     return (
-        <CreateBody submitAction={PostPCIeBracket}>
+        <CreateBody submitAction={PostPCIeSlot}>
             <Controls>
                 <BackLink />
                 <Button variant="primary" type="submit">
-                    Save bracket
+                    Create slot
                 </Button>
             </Controls>
             <CreateModule title="PCIe slot details" subtitle="Specify details for a new PCIe slot.">
                 <Content>
                     <Row>
-                        <ComboBox grow label="Version">
-                            <SelectItem>
-                                poop
-                            </SelectItem>
-                        </ComboBox>
+                        <PCIeVersionSelect isRequired grow label="Version" name="versionID" items={slotParams?.versions} />
                     </Row>
                     <Row>
-                        <ComboBox grow label="Physical width">
-                            <SelectItem>
-                                hello
-                            </SelectItem>
-                        </ComboBox>
-                        <ComboBox grow label="Lane width">
-                            <SelectItem>
-                                hello
-                            </SelectItem>
-                        </ComboBox>
+                        <PCIeSizeSelect isRequired grow label="Physical size" name="physicalSizeID" items={slotParams?.sizes} />
+                        <PCIeSizeSelect isRequired grow label="Lane size" name="laneSizeID" items={slotParams?.sizes} />
                     </Row>
                 </Content>
             </CreateModule>

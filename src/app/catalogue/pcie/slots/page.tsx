@@ -1,11 +1,11 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {DeletePCIeBracket} from '@/server/catalogue/pcie/pcie-brackets';
-import {PCIeSlotColumns} from '@/server/models';
-import {ListPCIeSlots} from "@/server/catalogue/pcie/pcie-slots";
+import {PCIeSlotColumns, SearchParams} from '@/server/models';
+import {DeletePCIeSlot, ListPCIeSlots} from "@/server/catalogue/pcie/pcie-slots";
+import {ReadPaginationData} from '@/server/catalogue';
 
-
-export default async function Page() {
-    const rows = await ListPCIeSlots(1, 20);
+export default async function Page({ searchParams } : { searchParams: SearchParams}) {
+    const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
+    const paginatedList = await ListPCIeSlots(pageIndex, pageSize);
     return (
         <Body>
             <Controls>
@@ -13,8 +13,8 @@ export default async function Page() {
                     Specify new slot
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeSlotColumns} rows={rows} deleteAction={DeletePCIeBracket}/>
-            <Pagination pageCount={13} />
+            <Table columns={PCIeSlotColumns} rows={paginatedList?.items} deleteAction={DeletePCIeSlot}/>
+            <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )
 }

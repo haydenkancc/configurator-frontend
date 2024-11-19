@@ -2,8 +2,8 @@
 import s from './view.module.scss'
 import {ButtonProps, Form, FormProps, LinkProps} from 'react-aria-components';
 import {usePathname, useRouter} from 'next/navigation';
-import {Button, Link} from '@/components/ui/button';
-import { ArrowLeft } from '@phosphor-icons/react/dist/ssr';
+import {Link} from '@/components/ui/button';
+import {ArrowLeft} from '@phosphor-icons/react/dist/ssr';
 
 interface MyCreateBodyProps extends FormProps {
     submitAction: (formData: FormData) => Promise<void>
@@ -48,7 +48,7 @@ export function BackLink({...props} : LinkProps) {
     const backPath = (paths.slice(0, 4)).join('/');
     return (
         <Link variant="neutral" href={backPath} {...props}>
-            <ArrowLeft />Back to {paths[3]}
+            <ArrowLeft />Back to {paths[3].replace('-', ' ')}
         </Link>
     )
 }

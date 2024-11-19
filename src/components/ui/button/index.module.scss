@@ -11,6 +11,10 @@
   @include variables.text-md;
   font-weight: 500;
   cursor: pointer;
+
+  &[data-disabled] {
+    cursor: not-allowed;
+  }
 }
 
 .danger {
@@ -45,8 +49,21 @@
   border: 1px solid variables.$palette-neutral-outlinedBorder;
   color: variables.$palette-neutral-outlinedColor;
 
+  & > svg {
+    fill: variables.$palette-text-icon
+  }
+
   &[data-hovered] {
     background-color: variables.$palette-neutral-outlinedHoverBg;
+  }
+
+  &[data-disabled] {
+    color: variables.$palette-neutral-outlinedDisabledColor;
+    border-color: variables.$palette-neutral-outlinedDisabledBorder;
+
+    & > svg {
+      fill: variables.$palette-danger-outlinedDisabledColor;
+    }
   }
 }
 

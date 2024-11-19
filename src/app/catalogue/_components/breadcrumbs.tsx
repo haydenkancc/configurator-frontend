@@ -1,6 +1,6 @@
 'use client'
 import s from './breadcrumbs.module.scss';
-import {Breadcrumbs as AriaBreadcrumbs, Breadcrumb as AriaBreadcrumb, Link} from 'react-aria-components';
+import {Breadcrumb as AriaBreadcrumb, Breadcrumbs as AriaBreadcrumbs, Link} from 'react-aria-components';
 import {CaretRight} from '@phosphor-icons/react';
 
 export default function Breadcrumbs() {

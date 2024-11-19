@@ -56,10 +56,6 @@ th.operationsColumn {
   justify-content: space-between;
 }
 
-.paginationButtonIcon {
-  fill: variables.$palette-text-icon;
-}
-
 .paginationPages {
   display: flex;
   gap: 0.5rem;
@@ -76,6 +72,16 @@ th.operationsColumn {
   border-radius: 50%;
   border: 1px solid variables.$palette-neutral-outlinedBorder;
   color: variables.$palette-neutral-outlinedColor;
+
+  &[data-hovered] {
+    background: variables.$palette-neutral-outlinedHoverBg;
+  }
+
+  &[data-selected] {
+    background: variables.$palette-neutral-outlinedActiveBg;
+    border-color: variables.$palette-neutral-outlinedActiveBg;
+  }
+
 }
 
 .paginationTextField {
@@ -95,5 +101,13 @@ th.operationsColumn {
   &::placeholder {
     opacity: variables.$placeholderOpacity;
     color: unset;
+  }
+
+  &[data-focused]::placeholder {
+    opacity: 0;
+  }
+
+  &[data-hovered] {
+    background: variables.$palette-neutral-outlinedHoverBg;
   }
 }

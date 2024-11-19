@@ -21,7 +21,7 @@ import {Check} from '@phosphor-icons/react';
 
 export interface MyTableProps extends TableProps {
     columns: {name: string, id: string, isRowHeader?: boolean}[];
-    rows: object[]
+    rows?: Record<string, any>[]
 }
 
 export interface MyColumnProps extends ColumnProps {

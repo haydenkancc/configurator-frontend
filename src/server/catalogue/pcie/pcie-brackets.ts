@@ -2,11 +2,11 @@
 
 import {BaseController} from '@/server/catalogue';
 import {revalidatePath} from 'next/cache';
-import {redirect, RedirectType} from 'next/navigation';
+import {redirect} from 'next/navigation';
 import {PCIeBracket, PCIeBracketRow} from '@/server/models';
 
 
-const baseController = new BaseController(`${process.env.apiHost}/api/PCIeBrackets`)
+const baseController = new BaseController(`${process.env.apiHost}/api/PCIe/PCIeBrackets`)
 
 export async function ListPCIeBrackets(pageIndex: number, pageSize: number) {
     return await baseController._list<PCIeBracketRow>(pageIndex, pageSize);
@@ -25,7 +25,7 @@ export async function PutPCIeBracket(id: number, formData: FormData): Promise<vo
 }
 
 export async function PostPCIeBracket(formData: FormData): Promise<void> {
-    const response = await baseController._post<PCIeBracket>(JSON.stringify(Object.fromEntries(formData)))
+    const response = await baseController._post(JSON.stringify(Object.fromEntries(formData)))
     if (response) {
         revalidatePath('/catalogue/pcie/brackets', 'layout');
         redirect(`/catalogue/pcie/brackets/${response.id}`)

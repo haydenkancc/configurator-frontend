@@ -2,27 +2,29 @@
 import s from './index.module.scss';
 import {
     Button,
-    ComboBox as AriaComboBox, ComboBoxProps,
+    ComboBox as AriaComboBox,
+    ComboBoxProps as AriaComboBoxProps,
     FieldError,
-    Text,
     Input,
-    ListBox,
+    ListBox, ListBoxProps,
     Popover,
+    Text,
     ValidationResult
 } from 'react-aria-components';
-import { CaretDown } from '@phosphor-icons/react/dist/ssr';
+import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 import Label from "@/components/ui/label";
+import {useEffect, useRef} from 'react';
 
-interface MyComboBoxProps<T extends object>
-    extends Omit<ComboBoxProps<T>, 'children'> {
+export interface ComboBoxProps<T extends object>
+    extends Omit<AriaComboBoxProps<T>, 'children'> {
     label?: string;
     description?: string | null;
     errorMessage?: (validation: ValidationResult) => string;
-    children: React.ReactNode | ((item: T) => React.ReactNode);
+    children?: React.ReactNode | ((item: T) => React.ReactNode)
     grow?: boolean;
 }
 
-export default function ComboBox<T extends object>({ label, description, errorMessage, children, isRequired, className, grow = false, ...props }: MyComboBoxProps<T>) {
+export function ComboBox<T extends object>({ label, description, errorMessage, children, isRequired, className, grow = false, ...props }: ComboBoxProps<T>) {
     return (
         <AriaComboBox {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`}>
             <Label isRequired={isRequired}>{label}</Label>
@@ -33,7 +35,7 @@ export default function ComboBox<T extends object>({ label, description, errorMe
             {description && <Text slot="description">{description}</Text>}
             <FieldError>{errorMessage}</FieldError>
             <Popover className={s.popover} offset={9} placement="bottom left">
-                <ListBox className={s.listBox}>
+                <ListBox className={s.listBox} onAction={(key) => console.log(key)}>
                     {children}
                 </ListBox>
             </Popover>
