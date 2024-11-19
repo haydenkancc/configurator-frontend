@@ -1,4 +1,4 @@
-import s from './label.module.scss';
+import s from './index.module.scss';
 import {Label as AriaLabel, LabelProps} from 'react-aria-components';
 
 interface MyLabelProps extends LabelProps {

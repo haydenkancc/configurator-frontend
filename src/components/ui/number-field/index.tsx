@@ -10,7 +10,7 @@ import {
     Text,
     ValidationResult
 } from 'react-aria-components';
-import Label from '../label/label';
+import Label from '../label';
 import {Minus, Plus} from '@phosphor-icons/react/dist/ssr'
 
 

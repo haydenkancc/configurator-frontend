@@ -1,5 +1,5 @@
 'use client'
-import s from './combo-box.module.scss';
+import s from './index.module.scss';
 import {
     Button,
     ComboBox as AriaComboBox, ComboBoxProps,
@@ -10,14 +10,14 @@ import {
     Popover,
     ValidationResult
 } from 'react-aria-components';
-import Label from '@/components/label/label';
-import {PiCaretDownFill} from 'react-icons/pi';
+import { CaretDown } from '@phosphor-icons/react/dist/ssr';
+import Label from "@/components/ui/label";
 
 interface MyComboBoxProps<T extends object>
     extends Omit<ComboBoxProps<T>, 'children'> {
     label?: string;
     description?: string | null;
-    errorMessage?: string | ((validation: ValidationResult) => string);
+    errorMessage?: (validation: ValidationResult) => string;
     children: React.ReactNode | ((item: T) => React.ReactNode);
     grow?: boolean;
 }
@@ -28,11 +28,11 @@ export default function ComboBox<T extends object>({ label, description, errorMe
             <Label isRequired={isRequired}>{label}</Label>
             <div className={s.container}>
                 <Input className={s.input}/>
-                <Button className={s.button}><PiCaretDownFill className={s.icon} /></Button>
+                <Button className={s.button}><CaretDown weight="fill" className={s.icon} /></Button>
             </div>
             {description && <Text slot="description">{description}</Text>}
             <FieldError>{errorMessage}</FieldError>
-            <Popover className={s.popover} placement="bottom left" containerPadding={0}>
+            <Popover className={s.popover} offset={9} placement="bottom left">
                 <ListBox className={s.listBox}>
                     {children}
                 </ListBox>

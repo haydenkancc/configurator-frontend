@@ -8,7 +8,7 @@ import {PCIeVersion, PCIeVersionRow} from '@/server/models';
 
 
 
-const baseController = new BaseController('http://localhost:5274/api/pcieversions')
+const baseController = new BaseController(`${process.env.apiHost}/api/PCIeVersions`)
 
 export async function ListPCIeVersions(pageIndex: number, pageVersion: number) {
     return await baseController._list<PCIeVersionRow>(pageIndex, pageVersion);

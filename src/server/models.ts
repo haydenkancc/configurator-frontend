@@ -47,3 +47,27 @@ export interface PCIeVersion {
     id: number;
     name: string;
 }
+
+export const PCIeSlotColumns = [
+    {name: 'ID', id: 'id', isRowHeader: true},
+    {name: 'Version', id: 'version' },
+    {name: 'Slot size', id: 'slotSize' },
+]
+
+export interface PCIeSlotRow {
+    id: number;
+    version: string;
+    slotSize: string;
+}
+
+export interface PCIeSlot {
+    id: number;
+    version: PCIeVersion;
+    physicalSize: PCIeSize;
+    laneSize: PCIeSize;
+}
+
+export interface PCIeSlotParams {
+    sizes: PCIeSize[];
+    versions: PCIeVersion[];
+}

@@ -6,7 +6,7 @@ import {redirect, RedirectType} from 'next/navigation';
 import {PCIeBracket, PCIeBracketRow} from '@/server/models';
 
 
-const baseController = new BaseController('http://localhost:5274/api/pciebrackets')
+const baseController = new BaseController(`${process.env.apiHost}/api/PCIeBrackets`)
 
 export async function ListPCIeBrackets(pageIndex: number, pageSize: number) {
     return await baseController._list<PCIeBracketRow>(pageIndex, pageSize);

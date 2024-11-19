@@ -10,6 +10,8 @@ import {Button} from '@/components/ui/button';
 import Index from '@/components/ui/text-field';
 import NumberField from '@/components/ui/number-field';
 import {GetPCIeBracket, PutPCIeBracket} from '@/server/catalogue/pcie/pcie-brackets';
+import ComboBox from "@/components/ui/combo-box";
+import SelectItem from "@/components/ui/select-item";
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
@@ -20,11 +22,138 @@ export default async function Page({ params } : { params: Promise<{ id: string }
             <Controls>
                 <BackButton />
             </Controls>
-            <DetailsModule title="PCIe bracket slot" subtitle="View and modify this PCIe bracket's slot." id={id} submitAction={PutPCIeBracket}>
+            <DetailsModule title="PCIe bracket slot" subtitle="View and modify this PCIe slot's details." id={id} submitAction={PutPCIeBracket}>
                 <Content>
                     <Row>
                         <NumberField value={bracket.id} label="ID" isReadOnly />
-                        <Index label="Name" name="name" defaultValue={bracket.name} grow isRequired />
+                        <ComboBox grow label="Version">
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                poop
+                            </SelectItem>
+                            <SelectItem>
+                                pee
+                            </SelectItem>
+                        </ComboBox>
+                    </Row>
+                    <Row>
+                        <ComboBox grow label="Physical width">
+                            <SelectItem>
+                                hello
+                            </SelectItem>
+                        </ComboBox>
+                        <ComboBox grow label="Lane width">
+                            <SelectItem>
+                                hello
+                            </SelectItem>
+                        </ComboBox>
                     </Row>
                 </Content>
                 <Footer>

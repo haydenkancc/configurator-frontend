@@ -8,7 +8,7 @@ import {PCIeSize, PCIeSizeRow} from '@/server/models';
 
 
 
-const baseController = new BaseController('http://localhost:5274/api/pciesizes')
+const baseController = new BaseController(`${process.env.apiHost}/api/PCIeSizes`)
 
 export async function ListPCIeSizes(pageIndex: number, pageSize: number) {
     return await baseController._list<PCIeSizeRow>(pageIndex, pageSize);

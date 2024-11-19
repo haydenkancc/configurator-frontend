@@ -11,8 +11,8 @@ import {
     Text,
     ValidationResult
 } from 'react-aria-components';
-import Label from '@/components/label/label';
-import { PiCaretUpDown } from 'react-icons/pi';
+import Label from '@/components/ui/label';
+import { CaretUpDown } from '@phosphor-icons/react/dist/ssr';
 
 
 interface MySelectProps<T extends object>extends Omit<SelectProps<T>, 'children'> {
@@ -30,11 +30,11 @@ export default function Select<T extends object>({ label, description, errorMess
             <Label isRequired={isRequired}>{label}</Label>
             <Button className={s.button}>
                 <SelectValue className={s.value} />
-                <PiCaretUpDown className={s.icon} />
+                <CaretUpDown className={s.icon} />
             </Button>
             {description && <Text slot="description">{description}</Text>}
             <FieldError>{errorMessage}</FieldError>
-            <Popover className={s.popover}>
+            <Popover className={s.popover} offset={9}>
                 <ListBox className={s.listBox} items={items}>
                     {children}
                 </ListBox>

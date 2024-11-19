@@ -1,10 +1,11 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {DeletePCIeBracket, ListPCIeBrackets} from '@/server/catalogue/pcie/pcie-brackets';
-import {PCIeBracketColumns} from '@/server/models';
+import {DeletePCIeBracket} from '@/server/catalogue/pcie/pcie-brackets';
+import {PCIeSlotColumns} from '@/server/models';
+import {ListPCIeSlots} from "@/server/catalogue/pcie/pcie-slots";
 
 
 export default async function Page() {
-    const rows = await ListPCIeBrackets(1, 20);
+    const rows = await ListPCIeSlots(1, 20);
     return (
         <Body>
             <Controls>
@@ -12,7 +13,7 @@ export default async function Page() {
                     Specify new slot
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeBracketColumns} rows={rows} deleteAction={DeletePCIeBracket}/>
+            <Table columns={PCIeSlotColumns} rows={rows} deleteAction={DeletePCIeBracket}/>
             <Pagination pageCount={13} />
         </Body>
     )

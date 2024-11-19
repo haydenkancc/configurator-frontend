@@ -1,5 +1,3 @@
-import {Cat} from '@phosphor-icons/react';
-
 export class BaseController {
     protected baseRoute : string;
 

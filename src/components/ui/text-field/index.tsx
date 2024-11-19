@@ -9,7 +9,7 @@ import {
     ValidationResult
 } from 'react-aria-components';
 
-import Label from '../label/label';
+import Label from '../label';
 
 interface MyTextFieldProps extends TextFieldProps {
     label?: string;

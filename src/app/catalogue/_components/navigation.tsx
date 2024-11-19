@@ -22,7 +22,7 @@ const items = [
     {
         id: 2,
         title: 'PCIe Specification',
-        href: 'PCIe',
+        href: 'pcie',
         icon: <ListBullets weight="fill" />,
     },
     {
@@ -88,14 +88,17 @@ const items = [
 ]
 
 export default function Navigation() {
-    let pathname = usePathname().split('/')[1]
-
+    let paths = usePathname().split('/')
+    let basePath = (paths.slice(0, 2)).join('/');
+    let pathname = paths[2]
+    console.log(pathname);
+    console.log(basePath);
     return (
         <div className={s.navigation}>
             <Tabs selectedKey={pathname} orientation="vertical">
                 <TabList items={items} className={s.tabList} aria-label="navigation">
                     {item => (
-                        <Tab className={s.tab} aria-label="navigation route" href={`/${item.href}`} id={item.href}>
+                        <Tab className={s.tab} aria-label="navigation route" href={`${basePath}/${item.href}`} id={item.href}>
                             {item.icon} {item.title}
                         </Tab>
                     )}

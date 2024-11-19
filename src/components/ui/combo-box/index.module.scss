@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   border-radius: 0.375rem;
+  min-height: 2rem;
   border: 1px solid variables.$palette-neutral-outlinedBorder;
   background-color: variables.$palette-background-surface;
   @include variables.box-shadow;
@@ -27,7 +28,6 @@
 
 .input {
   flex: 1 0 auto;
-  min-height: 2rem;
   padding-inline: 0.5rem 2rem;
   outline: none;
   background: transparent;
@@ -62,4 +62,6 @@
   border-radius: 0.375rem;
   background: variables.$palette-background-body;
   padding: 0.25rem 0;
+  max-height: 300px;
+  overflow: scroll;
 }
