@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/table'
 import {CaretLeft, CaretRight, LineVertical} from '@phosphor-icons/react/dist/ssr';
 import {
-    Button as AriaButton,
+    Button,
     Collection,
     DialogTrigger,
     Form,
@@ -24,7 +24,7 @@ import {
     Tabs,
     TextField
 } from 'react-aria-components';
-import AlertDialog from '@/components/ui/dialog/alert-dialog';
+import {AlertDialog} from '@/components/ui/dialog/alert-dialog';
 import {Link} from '@/components/ui/button';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {useCallback} from 'react';
@@ -93,7 +93,7 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
                                 <AriaLink className={s.operationsCell__link} href={`${pathName}/${item.id}`}>Details</AriaLink>
                                 <LineVertical />
                                 <DialogTrigger>
-                                    <AriaButton className={s.operationsCell__link}>Delete</AriaButton>
+                                    <Button className={s.operationsCell__link}>Delete</Button>
                                     <AlertDialog title="Confirmation" action={() => deleteAction(item.id)} confirmLabel="Delete">
                                         Are you sure you want to delete this item? All contents and related items will be permanently destroyed.
                                     </AlertDialog>

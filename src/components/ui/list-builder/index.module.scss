@@ -1,0 +1,33 @@
+@use '@/app/variables';
+
+.listBuilder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gridList {
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-radius: 0.375rem;
+  @include variables.box-shadow;
+}
+
+.gridListItem {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  padding-inline: 0.5rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
+  border-left: none;
+  border-right: none;
+  &:not(:last-of-type) {
+    border-bottom-color: variables.$palette-neutral-outlinedBorder;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+}

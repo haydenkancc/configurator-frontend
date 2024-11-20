@@ -10,15 +10,17 @@ import {
 } from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
 import NumberField from '@/components/ui/number-field';
-import {GetM2Key, PutM2Key} from '@/server/catalogue/m2/m2-keys';
+import {GetM2Key, GetM2KeyParams, PutM2Key} from '@/server/catalogue/m2/m2-keys';
 import TextField from '@/components/ui/text-field';
-import {M2KeysListBuilder} from '@/app/catalogue/m2/keys/fields';
+import {TreeBuilder} from '@/components/ui/tree-builder';
+import {ListBuilder, ListBuilderItem} from '@/components/ui/list-builder';
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
     const key = await GetM2Key(id);
-    console.log(key);
+    const keyParams = await GetM2KeyParams();
+    console.log(keyParams);
     return (
         <DetailsBody>
             <Controls>
@@ -42,7 +44,17 @@ export default async function Page({ params } : { params: Promise<{ id: string }
             </DetailsModule>
             <DetailsModule title="Compatible M.2 keys" subtitle="Specify which keys are compatible with this key." id={id} submitAction={PutM2Key}>
                 <Content>
-                        <M2KeysListBuilder></M2KeysListBuilder>
+                        <ListBuilder>
+                            <ListBuilderItem>
+                                goodbye
+                            </ListBuilderItem>
+                            <ListBuilderItem>
+                                hello
+                            </ListBuilderItem>
+                            <ListBuilderItem>
+                                123
+                            </ListBuilderItem>
+                        </ListBuilder>
                 </Content>
                 <Footer>
                     <Button type="reset" variant="neutral">

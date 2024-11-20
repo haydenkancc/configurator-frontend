@@ -64,7 +64,7 @@ interface ModuleProps extends FormProps {
 export function DetailsModule({children, title, submitAction, id, subtitle, ...props} : ModuleProps) {
 
     return (
-        <Form className={s.module} action={(formData) => submitAction(id, formData)} {...props}>
+        <Form className={s.module}  onSubmit={(e) => {e.preventDefault(); console.log(e)}} action={(formData) => submitAction(id, formData)} {...props}>
             <div className={s.title}>
                 <h1 className={s.header}>
                     {title}

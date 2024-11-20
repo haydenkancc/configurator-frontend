@@ -64,4 +64,28 @@
   padding: 0.25rem 0;
   max-height: 300px;
   overflow: auto;
+
+  &:not(:has(.listBoxItem[data-focused])) .listBoxItem:first-of-type {
+    background: variables.$palette-neutral-outlinedHoverBg;
+  }
+}
+
+.listBoxItem {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.1875rem 0.5rem;
+  color: variables.$palette-neutral-plainColor;
+  @include variables.text-md;
+
+
+  &[data-hovered], &[data-focused] {
+    background-color: variables.$palette-neutral-plainHoverBg;
+    outline: none;
+  }
+
+  &[data-selected] {
+    font-weight: 500;
+    background-color: variables.$palette-neutral-plainActiveBg;
+  }
 }

@@ -10,11 +10,10 @@ interface MyDialogProps extends DialogProps {
     action: () => Promise<void>;
 }
 
-export default function AlertDialog({className, title, confirmLabel, children, action, ...props } : MyDialogProps) {
+export function AlertDialog({className, title, confirmLabel, children, action, ...props } : MyDialogProps) {
     return (
         <ModalOverlay className={s.overlay} isDismissable>
             <Modal className={s.modal} >
-
                 <Dialog className={`${s.dialog} ${className}`} {...props}>
                     {({close}) => (
                         <>

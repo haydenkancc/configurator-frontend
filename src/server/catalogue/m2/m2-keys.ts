@@ -15,7 +15,6 @@ export async function ListM2Keys(pageIndex: number, pageSize: number) {
 export async function GetM2Key(id: number) {
 
     var poop = await baseController._get<M2Key>(id);
-    console.log(poop);
     return poop;
 }
 
