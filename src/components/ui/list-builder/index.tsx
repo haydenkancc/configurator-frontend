@@ -1,12 +1,26 @@
 'use client'
 import s from './index.module.scss';
-import {GridList, GridListItem, GridListItemProps, GridListProps} from 'react-aria-components';
-import {ComboBox, ComboBoxItem} from '@/components/ui/combo-box';
+import {
+    Button,
+    ButtonContext, ButtonProps,
+    ComboBoxContext,
+    GridList,
+    GridListItem,
+    GridListItemProps,
+    GridListProps, Input,
+    Key, ListBoxItemProps,
+    Provider, ToggleButton, ToggleButtonContext, ToggleButtonProps, useContextProps, useSlottedContext
+} from 'react-aria-components';
+import {ComboBox, ComboBoxItem, ComboBoxProps} from '@/components/ui/combo-box';
 import SelectItem from '@/components/ui/select-item';
-import {Button} from '@/components/ui/button';
-import {Plus} from '@phosphor-icons/react/dist/ssr';
-import {useListData} from 'react-stately';
+import {Plus, TrashSimple} from '@phosphor-icons/react/dist/ssr';
+import {ListData, useListData} from 'react-stately';
+import React, {createContext, ReactNode, useContext, useState} from 'react';
+import {useFilter} from '@react-aria/i18n';
+import {GridListContext, ListBoxContext, DEFAULT_SLOT} from 'react-aria-components';
 
+const RemoveFromListContext = createContext((key: Key | null) => {});
+const DeleteItemContext = createContext(() => {});
 
 let keys = [
         { id: 1, name: 'A' },
@@ -14,7 +28,7 @@ let keys = [
         { id: 3, name: 'C' },
         { id: 4, name: 'D' },
         { id: 5, name: 'E' },
-        { id: 6, name: 'A+E' },
+        { id: 6, name: 'A+E'},
         { id: 7, name: 'F' },
         { id: 8, name: 'G' },
         { id: 9, name: 'H' },
@@ -23,40 +37,155 @@ let keys = [
         { id: 12, name: 'L' },
         { id: 13, name: 'M' },
         { id: 14, name: 'B+M' }
-    ]
+]
 
+let key = {
+    id: 6, name: 'A+E'
+}
 
-export function ListBuilder({children, className, items, ...props} : GridListProps<object>) {
+let compatibleKeys = [
+    { id: 1, name: 'A' },
+    { id: 5, name: 'E' },
+]
 
-    let list = useListData({
-        initialItems: keys,
-        getKey: item => item.id
-    });
+export interface ListBuilderProps<T extends { id: number }> {
+    items: ListData<T>;
+    initialItems: ListData<T>;
+    children?: React.ReactNode | React.ReactNode[];
+}
 
+export function ListBuilder<T extends { id: number; }>({ items, initialItems, children } : ListBuilderProps<T>) {
+
+    const gridListItems = initialItems;
+    const comboBoxItems = items;
+
+    const [ selectedKey, setSelectedKey ] = useState<Key | null>(null)
+
+    const onSelectionChange = (id: Key | null) => {
+        setSelectedKey(id);
+    };
+
+    const addToList = (key: Key | null) => {
+        if (key) {
+            gridListItems.append(comboBoxItems.getItem(key));
+            setSelectedKey(null);
+            comboBoxItems.remove(key);
+        }
+    }
+
+    const removeFromList = (key: Key | undefined | null) => {
+        if (key) {
+
+            comboBoxItems.append(gridListItems.getItem(key));
+            gridListItems.remove(key);
+        }
+    }
 
     return (
-        <div className={s.listBuilder}>
-            <GridList className={`${s.gridList} ${className}`} {...props}>
-                {children}
-            </GridList>
-            <div className={s.row}>
-                <ComboBox grow defaultItems={list.items}>
-                    {item => (
-                        <ComboBoxItem>
-                            {item.name}
-                        </ComboBoxItem>
-                    )}
-                </ComboBox>
-                <Button variant="primary"><Plus weight="bold"></Plus></Button>
-            </div>
-        </div>
+        <Provider values={[
+            [GridListContext, {
+                slots: {
+                    [DEFAULT_SLOT]: {
+                        items: gridListItems.items,
+                    }
+                }
+            }],
+            [ComboBoxContext, {
+                slots: {
+                    [DEFAULT_SLOT]: {
+                        items: comboBoxItems.items,
+                        onInputChange: comboBoxItems.setFilterText,
+                        onSelectionChange: onSelectionChange,
+                        selectedKey: selectedKey,
+                    }
+                }
+            }],
+            [ButtonContext, {
+                slots: {
+                    submit: {
+                        onPress: (e) => addToList(selectedKey)
+                    }
+                }
+            }]
+        ]}>
+            <RemoveFromListContext.Provider value={removeFromList}>
+                <div className={s.listBuilder}>
+                    {children}
+                </div>
+            </RemoveFromListContext.Provider>
+        </Provider>
     )
 }
 
-export function ListBuilderItem({children, className, ...props} : GridListItemProps) {
+interface ListBuilderListProps<T extends object> extends Omit<GridListProps<T>, 'items'> {
+    children?: ReactNode | ((item: T) => ReactNode);
+}
+
+export function ListBuilderList<T extends object>({ children, ...props}: ListBuilderListProps<T>) {
+
     return (
-        <GridListItem className={`${s.gridListItem} ${className}`} {...props}>
+        <GridList className={s.gridList} {...props} renderEmptyState={() => <div className={s.gridListEmpty}>No items selected.</div>}>
             {children}
-        </GridListItem>
+        </GridList>
+    )
+}
+
+export function ListBuilderRow({children} : Readonly<{children: React.ReactNode}>) {
+    return <div className={s.row}>{children}</div>
+}
+
+export function ListBuilderListItem({children, className, ...props} : GridListItemProps) {
+    const removeFromList = useContext(RemoveFromListContext)
+    return (
+
+            <GridListItem className={`${s.gridListItem} ${className}`} {...props}>
+                <ButtonContext.Provider value={{
+                    slots: {
+                        remove: {
+                            onPress: () => removeFromList(props.id ?? null)
+                        }
+                    }
+                }}>
+                    <>
+                        {children}
+                    </>
+                </ButtonContext.Provider>
+            </GridListItem>
+
+    )
+}
+
+
+export function ListBuilderTrashButton({ children, id, className, ...props} : ButtonProps) {
+
+    return (
+        <Button className={s.trashButton} slot='remove' {...props}>
+            <TrashSimple weight="fill" className={s.trashButtonIcon} />
+        </Button>
+    )
+}
+
+export function ListBuilderAddButton({ children, className, ...props} : ButtonProps) {
+
+    return (
+        <Button className={s.addButton} slot='submit' {...props}>
+            <Plus weight="bold" />
+        </Button>
+    )
+}
+
+export function ListBuilderComboBox<T extends object>({ children, ...props}: Omit<ComboBoxProps<T>, 'items' | 'defaultItems'>) {
+    return (
+        <ComboBox grow {...props}>
+            {children}
+        </ComboBox>
+    )
+}
+
+export function ListBuilderComboBoxItem({ children, ...props} : ListBoxItemProps) {
+    return (
+        <ComboBoxItem {...props}>
+            {children}
+        </ComboBoxItem>
     )
 }

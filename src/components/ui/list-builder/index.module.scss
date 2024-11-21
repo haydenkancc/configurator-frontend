@@ -12,11 +12,20 @@
   @include variables.box-shadow;
 }
 
+.gridListEmpty {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  color: variables.$palette-neutral-plainDisabledColor;
+}
+
 .gridListItem {
   min-height: 2rem;
   display: flex;
   align-items: center;
-  padding-inline: 0.5rem;
+  padding-inline: 0.5rem 0.25rem;
   border-style: solid;
   border-width: 1px;
   border-color: transparent;
@@ -27,7 +36,58 @@
   }
 }
 
+
+
+.trashButton {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+
+  @include variables.focus;
+
+  &[data-hovered], &[data-focus-visible] {
+    background-color: variables.$palette-danger-plainHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-danger-plainActiveBg;
+  }
+}
+
+.trashButtonIcon {
+  color: variables.$palette-danger-plainColor;
+}
+
 .row {
   display: flex;
   gap: 0.5rem;
+}
+
+.addButton {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  padding-inline: 0.0625rem;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+  color: variables.$palette-primary-solidColor;
+  background-color: variables.$palette-primary-solidBg;
+  box-sizing: content-box;
+
+  @include variables.focus;
+
+  &[data-hovered], &[data-focus-visible] {
+    background-color: variables.$palette-primary-solidHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-primary-solidActiveBg;
+  }
 }

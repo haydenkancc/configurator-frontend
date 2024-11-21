@@ -1,4 +1,4 @@
-import {BackLink, Content, Controls, DetailsBody, DetailsModule, Footer, Row} from '@/app/catalogue/_templates/view';
+import {BackLink, Content, Controls, Body, FormModule, Footer, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
 import TextField from '@/components/ui/text-field';
 import NumberField from '@/components/ui/number-field';
@@ -9,11 +9,11 @@ export default async function Page({ params } : { params: Promise<{ id: string }
     const id = parseInt((await params).id);
     const version = await GetPCIeVersion(id);
     return (
-        <DetailsBody>
+        <Body>
             <Controls>
                 <BackLink />
             </Controls>
-            <DetailsModule title="PCIe version details" subtitle="View and modify this PCIe version's details." id={id} submitAction={PutPCIeVersion}>
+            <FormModule title="PCIe version details" subtitle="View and modify this PCIe version's details." id={id} submitAction={PutPCIeVersion}>
                 <Content>
                     <Row>
                         <NumberField value={version.id} label="ID" isReadOnly />
@@ -28,8 +28,8 @@ export default async function Page({ params } : { params: Promise<{ id: string }
                         Save changes
                     </Button>
                 </Footer>
-            </DetailsModule>
+            </FormModule>
 
-        </DetailsBody>
+        </Body>
     )
 }

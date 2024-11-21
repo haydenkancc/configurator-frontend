@@ -1,4 +1,4 @@
-import {BackLink, Content, Controls, DetailsBody, DetailsModule, Footer, Row} from '@/app/catalogue/_templates/view';
+import {BackLink, Content, Controls, Body, FormModule, Footer, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
 import NumberField from '@/components/ui/number-field';
 import {GetPCIeSlot, GetPCIeSlotParams, PutPCIeSlot} from '@/server/catalogue/pcie/pcie-slots';
@@ -10,11 +10,11 @@ export default async function Page({ params } : { params: Promise<{ id: string }
     const slot = await GetPCIeSlot(id);
     const slotParams = await GetPCIeSlotParams();
     return (
-        <DetailsBody>
+        <Body>
             <Controls>
                 <BackLink />
             </Controls>
-            <DetailsModule title="PCIe bracket slot" subtitle="View and modify this PCIe slot's details." id={id} submitAction={PutPCIeSlot}>
+            <FormModule title="PCIe bracket slot" subtitle="View and modify this PCIe slot's details." id={id} submitAction={PutPCIeSlot}>
                 <Content>
                     <Row>
                         <NumberField value={slot.id} label="ID" isReadOnly />
@@ -33,8 +33,8 @@ export default async function Page({ params } : { params: Promise<{ id: string }
                         Save changes
                     </Button>
                 </Footer>
-            </DetailsModule>
+            </FormModule>
 
-        </DetailsBody>
+        </Body>
     )
 }

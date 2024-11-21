@@ -6,19 +6,19 @@ import {Link} from '@/components/ui/button';
 import {ArrowLeft} from '@phosphor-icons/react/dist/ssr';
 
 interface MyCreateBodyProps extends FormProps {
-    submitAction: (formData: FormData) => Promise<void>
+
 }
 
-export function CreateBody({children, submitAction, ...props} : MyCreateBodyProps){
+export function FormBody({children, ...props} : MyCreateBodyProps){
     return (
-        <Form className={s.body} action={(formData) => submitAction(formData)} {...props}>
+        <Form className={s.body} {...props}>
             {children}
         </Form>
     )
 }
 
 
-export function DetailsBody({ children } : Readonly<{ children: React.ReactNode}>) {
+export function Body({ children } : Readonly<{ children: React.ReactNode}>) {
     return (
         <div className={s.body}>
             { children }
@@ -57,14 +57,12 @@ interface ModuleProps extends FormProps {
     children: React.ReactNode;
     title: string,
     subtitle: string,
-    submitAction: (id: number, formData : FormData) => Promise<void>
-    id: any,
 }
 
-export function DetailsModule({children, title, submitAction, id, subtitle, ...props} : ModuleProps) {
+export function FormModule({children, title, subtitle, ...props} : ModuleProps) {
 
     return (
-        <Form className={s.module}  onSubmit={(e) => {e.preventDefault(); console.log(e)}} action={(formData) => submitAction(id, formData)} {...props}>
+        <Form className={s.module} {...props}>
             <div className={s.title}>
                 <h1 className={s.header}>
                     {title}
@@ -78,7 +76,7 @@ export function DetailsModule({children, title, submitAction, id, subtitle, ...p
     )
 }
 
-export function CreateModule({children, title, subtitle, ...props} : Partial<ModuleProps>) {
+export function Module({children, title, subtitle, ...props} : Partial<ModuleProps>) {
     return (
         <div className={s.module}>
             <div className={s.title}>

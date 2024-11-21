@@ -28,7 +28,7 @@ export interface ComboBoxProps<T extends object>
 export function ComboBox<T extends object>({ label, description, errorMessage, children, isRequired, className, grow = false, ...props }: ComboBoxProps<T>) {
 
     return (
-        <AriaComboBox {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus">
+        <AriaComboBox {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus" shouldFocusWrap>
             <Label isRequired={isRequired}>{label}</Label>
             <div className={s.container}>
                 <Input className={s.input}/>
@@ -51,7 +51,7 @@ function Input({...props} : InputProps) {
     return (
         <AriaInput {...props} onKeyDown={(e)=> {
             if (e.key == 'Enter') {
-                e.stopPropagation()
+                e.preventDefault();
                 if(context.selectionManager.focusedKey === null) {
                     context.selectionManager.setFocusedKey(context.collection.getFirstKey());
                     context.setSelectedKey(context.collection.getFirstKey());

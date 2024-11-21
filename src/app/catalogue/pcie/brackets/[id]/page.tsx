@@ -1,4 +1,4 @@
-import {BackButton, Content, Controls, DetailsBody, DetailsModule, Footer, Row} from '@/app/catalogue/_templates/view';
+import {BackButton, Content, Controls, Body, FormModule, Footer, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
 import Index from '@/components/ui/text-field';
 import NumberField from '@/components/ui/number-field';
@@ -9,11 +9,11 @@ export default async function Page({ params } : { params: Promise<{ id: string }
     const id = parseInt((await params).id);
     const bracket = await GetPCIeBracket(id);
     return (
-        <DetailsBody>
+        <Body>
             <Controls>
                 <BackButton />
             </Controls>
-            <DetailsModule title="PCIe bracket details" subtitle="View and modify this PCIe bracket's details." id={id} submitAction={PutPCIeBracket}>
+            <FormModule title="PCIe bracket details" subtitle="View and modify this PCIe bracket's details." id={id} submitAction={PutPCIeBracket}>
                 <Content>
                     <Row>
                         <NumberField value={bracket.id} label="ID" isReadOnly />
@@ -28,8 +28,8 @@ export default async function Page({ params } : { params: Promise<{ id: string }
                         Save changes
                     </Button>
                 </Footer>
-            </DetailsModule>
+            </FormModule>
 
-        </DetailsBody>
+        </Body>
     )
 }

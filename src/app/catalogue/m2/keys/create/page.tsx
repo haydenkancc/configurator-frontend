@@ -1,32 +1,27 @@
-import {BackLink, Content, Controls, CreateBody, CreateModule, Row} from '@/app/catalogue/_templates/view';
+import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
 import {PostPCIeSize} from '@/server/catalogue/pcie/pcie-sizes';
 import NumberField from '@/components/ui/number-field';
 import TextField from '@/components/ui/text-field';
+import {UploadSimple} from '@phosphor-icons/react/dist/ssr';
+import {Form} from './form';
+import {GetM2KeyParams, PostM2Key} from '@/server/catalogue/m2/m2-keys';
+import {M2KeyBase, M2KeyDbo} from '@/server/models';
 
-export default function Page() {
+export default async function Page() {
+
+    const keyParams = await GetM2KeyParams();
+
+    async function submitAction(name: string, compatibleKeys: M2KeyBase[]) {
+        'use server'
+        const key: M2KeyDbo = {
+            name: name,
+            compatibleKeyIDs: compatibleKeys.map(({id}) => id),
+        };
+        await PostM2Key(key);
+    }
+
     return (
-        <CreateBody submitAction={PostPCIeSize}>
-            <Controls>
-                <BackLink />
-                <Button variant="primary" type="submit">
-                    Create key
-                </Button>
-            </Controls>
-            <CreateModule title="M.2 key details" subtitle="Specify details for a new M.2 key.">
-                <Content>
-                    <Row>
-                        <TextField label="Name" name="name" grow isRequired />
-                    </Row>
-                </Content>
-            </CreateModule>
-            <CreateModule title="Compatible M.2 keys" subtitle="Specify which keys are compatible with this key.">
-                <Content>
-                    <Row>
-                        poop
-                    </Row>
-                </Content>
-            </CreateModule>
-        </CreateBody>
+        <Form action={submitAction} keyParams={keyParams} />
     )
 }

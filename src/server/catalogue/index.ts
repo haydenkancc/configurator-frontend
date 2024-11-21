@@ -54,7 +54,7 @@ export class BaseController {
                 body: body,
             })
             if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
+                throw new Error(`Response status: ${response.status}\nResponse: ${await response.text()}`);
             }
             return true;
         } catch (error: any) {
@@ -64,6 +64,7 @@ export class BaseController {
     }
 
     public async _post(body: string): Promise<{ id: number } | null> {
+        console.log(body)
         try {
             const response = await fetch(`${this.baseRoute}`,{
                 method: "POST",

@@ -4,7 +4,7 @@ import s from './index.module.scss';
 import {Button as AriaButton, ButtonProps, Link as AriaLink, LinkProps} from 'react-aria-components';
 
 interface MyButtonProps extends ButtonProps {
-    variant?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'plain',
+    variant?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'plain' | 'trash',
 }
 
 
@@ -29,6 +29,9 @@ export function Button({children, className, variant, ...props} : MyButtonProps)
         case 'plain':
             variantClass = s.plain;
             break;
+        case 'trash':
+            variantClass = s.trash;
+            break;
     }
 
     return (
@@ -39,7 +42,7 @@ export function Button({children, className, variant, ...props} : MyButtonProps)
 }
 
 interface MyLinkProps extends LinkProps {
-    variant?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'plain',
+    variant?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'plain' | 'trash',
 }
 
 export function Link({ children, className, variant, ...props} : MyLinkProps) {
@@ -62,6 +65,9 @@ export function Link({ children, className, variant, ...props} : MyLinkProps) {
             break;
         case 'plain':
             variantClass = s.plain;
+            break;
+        case 'trash':
+            variantClass = s.trash;
             break;
     }
 

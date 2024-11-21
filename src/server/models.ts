@@ -114,7 +114,7 @@ export interface M2KeyBase {
 
 export interface M2KeyDbo {
     name: string;
-    compatibleKeys: M2KeyBase[];
+    compatibleKeyIDs: number[];
 }
 
 export interface M2KeyParams {
