@@ -1,16 +1,16 @@
-import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
-import {PostPCIeSize} from '@/server/catalogue/pcie/pcie-sizes';
-import NumberField from '@/components/ui/number-field';
-import TextField from '@/components/ui/text-field';
-import {UploadSimple} from '@phosphor-icons/react/dist/ssr';
 import {Form} from './form';
-import {GetM2KeyParams, PostM2Key} from '@/server/catalogue/m2/m2-keys';
-import {M2KeyBase, M2KeyDbo} from '@/server/models';
+import {M2Key, M2KeyBase, M2KeyDbo, M2KeyParams} from '@/server/models';
+import {configuratorApiClient} from '@/server/catalogue';
+import {revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
 
 export default async function Page() {
 
-    const keyParams = await GetM2KeyParams();
+    async function getKeyParams() {
+        'use server';
+        const response = await configuratorApiClient.Get<M2KeyParams>('api/M2/M2Keys/params', ['M2Keys']);
+        return response.data;
+    }
 
     async function submitAction(name: string, compatibleKeys: M2KeyBase[]) {
         'use server'
@@ -18,8 +18,14 @@ export default async function Page() {
             name: name,
             compatibleKeyIDs: compatibleKeys.map(({id}) => id),
         };
-        await PostM2Key(key);
+        const response = await configuratorApiClient.Post<M2Key>(`api/M2/M2Keys`, key);
+        if(!response.error) {
+            revalidateTag('M2Keys');
+            redirect(`/catalogue/m2/keys/${response.data?.id}`)
+        }
     }
+
+    const keyParams = await getKeyParams() ?? undefined;
 
     return (
         <Form action={submitAction} keyParams={keyParams} />

@@ -38,7 +38,7 @@ const items = [
     },
     {
         id: 3,
-        title: 'I/O Connectors',
+        title: 'I/O Specification',
         href: 'io',
         icon: <Plugs weight="fill" />,
     },

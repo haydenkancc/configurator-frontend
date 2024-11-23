@@ -1,37 +1,62 @@
 import {
     BackLink,
-    Content,
     Controls,
-    Module,
     Body,
-    FormModule,
-    Footer,
-    Row
 } from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
-import NumberField from '@/components/ui/number-field';
-import {GetM2Key, GetM2KeyParams, PutM2Key} from '@/server/catalogue/m2/m2-keys';
-import TextField from '@/components/ui/text-field';
 import React from 'react';
 import {Details, Keys} from '@/app/catalogue/m2/keys/[id]/forms';
-import {M2KeyBase, M2KeyDbo} from '@/server/models';
+import {M2Key, M2KeyBase, M2KeyDbo, M2KeyParams} from '@/server/models';
+import {configuratorApiClient} from '@/server/catalogue';
+import {revalidatePath, revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
+
     const id = parseInt((await params).id);
-    const key = await GetM2Key(id);
-    const keyParams = await GetM2KeyParams();
+
+    async function getKeyParams() {
+        'use server';
+        const response = await configuratorApiClient.Get<M2KeyParams>('api/M2/M2Keys/params', ['M2Keys']);
+        return response.data;
+    }
+
+    async function getKey(id: number) {
+        const response = await configuratorApiClient.Get<M2Key>(`api/M2/M2Keys/id/${id}`, ['M2Keys'])
+        return response.data;
+    }
 
     async function submitKeysAction(compatibleKeys: M2KeyBase[]) {
         'use server';
         const compatibleKeyIDs: M2KeyDbo["compatibleKeyIDs"] = compatibleKeys.map(({id}) => id);
-        await PutM2Key(id, {compatibleKeyIDs: compatibleKeyIDs});
+        await configuratorApiClient.Put<Partial<M2KeyDbo>>(`api/M2/M2Keys/id/${id}`,
+            {
+                compatibleKeyIDs,
+            })
+        revalidateTag('M2Keys')
+        redirect(`/catalogue/m2/keys/${id}`)
     }
 
     async function submitDetailsAction(name: string) {
         'use server'
-        name && await PutM2Key(id, {name: name})
+        if (name)
+        {
+            const response = await configuratorApiClient.Put<Partial<M2KeyDbo>>(`api/M2/M2Keys/id/${id}`,
+                {
+                    name,
+                })
+
+            if(!response.error) {
+                revalidateTag('M2Keys');
+                redirect(`/catalogue/m2/keys/${id}`)
+            }
+        }
     }
+
+
+    const keyParams = await getKeyParams() ?? undefined;
+
+    const key = (await getKey(id))!
 
     return (
         <Body>

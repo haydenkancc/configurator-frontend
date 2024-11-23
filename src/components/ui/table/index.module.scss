@@ -57,6 +57,22 @@ th.spacingColumn {
   width: unset;
 }
 
+th.smallColumn {
+  width: 10rem;
+}
+
+th.mediumColumn {
+  width: 12.5rem;
+}
+
+th.largeColumn {
+  width: 15rem;
+}
+
+th.unsetColumn {
+  width: unset;
+}
+
 th.operationsColumn {
   width: 8.5rem;
 }
@@ -66,7 +82,8 @@ th.operationsColumn {
   color: variables.$palette-text-secondary;
   @include variables.text-md;
   font-weight: 600;
-  width: 8.75rem;
+  width: 7.5rem;
+  white-space: nowrap;
   text-align: start;
   background: variables.$palette-background-level1;
   border-bottom: 1px solid variables.$palette-neutral-outlinedBorder;

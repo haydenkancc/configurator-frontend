@@ -1,24 +1,27 @@
-import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
-import {PostPCIeSize} from '@/server/catalogue/pcie/pcie-sizes';
-import NumberField from '@/components/ui/number-field';
+import { Form } from './form';
+import {PCIeSize, PCIeSizeDbo} from '@/server/models';
+import {configuratorApiClient} from '@/server/catalogue';
+import {revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
 
-export default function Page() {
+export default async function Page() {
+
+    async function submitAction(laneCount: number) {
+        'use server'
+        if (laneCount && laneCount > 0) {
+            const size: PCIeSizeDbo = {
+                laneCount,
+            };
+            const response = await configuratorApiClient.Post<PCIeSize>('api/PCIe/PCIeSizes', size, ['PCIeSizes']);
+            console.log(response);
+            if (!response.error) {
+                revalidateTag('PCIeSizes');
+                redirect(`/catalogue/pcie/sizes/${response.data?.id}`)
+            }
+        }
+    }
+
     return (
-        <FormBody submitAction={PostPCIeSize}>
-            <Controls>
-                <BackLink />
-                <Button variant="primary" type="submit">
-                    Create size
-                </Button>
-            </Controls>
-            <Module title="PCIe size details" subtitle="Specify details for a new PCIe size.">
-                <Content>
-                    <Row>
-                        <NumberField label="Lane count" name="laneCount" grow isRequired />
-                    </Row>
-                </Content>
-            </Module>
-        </FormBody>
+        <Form action={submitAction} />
     )
 }

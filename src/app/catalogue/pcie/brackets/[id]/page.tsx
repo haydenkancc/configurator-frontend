@@ -1,35 +1,43 @@
-import {BackButton, Content, Controls, Body, FormModule, Footer, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
-import Index from '@/components/ui/text-field';
-import NumberField from '@/components/ui/number-field';
-import {GetPCIeBracket, PutPCIeBracket} from '@/server/catalogue/pcie/pcie-brackets';
+import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
+import {configuratorApiClient} from '@/server/catalogue';
+import {PCIeBracket, PCIeBracketDbo} from '@/server/models';
+import {revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
+import {Details} from './forms';
+
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
-    const bracket = await GetPCIeBracket(id);
+
+    async function getBracket(id: number) {
+        const response = await configuratorApiClient.Get<PCIeBracket>(`api/PCIe/PCIeBrackets/id/${id}`, ['PCIeBrackets'])
+        return response.data;
+    }
+
+    async function submitDetailsAction(name: string) {
+        'use server'
+        if (name)
+        {
+            const response = await configuratorApiClient.Put<PCIeBracketDbo>(`api/PCIe/PCIeBrackets/id/${id}`,
+                {
+                    name,
+                })
+            if(!response.error) {
+                revalidateTag('PCIeBrackets');
+                redirect(`/catalogue/pcie/brackets/${id}`)
+            }
+        }
+    }
+
+    const bracket = (await getBracket(id))!;
+
     return (
         <Body>
             <Controls>
-                <BackButton />
+                <BackLink />
             </Controls>
-            <FormModule title="PCIe bracket details" subtitle="View and modify this PCIe bracket's details." id={id} submitAction={PutPCIeBracket}>
-                <Content>
-                    <Row>
-                        <NumberField value={bracket.id} label="ID" isReadOnly />
-                        <Index label="Name" name="name" defaultValue={bracket.name} grow isRequired />
-                    </Row>
-                </Content>
-                <Footer>
-                    <Button type="reset" variant="neutral">
-                        Cancel
-                    </Button>
-                    <Button type="submit" variant="primary">
-                        Save changes
-                    </Button>
-                </Footer>
-            </FormModule>
-
+            <Details bracket={bracket} action={submitDetailsAction}/>
         </Body>
     )
 }

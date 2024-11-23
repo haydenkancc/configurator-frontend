@@ -1,35 +1,44 @@
-import {BackLink, Content, Controls, Body, FormModule, Footer, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
-import TextField from '@/components/ui/text-field';
-import NumberField from '@/components/ui/number-field';
-import {GetPCIeVersion, PutPCIeVersion} from '@/server/catalogue/pcie/pcie-versions';
+import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
+import {configuratorApiClient} from '@/server/catalogue';
+import {PCIeVersion, PCIeVersionDbo} from '@/server/models';
+import {revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
+import {Details} from './forms';
+
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
-    const version = await GetPCIeVersion(id);
+
+    async function getVersion(id: number) {
+        const response = await configuratorApiClient.Get<PCIeVersion>(`api/PCIe/PCIeVersions/id/${id}`, ['PCIeVersions'])
+        return response.data;
+    }
+
+    async function submitDetailsAction(name: string) {
+        'use server'
+        if (name)
+        {
+            const response = await configuratorApiClient.Put<PCIeVersionDbo>(`api/PCIe/PCIeVersions/id/${id}`,
+                {
+                    name,
+                })
+            console.log(response);
+            if(!response.error) {
+                revalidateTag('PCIeVersions');
+                redirect(`/catalogue/pcie/versions/${id}`)
+            }
+        }
+    }
+
+    const version = (await getVersion(id))!;
+
     return (
         <Body>
             <Controls>
                 <BackLink />
             </Controls>
-            <FormModule title="PCIe version details" subtitle="View and modify this PCIe version's details." id={id} submitAction={PutPCIeVersion}>
-                <Content>
-                    <Row>
-                        <NumberField value={version.id} label="ID" isReadOnly />
-                        <TextField label="Version" name="name" defaultValue={version.name} grow isRequired />
-                    </Row>
-                </Content>
-                <Footer>
-                    <Button type="reset" variant="neutral">
-                        Cancel
-                    </Button>
-                    <Button type="submit" variant="primary">
-                        Save changes
-                    </Button>
-                </Footer>
-            </FormModule>
-
+            <Details version={version} action={submitDetailsAction}/>
         </Body>
     )
 }

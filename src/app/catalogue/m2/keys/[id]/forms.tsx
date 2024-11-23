@@ -2,7 +2,6 @@
 import {M2Key, M2KeyBase, M2KeyParams} from '@/server/models';
 import {useFilter} from '@react-aria/i18n';
 import {useListData} from 'react-stately';
-import {PutM2Key} from '@/server/catalogue/m2/m2-keys';
 import {Content, Footer, FormModule, Row} from '@/app/catalogue/_templates/view';
 import {
     ListBuilder, ListBuilderAddButton, ListBuilderComboBox, ListBuilderComboBoxItem,
@@ -14,7 +13,7 @@ import {
 import {Button} from '@/components/ui/button';
 import React, {useState} from 'react';
 import NumberField from '@/components/ui/number-field';
-import TextField from '@/components/ui/text-field';
+import {TextField} from '@/components/ui/text-field';
 
 interface KeysProps {
     m2key: M2Key;
@@ -37,10 +36,8 @@ export function Keys({m2key, keyParams, action} : KeysProps) {
         filter: (item, filterText) => contains(item.name, filterText)
     });
 
-
-
     return (
-        <FormModule title="Compatible M.2 keys" subtitle="Specify which keys are compatible with this key." action={() => action(initialItems.items)}>
+        <FormModule title="Compatible M.2 keys" subtitle="Specify which keys are compatible with this key." action={async () => await action(initialItems.items)}>
             <Content>
                 <ListBuilder initialItems={initialItems} items={items}>
                     <ListBuilderList<M2KeyBase>>
@@ -77,15 +74,15 @@ interface DetailsProps {
 
 export function Details({m2key, action} : DetailsProps) {
 
-    const [name, setName] = useState('')
+    const [name, setName] = useState(m2key.name)
 
 
     return (
-        <FormModule title="M.2 key details" subtitle="View and modify this M.2 key's details." action={() => action(name)}>
+        <FormModule title="M.2 key details" subtitle="View and modify this M.2 key's details." action={async () => await action(name)}>
             <Content>
                 <Row>
                     <NumberField value={m2key.id} label="ID" isReadOnly />
-                    <TextField label="Name" name="name" defaultValue={m2key.name} onChange={setName} grow isRequired />
+                    <TextField label="Name" name="name" value={name} onChange={setName} grow isRequired />
                 </Row>
             </Content>
             <Footer>

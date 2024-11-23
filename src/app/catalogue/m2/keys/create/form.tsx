@@ -1,7 +1,7 @@
 'use client'
 import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
-import TextField from '@/components/ui/text-field';
+import {TextField} from '@/components/ui/text-field';
 import React, {useState} from 'react';
 import {useFilter} from '@react-aria/i18n';
 import {ListData, useListData} from 'react-stately';
@@ -37,7 +37,7 @@ export function Form({ keyParams, action } : FormProps) {
     });
 
     return (
-        <FormBody action={() => action(name, initialItems.items)}>
+        <FormBody action={async () => await action(name, initialItems.items)}>
             <Controls>
                 <BackLink />
                 <Button variant="primary" type="submit">

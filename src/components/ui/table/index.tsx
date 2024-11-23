@@ -26,6 +26,7 @@ export interface MyTableProps extends TableProps {
 
 export interface MyColumnProps extends ColumnProps {
     spacer?: boolean;
+    size?: 'small' | 'medium' | 'large' | 'unset';
 }
 
 export function Table({ children, ...props } : MyTableProps) {
@@ -67,9 +68,14 @@ export function Row<T extends object>({ id, columns, children, className, ...pro
     );
 }
 
-export function Column({children, className, spacer = false, ...props} : MyColumnProps) {
+export function Column({children, className, size, spacer = false, ...props} : MyColumnProps) {
     return(
-        <AriaColumn className={`${s.column} ${spacer ? s.spacingColumn : ''} ${className}`} {...props}>
+        <AriaColumn className={`${s.column} ${spacer ? s.spacingColumn : ''} 
+        ${size === 'small' ? s.smallColumn : ''} 
+        ${size === 'medium' ? s.mediumColumn : ''} 
+        ${size === 'large' ? s.largeColumn : ''} 
+        ${size === 'unset' ? s.unsetColumn : ''} 
+        ${className}`} {...props}>
             {children}
         </AriaColumn>
     )

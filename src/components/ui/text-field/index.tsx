@@ -18,7 +18,7 @@ interface MyTextFieldProps extends TextFieldProps {
     grow?: boolean;
 }
 
-export default function TextField({ label, description, errorMessage, className, isRequired, grow = false, ...props} : MyTextFieldProps) {
+export function TextField({ label, description, errorMessage, className, isRequired, grow = false, ...props} : MyTextFieldProps) {
     return (
         <AriaTextField className={`${s.textField} ${grow && s.grow} ${className}`} {...props}>
             <Label isRequired={isRequired}>{label}</Label>

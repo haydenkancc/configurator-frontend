@@ -1,24 +1,26 @@
-import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
-import TextField from '@/components/ui/text-field';
-import {Button} from '@/components/ui/button';
-import {PostPCIeVersion} from '@/server/catalogue/pcie/pcie-versions';
+import { Form } from './form';
+import {PCIeVersion, PCIeVersionDbo} from '@/server/models';
+import {configuratorApiClient} from '@/server/catalogue';
+import {revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
 
 export default function Page() {
+
+    async function submitAction(name: string) {
+        'use server'
+        const version: PCIeVersionDbo = {
+            name: name,
+        };
+        const response = await configuratorApiClient.Post<PCIeVersion>('api/PCIe/PCIeVersions', version, ['PCIeVersions']);
+        console.log(response);
+        if (!response.error) {
+            revalidateTag('PCIeVersions');
+            redirect(`/catalogue/pcie/versions/${response.data?.id}`)
+        }
+    }
+
+
     return (
-        <FormBody submitAction={PostPCIeVersion}>
-            <Controls>
-                <BackLink />
-                <Button variant="primary" type="submit">
-                    Create version
-                </Button>
-            </Controls>
-            <Module title="PCIe version details" subtitle="Specify details for a new PCIe version.">
-                <Content>
-                    <Row>
-                        <TextField label="Version" name="name" grow isRequired />
-                    </Row>
-                </Content>
-            </Module>
-        </FormBody>
+        <Form action={submitAction} />
     )
 }

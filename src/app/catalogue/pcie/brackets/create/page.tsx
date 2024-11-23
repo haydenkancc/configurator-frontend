@@ -1,24 +1,25 @@
-import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
-import TextField from '@/components/ui/text-field';
-import {Button} from '@/components/ui/button';
-import {PostPCIeBracket} from '@/server/catalogue/pcie/pcie-brackets';
+import { Form } from './form';
+import {PCIeBracket, PCIeBracketDbo} from '@/server/models';
+import {configuratorApiClient} from '@/server/catalogue';
+import {revalidateTag} from 'next/cache';
+import {redirect} from 'next/navigation';
 
-export default function Page() {
+export default async function Page() {
+
+    async function submitAction(name: string) {
+        'use server'
+        const bracket: PCIeBracketDbo = {
+            name: name,
+        };
+        const response = await configuratorApiClient.Post<PCIeBracket>('api/PCIe/PCIeBrackets', bracket, ['PCIeBrackets']);
+        console.log(response);
+        if (!response.error) {
+            revalidateTag('PCIeBrackets');
+            redirect(`/catalogue/pcie/brackets/${response.data?.id}`)
+        }
+    }
+
     return (
-        <FormBody submitAction={PostPCIeBracket}>
-            <Controls>
-                <BackLink />
-                <Button variant="primary" type="submit">
-                    Create bracket
-                </Button>
-            </Controls>
-            <Module title="PCIe bracket details" subtitle="Specify details for a new PCIe bracket.">
-                <Content>
-                    <Row>
-                        <TextField label="Name" name="Name" grow isRequired />
-                    </Row>
-                </Content>
-            </Module>
-        </FormBody>
+        <Form action={submitAction} />
     )
 }

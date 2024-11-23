@@ -56,6 +56,12 @@ export function CreateButton({ children, ...props} : LinkProps) {
 
 interface HomeTableProps extends MyTableProps {
     deleteAction: (id: number) => Promise<void>
+    columns: {
+        name: string;
+        id: string;
+        isRowHeader?: boolean | undefined;
+        size?: 'small' | 'medium' | 'large' | 'unset';
+    }[]
 }
 
 export function Table({ columns, rows, deleteAction } : HomeTableProps) {
@@ -66,7 +72,7 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
                 <Column className={s.checkboxColumn} />
                 <Collection items={columns} aria-label="columns">
                     {column => (
-                        <Column isRowHeader={column.isRowHeader}>
+                        <Column isRowHeader={column.isRowHeader} size={column.size}>
                             {column.name}
                         </Column>
                     )}
