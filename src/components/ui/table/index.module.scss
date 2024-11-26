@@ -138,6 +138,7 @@ th.operationsColumn {
   height: 2rem;
   padding: 0.25rem 0.5rem;
   box-sizing: content-box;
+  text-wrap: nowrap;
   border-bottom: 1px solid variables.$palette-neutral-outlinedBorder;
   @include variables.focus;
 }

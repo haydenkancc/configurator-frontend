@@ -35,6 +35,8 @@ export default async function Page() {
 
     const slotParams = await getSlotParams() ?? undefined;
 
+    console.log(slotParams);
+
     return (
         <Form action={submitAction} slotParams={slotParams} />
     )

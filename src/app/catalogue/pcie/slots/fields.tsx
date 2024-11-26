@@ -8,7 +8,7 @@ import {Select, SelectProps} from '@/components/ui/select/select';
 export function PCIeSizeSelect( {...props } : SelectProps<PCIeSlotParams["sizes"][number]>) {
     return (
         <Select {...props}>
-            {size => <SelectItem textValue={`${size.laneCount}`}>x{size.laneCount}</SelectItem>}
+            {size => <SelectItem id={size.laneCount} textValue={`${size.laneCount}`}>x{size.laneCount}</SelectItem>}
         </Select>
     )
 }

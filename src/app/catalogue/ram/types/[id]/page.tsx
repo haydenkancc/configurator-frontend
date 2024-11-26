@@ -25,7 +25,7 @@ export default async function Page({ params } : { params: Promise<{ id: string }
                 })
             if(!response.error) {
                 revalidateTag('MemoryTypes');
-                redirect(`/catalogue/ram/form-factors/${id}`)
+                redirect(`/catalogue/ram/types/${id}`)
             }
         }
     }

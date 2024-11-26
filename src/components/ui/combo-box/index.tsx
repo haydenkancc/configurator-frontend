@@ -4,7 +4,6 @@ import {
     Button,
     ComboBox as AriaComboBox,
     ComboBoxProps as AriaComboBoxProps, ComboBoxStateContext,
-    FieldError,
     Input as AriaInput, InputProps,
     ListBox, ListBoxItem as AriaListBoxItem, ListBoxItemProps, ListBoxProps,
     Popover,
@@ -15,6 +14,7 @@ import {CaretDown} from '@phosphor-icons/react/dist/ssr';
 import Label from "@/components/ui/label";
 import {useContext, useEffect, useRef} from 'react';
 import {useComboBoxState} from 'react-stately';
+import {FieldError} from '@/components/ui/field-error';
 
 export interface ComboBoxProps<T extends object>
     extends Omit<AriaComboBoxProps<T>, 'children'> {
@@ -28,7 +28,7 @@ export interface ComboBoxProps<T extends object>
 export function ComboBox<T extends object>({ label, description, errorMessage, children, isRequired, className, grow = false, ...props }: ComboBoxProps<T>) {
 
     return (
-        <AriaComboBox {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus" shouldFocusWrap>
+        <AriaComboBox  isRequired={isRequired} {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus" shouldFocusWrap>
             <Label isRequired={isRequired}>{label}</Label>
             <div className={s.container}>
                 <Input className={s.input}/>

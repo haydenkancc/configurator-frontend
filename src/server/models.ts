@@ -16,6 +16,53 @@ interface TableColumn {
     size?: 'small' | 'medium' | 'large';
 }
 
+export interface Component {
+    id: number,
+    sku: string,
+    name: string,
+    displayName: string,
+    regularPrice: number,
+    salePrice: number,
+    onSale: boolean,
+    saleable: boolean,
+    manufacturer: Manufacturer,
+}
+
+export interface ComponentDbo {
+    sku: string,
+    name: string,
+    displayName: string,
+    regularPrice: number,
+    salePrice: number,
+    onSale: boolean,
+    saleable: boolean,
+    manufacturerID: number,
+}
+
+export interface ComponentParams {
+    manufacturers: Manufacturer[];
+}
+
+export const ManufacturerColumns: TableColumn[] = [
+    {name: 'ID', id: 'id', isRowHeader: true},
+    {name: 'Name', id: 'name'},
+]
+
+export interface ManufacturerRow {
+    id: number;
+    name: string;
+}
+
+export interface Manufacturer {
+    id: number;
+    name: string;
+}
+
+export interface ManufacturerDbo {
+    name: string;
+}
+
+
 
 export const PCIeBracketColumns: TableColumn[] = [
     {name: 'ID', id: 'id', isRowHeader: true},
@@ -39,17 +86,15 @@ export interface PCIeBracketDbo {
 
 
 export const PCIeSizeColumns: TableColumn[] = [
-    {name: 'ID', id: 'id', isRowHeader: true},
-    {name: 'Lane count', id: 'laneCount'},
+    {name: 'Lane count', id: 'laneCount', isRowHeader: true},
 ]
 
 export interface PCIeSizeRow {
     id: number;
-    laneCount: number;
+    laneCount: string;
 }
 
 export interface PCIeSize {
-    id: number;
     laneCount: number;
 }
 
@@ -262,4 +307,75 @@ export interface MemoryType {
 
 export interface MemoryTypeDbo {
     name: string;
+}
+
+export const MemorySizeColumns: TableColumn[] = [
+    {name: 'Size', id: 'size', isRowHeader: true},
+]
+
+export interface MemorySizeRow {
+    id: number;
+    size: string;
+}
+
+export interface MemorySize {
+    size: number;
+}
+
+
+export interface MemorySizeDbo {
+    size: number;
+}
+
+export const MemoryKitColumns: TableColumn[] = [
+    {name: 'Name', id: 'name', isRowHeader: true, size: 'medium'},
+    {name: 'Modules', id: 'modules', },
+    {name: 'Speed', id: 'speed', },
+    {name: 'CAS Latency', id: 'casLatency', },
+    {name: 'First Word Latency', id: 'firstWordLatency', size: 'small' },
+]
+
+export interface MemoryKitRow {
+    name: string;
+    price: string;
+    modules: string;
+    speed: string;
+    casLatency: string;
+    firstWordLatency: string;
+}
+
+export interface MemoryKit extends Component {
+    size: number;
+    clockFrequency: number;
+    height: number;
+    isECC: boolean;
+    isBuffered: boolean;
+    moduleCount: number;
+    casLatency: number;
+    firstWordLatency: number;
+    voltage: number;
+    timing: string;
+    formFactor: MemoryFormFactor;
+    type: MemoryType;
+}
+
+export interface MemoryKitDbo extends ComponentDbo {
+    formFactorID: number;
+    typeID: number;
+    size: number;
+    clockFrequency: number;
+    height: number;
+    isECC: boolean;
+    isBuffered: boolean;
+    moduleCount: number;
+    casLatency: number;
+    firstWordLatency: number;
+    voltage: number;
+    timing: string;
+}
+
+export interface MemoryKitParams extends ComponentParams {
+    types: MemoryType[];
+    formFactors: MemoryFormFactor[];
+    sizes: MemorySize[];
 }

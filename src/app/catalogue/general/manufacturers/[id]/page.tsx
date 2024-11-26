@@ -1,6 +1,6 @@
 import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
 import {configuratorApiClient} from '@/server/catalogue';
-import {MemoryFormFactor, MemoryFormFactorDbo} from '@/server/models';
+import {Manufacturer, ManufacturerDbo} from '@/server/models';
 import {revalidateTag} from 'next/cache';
 import {redirect} from 'next/navigation';
 import {Details} from './forms';
@@ -11,7 +11,7 @@ export default async function Page({ params } : { params: Promise<{ id: string }
     const id = parseInt((await params).id);
 
     async function getFormFactor(id: number) {
-        const response = await configuratorApiClient.Get<MemoryFormFactor>(`api/Memory/MemoryFormFactors/id/${id}`, ['MemoryFormFactors'])
+        const response = await configuratorApiClient.Get<Manufacturer>(`api/Manufacturers/id/${id}`, ['Manufacturers'])
         return response.data;
     }
 
@@ -19,27 +19,25 @@ export default async function Page({ params } : { params: Promise<{ id: string }
         'use server'
         if (name)
         {
-            const response = await configuratorApiClient.Put<MemoryFormFactorDbo>(`api/Memory/MemoryFormFactors/id/${id}`,
+            const response = await configuratorApiClient.Put<ManufacturerDbo>(`api/Manufacturers/id/${id}`,
                 {
                     name,
                 })
             if(!response.error) {
-                revalidateTag('MemoryFormFactors');
-                redirect(`/catalogue/ram/form-factors/${id}`)
+                revalidateTag('Manufacturers');
+                redirect(`/catalogue/general/manufacturers/${id}`)
             }
         }
     }
 
-    const formFactor = (await getFormFactor(id))!;
-
-    console.log(formFactor);
+    const manufacturer = (await getFormFactor(id))!;
 
     return (
         <Body>
             <Controls>
                 <BackLink />
             </Controls>
-            <Details formFactor={formFactor} action={submitDetailsAction}/>
+            <Details manufacturer={manufacturer} action={submitDetailsAction}/>
         </Body>
     )
 }

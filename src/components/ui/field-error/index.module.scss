@@ -1,0 +1,7 @@
+@use '@/app/variables';
+
+.fieldError {
+  margin-top: 0.25rem;
+  color: variables.$palette-danger-plainColor;
+  @include variables.text-sm;
+}

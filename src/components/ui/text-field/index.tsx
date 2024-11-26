@@ -1,7 +1,6 @@
 'use client'
 import s from './index.module.scss';
 import {
-    FieldError,
     Input,
     Text,
     TextField as AriaTextField,
@@ -10,6 +9,7 @@ import {
 } from 'react-aria-components';
 
 import Label from '../label';
+import {FieldError} from '@/components/ui/field-error';
 
 interface MyTextFieldProps extends TextFieldProps {
     label?: string;
@@ -20,11 +20,11 @@ interface MyTextFieldProps extends TextFieldProps {
 
 export function TextField({ label, description, errorMessage, className, isRequired, grow = false, ...props} : MyTextFieldProps) {
     return (
-        <AriaTextField className={`${s.textField} ${grow && s.grow} ${className}`} {...props}>
+        <AriaTextField isRequired={isRequired} className={`${s.textField} ${grow && s.grow} ${className}`} {...props}>
             <Label isRequired={isRequired}>{label}</Label>
             <Input className={s.input}/>
             {description && <Text slot="description">{description}</Text>}
-            <FieldError className={s.fieldError}>{errorMessage}</FieldError>
+            <FieldError>{errorMessage}</FieldError>
         </AriaTextField>
     )
 }

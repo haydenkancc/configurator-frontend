@@ -1,5 +1,5 @@
 'use client'
-import {PCIeSize} from '@/server/models';
+import {MemorySize} from '@/server/models';
 import {Content, Footer, FormModule, Row} from '@/app/catalogue/_templates/view';
 import NumberField from '@/components/ui/number-field';
 import {TextField} from '@/components/ui/text-field';
@@ -8,19 +8,19 @@ import {useState} from 'react';
 
 
 interface DetailsProps {
-    size: PCIeSize;
-    action: (laneCount: number) => Promise<void>;
+    memorySize: MemorySize;
+    action: (size: number) => Promise<void>;
 }
 
-export function Details({ size, action } : DetailsProps) {
+export function Details({ memorySize, action } : DetailsProps) {
 
-    const [ laneCount, setLaneCount ] = useState(size.laneCount)
+    const [ size, setSize ] = useState(memorySize.size)
 
     return (
-        <FormModule title="PCIe size details" subtitle="View and modify this PCIe size's details." action={async() => await action(laneCount)}>
+        <FormModule title="Memory size details" subtitle="View and modify this Memory size's details." action={async() => await action(size)}>
             <Content>
                 <Row>
-                    <NumberField label="Lane count" name="laneCount" value={laneCount} onChange={setLaneCount} grow isRequired minValue={1} />
+                    <NumberField label="Size (GB)" value={size} onChange={setSize} grow isRequired minValue={1} />
                 </Row>
             </Content>
             <Footer>

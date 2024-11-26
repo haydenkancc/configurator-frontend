@@ -16,7 +16,7 @@ export default async function Page() {
             console.log(response);
             if (!response.error) {
                 revalidateTag('PCIeSizes');
-                redirect(`/catalogue/pcie/sizes/${response.data?.id}`)
+                redirect(`/catalogue/pcie/sizes/${response.data?.laneCount}`)
             }
         }
     }

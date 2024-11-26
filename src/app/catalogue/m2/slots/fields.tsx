@@ -21,7 +21,7 @@ export function M2VersionSelect({...props } : SelectProps<M2SlotParams["versions
 export function M2LaneSizeSelect({...props } : SelectProps<M2SlotParams["laneSizes"][number]>) {
     return (
         <Select label="PCIe lane size" {...props}>
-            {size => <SelectItem>{`x${size.laneCount}`}</SelectItem>}
+            {size => <SelectItem id={size.laneCount}>{`x${size.laneCount}`}</SelectItem>}
         </Select>
     )
 }

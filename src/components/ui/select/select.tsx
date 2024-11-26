@@ -2,7 +2,6 @@
 import s from './select.module.scss';
 import {
     Button,
-    FieldError,
     ListBox,
     Popover,
     Select as AriaSelect,
@@ -13,6 +12,7 @@ import {
 } from 'react-aria-components';
 import Label from '@/components/ui/label';
 import {CaretUpDown} from '@phosphor-icons/react/dist/ssr';
+import {FieldError} from '@/components/ui/field-error';
 
 
 export interface SelectProps<T extends object>extends Omit<AriaSelectProps<T>, 'children'> {
@@ -26,7 +26,7 @@ export interface SelectProps<T extends object>extends Omit<AriaSelectProps<T>, '
 
 export function Select<T extends object>({ label, description, errorMessage, children, className, isRequired, items, grow = false, ...props } : SelectProps<T>) {
     return (
-        <AriaSelect {...props} className={`${s.select} ${grow && s.grow} ${className}`}>
+        <AriaSelect isRequired={isRequired} {...props} className={`${s.select} ${grow && s.grow} ${className}`}>
             <Label isRequired={isRequired}>{label}</Label>
             <Button className={s.button}>
                 <SelectValue className={s.value} />
