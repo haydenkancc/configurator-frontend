@@ -1,43 +1,19 @@
-import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
 import {configuratorApiClient} from '@/server/catalogue';
 import {PCIeBracket, PCIeBracketDbo} from '@/server/models';
 import {revalidateTag} from 'next/cache';
-import {redirect} from 'next/navigation';
-import {Details} from './forms';
-
+import {Form} from './form';
+import {getComponent, getComponentParams, putComponentAction} from '@/server/catalogue/test';
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
+    const endpoint = '/api/PCIe/PCIeBrackets'
 
-    async function getBracket(id: number) {
-        const response = await configuratorApiClient.Get<PCIeBracket>(`api/PCIe/PCIeBrackets/id/${id}`, ['PCIeBrackets'])
-        return response.data;
-    }
+    const bracket = (await getComponent<PCIeBracket>(endpoint, id, ['PCIeBrackets'])).data;
 
-    async function submitDetailsAction(name: string) {
-        'use server'
-        if (name)
-        {
-            const response = await configuratorApiClient.Put<PCIeBracketDbo>(`api/PCIe/PCIeBrackets/id/${id}`,
-                {
-                    name,
-                })
-            if(!response.error) {
-                revalidateTag('PCIeBrackets');
-                redirect(`/catalogue/pcie/brackets/${id}`)
-            }
-        }
-    }
-
-    const bracket = (await getBracket(id))!;
+    const action = await putComponentAction(endpoint, id, ['PCIeBrackets'])
 
     return (
-        <Body>
-            <Controls>
-                <BackLink />
-            </Controls>
-            <Details bracket={bracket} action={submitDetailsAction}/>
-        </Body>
+        <Form item={bracket} action={action}/>
     )
 }

@@ -2,27 +2,78 @@
 import s from './view.module.scss'
 import {ButtonProps, Form, FormProps, LinkProps} from 'react-aria-components';
 import {usePathname, useRouter} from 'next/navigation';
-import {Link} from '@/components/ui/button';
+import {Button, Link} from '@/components/ui/button';
 import {ArrowLeft} from '@phosphor-icons/react/dist/ssr';
+import {useContext, useState} from 'react';
+import {ToastQueueContext} from '@/app/providers';
+import {ToastContent} from '@/components/ui/toast';
+import {ToastQueue} from '@react-stately/toast';
 
-interface MyCreateBodyProps extends FormProps {
-
+interface PutBodyProps extends Omit<FormProps, 'method'> {
+    submitAction: () => Promise<boolean>;
+    name: string;
 }
 
-export function FormBody({children, ...props} : MyCreateBodyProps){
+interface PostBodyProps extends Omit<FormProps, 'method'> {
+    submitAction: () => Promise<number | null>;
+    name: string;
+}
+
+export function PutBody({ children, onSubmit, name, submitAction, ...props } : PutBodyProps) {
+    const toastQueue = useContext(ToastQueueContext)
+    const upperName = name.charAt(0).toUpperCase() + name.slice(1);
+    const lowerName =  name.toLowerCase();
+    const [ isLoading, setLoading ] = useState(false);
+
     return (
-        <Form className={s.body} {...props}>
-            {children}
+        <Form className={s.body} {...props} onSubmit={async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            const ok = await submitAction();
+            if (ok) {
+                toastQueue.add({ title: 'Changes successfully saved.', color: 'success'}, { timeout: 3000 })
+            } else {
+                toastQueue.add({ title: 'Failed to save changes, please try again later.', color: 'danger'}, { timeout: 3000 })
+            }
+            setLoading(false);
+
+        }}>
+            <>
+                <Controls>
+                    <BackLink /><Button variant="primary" type="submit" isLoading={isLoading} >Save changes</Button>
+                </Controls>
+                { children }
+            </>
         </Form>
     )
 }
 
-
-export function Body({ children } : Readonly<{ children: React.ReactNode}>) {
+export function PostBody({ children, onSubmit, submitAction, name, ...props } : PostBodyProps) {
+    const toastQueue = useContext(ToastQueueContext)
+    const router = useRouter()
+    const upperName = name.charAt(0).toUpperCase() + name.slice(1);
+    const lowerName =  name.toLowerCase();
+    const [ isLoading, setLoading ] = useState(false);
     return (
-        <div className={s.body}>
-            { children }
-        </div>
+        <Form className={s.body} {...props} onSubmit={async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            const id = await submitAction();
+            if (id) {
+                toastQueue.add({ title: `${upperName} successfully created.`, color: 'primary'}, { timeout: 3000 })
+                router.push(`${id}`)
+            } else {
+                toastQueue.add({ title: `Failed to create ${lowerName}, please try again later.`, color: 'warning'}, { timeout: 3000 })
+                setLoading(false);
+            }
+        }}>
+            <>
+                <Controls>
+                    <BackLink /><Button variant="primary" type="submit" isLoading={isLoading} >Create {lowerName}</Button>
+                </Controls>
+                { children }
+            </>
+        </Form>
     )
 }
 
@@ -31,15 +82,6 @@ export function Controls({children} : Readonly<{children: React.ReactNode}>) {
         <div className={s.controls}>
             {children}
         </div>
-    )
-}
-
-export function BackButton({ ...props} : ButtonProps) {
-    const router = useRouter();
-    return (
-        <Link onPress={router.back} variant="neutral">
-            <ArrowLeft />Back to previous page
-        </Link>
     )
 }
 
@@ -53,30 +95,13 @@ export function BackLink({...props} : LinkProps) {
     )
 }
 
-interface ModuleProps extends FormProps {
+interface ModuleProps {
     children: React.ReactNode;
     title: string,
     subtitle: string,
 }
 
-export function FormModule({children, title, subtitle, ...props} : ModuleProps) {
-
-    return (
-        <Form className={s.module} {...props}>
-            <div className={s.title}>
-                <h1 className={s.header}>
-                    {title}
-                </h1>
-                <h2 className={s.subheader}>
-                    {subtitle}
-                </h2>
-            </div>
-            {children}
-        </Form>
-    )
-}
-
-export function Module({children, title, subtitle, ...props} : Partial<ModuleProps>) {
+export function Module({children, title, subtitle} : ModuleProps) {
     return (
         <div className={s.module}>
             <div className={s.title}>

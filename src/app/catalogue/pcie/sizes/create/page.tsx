@@ -1,25 +1,15 @@
 import { Form } from './form';
-import {PCIeSize, PCIeSizeDbo} from '@/server/models';
+import {PCIeSizeDbo, PCIeSize } from '@/server/models';
 import {configuratorApiClient} from '@/server/catalogue';
 import {revalidateTag} from 'next/cache';
 import {redirect} from 'next/navigation';
+import {getComponentParams, postComponentAction} from '@/server/catalogue/test';
 
 export default async function Page() {
 
-    async function submitAction(laneCount: number) {
-        'use server'
-        if (laneCount && laneCount > 0) {
-            const size: PCIeSizeDbo = {
-                laneCount,
-            };
-            const response = await configuratorApiClient.Post<PCIeSize>('api/PCIe/PCIeSizes', size, ['PCIeSizes']);
-            console.log(response);
-            if (!response.error) {
-                revalidateTag('PCIeSizes');
-                redirect(`/catalogue/pcie/sizes/${response.data?.laneCount}`)
-            }
-        }
-    }
+    const endpoint = '/api/PCIe/PCIeSizes'
+
+    const submitAction = await postComponentAction(endpoint, '/catalogue/pcie/Sizes', ['PCIeSizes'])
 
     return (
         <Form action={submitAction} />

@@ -13,10 +13,11 @@ export async function ReadPaginationData(searchParams : SearchParams) {
 export type ApiResponse<T> = {
     data: T | null;
     error?: string;
+    ok: boolean;
     statusCode?: number;
 }
 
-class ApiClient
+export class ApiClient
 {
     private readonly _baseUrl: string;
 
@@ -58,6 +59,7 @@ class ApiClient
                 return {
                     data: null,
                     error: error.message || error || 'An error occurred',
+                    ok: response.ok,
                     statusCode,
                 }
             }
@@ -66,6 +68,7 @@ class ApiClient
             return {
                 data,
                 statusCode,
+                ok: response.ok,
             };
         }
         catch (error: any)
@@ -73,6 +76,7 @@ class ApiClient
             return {
                 data: null,
                 error: error.message || 'Unknown error occurred',
+                ok: false,
                 statusCode: 0,
             }
         }
@@ -114,6 +118,18 @@ class ApiClient
     ): Promise<ApiResponse<T>>
     {
         return this._request<T>('DELETE', endpoint, headers, undefined, tags)
+    }
+}
+
+class ConfiguratorApiClient extends ApiClient {
+    public Get<T>(
+        endpoint: string,
+        tags?: string[],
+        headers?: Record<string, string>
+    ): Promise<ApiResponse<T>>
+    {
+        const response = super.Get<T>(endpoint, tags, headers);
+        return response;
     }
 }
 

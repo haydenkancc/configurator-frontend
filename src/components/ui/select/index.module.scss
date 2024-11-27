@@ -66,3 +66,23 @@
   max-height: 300px;
   overflow: auto;
 }
+
+.listBoxItem {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.1875rem 0.5rem;
+  color: variables.$palette-neutral-plainColor;
+  @include variables.text-md;
+
+  &[data-selected] {
+    font-weight: 500;
+    background-color: variables.$palette-neutral-plainActiveBg;
+  }
+
+  &[data-hovered], &[data-focused] {
+    background-color: variables.$palette-neutral-plainHoverBg;
+    outline: none;
+  }
+
+}

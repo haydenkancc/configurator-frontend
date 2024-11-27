@@ -4,11 +4,11 @@ import {Button} from '@/components/ui/button';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
 
-interface FormParams {
+interface FormProps {
     action: (name: string) => Promise<void>
 }
 
-export function Form({ action } : FormParams) {
+export function Form({ action } : FormProps) {
 
     const [ name, setName ] = useState('')
 

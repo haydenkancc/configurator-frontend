@@ -1,21 +1,5 @@
 @use '@/app/variables';
 
-.button {
-  @include variables.focus;
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  min-height: 2rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.25rem;
-  @include variables.text-md;
-  font-weight: 500;
-  cursor: pointer;
-
-  &[data-disabled] {
-    cursor: not-allowed;
-  }
-}
 
 .danger {
   background-color: variables.$palette-danger-solidBg;
@@ -29,6 +13,7 @@
     background-color: variables.$palette-danger-solidDisabledBg;
     color: variables.$palette-danger-solidDisabledColor
   }
+
 }
 
 .primary {
@@ -40,8 +25,8 @@
   }
 
   &[data-disabled] {
-    background-color: variables.$palette-neutral-solidDisabledColor;
-    color: variables.$palette-neutral-solidDisabledColor
+    background-color: variables.$palette-primary-solidDisabledBg;
+    color: variables.$palette-primary-solidDisabledColor;
   }
 }
 
@@ -90,7 +75,7 @@
   }
 
   &[data-disabled] {
-    background-color: variables.$palette-success-solidDisabledColor;
+    background-color: variables.$palette-success-solidDisabledBg;
     color: variables.$palette-success-solidDisabledColor
   }
 }
@@ -108,8 +93,64 @@
   }
 }
 
-.trash {
-  & > svg {
-    fill: variables.$palette-danger-plainColor;
+
+.button {
+  @include variables.focus;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  @include variables.text-md;
+  font-weight: 500;
+  cursor: pointer;
+
+  &[data-disabled] {
+    cursor: not-allowed;
   }
+
+  &[data-loading=true] {
+    color: transparent;
+  }
+}
+
+.loaderWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.loader {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1.25s linear infinite
+}
+
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid variables.$palette-primary-solidBg;
+  animation: prixClipFix 3s linear infinite ;
+}
+
+@keyframes rotate {
+  100%   {transform: rotate(360deg)}
+}
+
+@keyframes prixClipFix {
+  0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+  25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+  50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+  75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+  100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
 }

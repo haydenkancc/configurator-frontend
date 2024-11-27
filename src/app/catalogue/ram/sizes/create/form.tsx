@@ -5,11 +5,11 @@ import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
 import NumberField from '@/components/ui/number-field';
 
-interface FormParams {
+interface FormProps {
     action: (size: number) => Promise<void>
 }
 
-export function Form({ action } : FormParams) {
+export function Form({ action } : FormProps) {
 
     const [ size, setSize ] = useState<number | undefined>()
 

@@ -2,7 +2,7 @@
 import {M2FormFactor, M2Slot, M2SlotParams} from '@/server/models';
 import {useFilter} from '@react-aria/i18n';
 import {useListData} from 'react-stately';
-import {Content, Footer, FormModule, Row} from '@/app/catalogue/_templates/view';
+import {Content, Footer, Module, Row} from '@/app/catalogue/_templates/view';
 import {
     ListBuilder, ListBuilderAddButton, ListBuilderComboBox, ListBuilderComboBoxItem,
     ListBuilderList,
@@ -11,8 +11,8 @@ import {
     ListBuilderTrashButton
 } from '@/components/ui/list-builder';
 import {Button} from '@/components/ui/button';
-import React, {useState} from 'react';
-import NumberField from '@/components/ui/number-field';
+import {useState} from 'react';
+import {NumberField} from '@/components/ui/number-field';
 import {TextField} from '@/components/ui/text-field';
 import {M2KeySelect, M2LaneSizeSelect, M2VersionSelect} from '@/app/catalogue/m2/slots/fields';
 import {Key} from 'react-aria-components';
@@ -39,7 +39,7 @@ export function FormFactors({m2slot, slotParams, action} : SlotsProps) {
     }); 
 
     return (
-        <FormModule title="Compatible form factors" subtitle="Specify which form factors are compatible with this slot." action={async () => await action(initialItems.items)}>
+        <Module title="Compatible form factors" subtitle="Specify which form factors are compatible with this slot." action={async () => await action(initialItems.items)}>
             <Content>
                 <ListBuilder initialItems={initialItems} items={items}>
                     <ListBuilderList<M2FormFactor>>
@@ -65,7 +65,7 @@ export function FormFactors({m2slot, slotParams, action} : SlotsProps) {
                     Save changes
                 </Button>
             </Footer>
-        </FormModule>
+        </Module>
     )
 }
 
@@ -82,7 +82,7 @@ export function Details({m2slot, slotParams, action} : DetailsProps) {
     const [ laneSizeID, setLaneSizeID ] = useState<Key>();
 
     return (
-        <FormModule title="M.2 slot details" subtitle="View and modify this M.2 slot's details." action={async () => await action(keyID, versionID, laneSizeID)}>
+        <Module title="M.2 slot details" subtitle="View and modify this M.2 slot's details." action={async () => await action(keyID, versionID, laneSizeID)}>
             <Content>
                 <Row>
                     <NumberField value={m2slot.id} label="ID" isReadOnly grow/>
@@ -103,6 +103,6 @@ export function Details({m2slot, slotParams, action} : DetailsProps) {
                     Save changes
                 </Button>
             </Footer>
-        </FormModule>
+        </Module>
     )
 }

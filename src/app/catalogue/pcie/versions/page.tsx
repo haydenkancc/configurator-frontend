@@ -1,34 +1,26 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {PaginatedList, PCIeVersionRow, PCIeVersionColumns, SearchParams} from '@/server/models';
+import {PCIeVersionRow, PaginatedList, PCIeVersionColumns, SearchParams} from '@/server/models';
 import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
 import {revalidateTag} from 'next/cache';
+import {deleteComponentAction, getComponents} from '@/server/catalogue/test';
 
 
 export default async function Page({ searchParams } : { searchParams: SearchParams}) {
     
-    async function listPCIeVersions(pageIndex: number, pageSize: number) {
-        'use server'
-        const response = await configuratorApiClient.Get<PaginatedList<PCIeVersionRow>>(`api/PCIe/PCIeVersions?pageIndex=${pageIndex}&pageSize=${pageSize}`, ['PCIeVersions'])
-        return response.data;
-    }
-
-    async function deletePCIeVersion(id: number) {
-        'use server'
-        const response = await configuratorApiClient.Delete<null>(`api/PCIe/PCIeVersions/id/${id}`);
-        revalidateTag('PCIeVersions');
-    }
+    const endpoint = '/api/PCIe/PCIeVersions'
 
     const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
-    const paginatedList = await listPCIeVersions(pageIndex, pageSize);
+    const paginatedList = await getComponents<PCIeVersionRow>(endpoint, pageIndex, pageSize, ['PCIeVersions']);
+    const deleteAction = await deleteComponentAction(endpoint, ['PCIeVersions'])
 
     return (
         <Body>
             <Controls>
                 <CreateButton>
-                    Specify new version
+                    Create new version
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeVersionColumns} rows={paginatedList?.items} deleteAction={deletePCIeVersion}/>
+            <Table columns={PCIeVersionColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
             <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )

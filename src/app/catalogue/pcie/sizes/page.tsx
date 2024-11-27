@@ -1,34 +1,26 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {PaginatedList, PCIeSizeRow, PCIeSizeColumns, SearchParams} from '@/server/models';
+import {PCIeSizeRow, PaginatedList, PCIeSizeColumns, SearchParams} from '@/server/models';
 import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
 import {revalidateTag} from 'next/cache';
+import {deleteComponentAction, getComponents} from '@/server/catalogue/test';
 
 
 export default async function Page({ searchParams } : { searchParams: SearchParams}) {
     
-    async function listPCIeSizes(pageIndex: number, pageSize: number) {
-        'use server'
-        const response = await configuratorApiClient.Get<PaginatedList<PCIeSizeRow>>(`api/PCIe/PCIeSizes?pageIndex=${pageIndex}&pageSize=${pageSize}`, ['PCIeSizes'])
-        return response.data;
-    }
-
-    async function deletePCIeSize(id: number) {
-        'use server'
-        const response = await configuratorApiClient.Delete<null>(`api/PCIe/PCIeSizes/id/${id}`);
-        revalidateTag('PCIeSizes');
-    }
+    const endpoint = '/api/PCIe/PCIeSizes'
 
     const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
-    const paginatedList = await listPCIeSizes(pageIndex, pageSize);
+    const paginatedList = await getComponents<PCIeSizeRow>(endpoint, pageIndex, pageSize, ['PCIeSizes']);
+    const deleteAction = await deleteComponentAction(endpoint, ['PCIeSizes'])
 
     return (
         <Body>
             <Controls>
                 <CreateButton>
-                    Specify new size
+                    Create new size
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeSizeColumns} rows={paginatedList?.items} deleteAction={deletePCIeSize}/>
+            <Table columns={PCIeSizeColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
             <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )

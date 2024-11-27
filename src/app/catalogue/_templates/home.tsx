@@ -27,7 +27,8 @@ import {
 import {AlertDialog} from '@/components/ui/dialog/alert-dialog';
 import {Link} from '@/components/ui/button';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {useCallback} from 'react';
+import {useCallback, useContext} from 'react';
+import {ToastQueueContext, ToastProvider} from '@/app/providers';
 
 export function Body({ children } : Readonly<{ children: React.ReactNode}>) {
     return (
@@ -55,7 +56,7 @@ export function CreateButton({ children, ...props} : LinkProps) {
 }
 
 interface HomeTableProps extends MyTableProps {
-    deleteAction: (id: number) => Promise<void>
+    deleteAction: (id: number) => Promise<boolean>
     columns: {
         name: string;
         id: string;
@@ -66,6 +67,7 @@ interface HomeTableProps extends MyTableProps {
 
 export function Table({ columns, rows, deleteAction } : HomeTableProps) {
     const pathName = usePathname();
+    const toastQueue = useContext(ToastQueueContext);
     return (
         <MyTable columns={columns} rows={rows}>
             <TableHeader columns={columns}>
@@ -100,7 +102,14 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
                                 <LineVertical />
                                 <DialogTrigger>
                                     <Button className={s.operationsCell__link}>Delete</Button>
-                                    <AlertDialog title="Confirmation" action={() => deleteAction(item.id)} confirmLabel="Delete">
+                                    <AlertDialog title="Confirmation" action={async () => {
+                                        const ok = await deleteAction(item.id)
+                                        if (ok) {
+                                            toastQueue.add({ title: `Item successfully deleted.`, color: 'primary'}, { timeout: 3000 })
+                                        } else {
+                                            toastQueue.add({ title: `Failed to delete item, please try again later.`, color: 'warning'}, { timeout: 3000 })
+                                        }
+                                    }} confirmLabel="Delete">
                                         Are you sure you want to delete this item? All contents and related items will be permanently destroyed.
                                     </AlertDialog>
                                 </DialogTrigger>
@@ -138,10 +147,18 @@ export function Pagination({ pageCount = 1, pageIndex = 1, hasPreviousPage = fal
         [searchParams]
     )
 
+    let pageNumberParam = searchParams.get('page')
+    let pageNumber: number
+    if (pageNumberParam && parseInt(pageNumberParam)) {
+        pageNumber = parseInt(pageNumberParam)
+    } else {
+        pageNumber = 1
+    }
+
     return (
         <div className={s.pagination}>
             <Link variant="neutral" isDisabled={!hasPreviousPage}
-                  href={pathname + '?' + createQueryString('page', `${searchParams.get('page') ? parseInt(searchParams.get('page')!) - 1 : ''}`)}
+                  href={pathname + '?' + createQueryString('page', `${pageNumber - 1}`)}
             >
                 <CaretLeft weight="bold" />Previous
             </Link>
@@ -149,7 +166,7 @@ export function Pagination({ pageCount = 1, pageIndex = 1, hasPreviousPage = fal
                 <PaginationPages pageCount={pageCount} pageIndex={pageIndex} />
             </div>
             <Link variant="neutral" isDisabled={!hasNextPage}
-                  href={pathname + '?' + createQueryString('page', `${searchParams.get('page') ? parseInt(searchParams.get('page')!) + 1 : ''}`)}
+                  href={pathname + '?' + createQueryString('page', `${pageNumber + 1}`)}
             >
                 Next<CaretRight weight="bold" />
             </Link>

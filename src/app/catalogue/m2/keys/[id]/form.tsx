@@ -1,37 +1,38 @@
-'use client'
-import {BackLink, Content, Controls, Module, PostBody, PutBody, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
-import {TextField} from '@/components/ui/text-field';
-import React, {useState} from 'react';
-import {useFilter} from '@react-aria/i18n';
-import {ListData, useListData} from 'react-stately';
-import {M2Key, M2KeyBase, M2KeyDbo, M2KeyParams, PostFormProps} from '@/server/models';
-import {M2KeysListBuilder} from '@/app/catalogue/m2/keys/fields';
+'use client';
+import {M2Key, M2KeyDbo, M2KeyParams, PCIeBracket, PCIeBracketDbo, PutFormProps} from '@/server/models';
+import {Content, Footer, Module, Row, Controls, BackLink, PutBody} from '@/app/catalogue/_templates/view';
 import {NumberField} from '@/components/ui/number-field';
+import {TextField} from '@/components/ui/text-field';
+import {Button} from '@/components/ui/button';
+import React, {useState} from 'react';
+import {M2KeysListBuilder} from '@/app/catalogue/m2/keys/fields';
+import {useFilter} from '@react-aria/i18n';
+import {useListData} from 'react-stately';
 
+export function Form({ item, action, params } : PutFormProps<M2Key, M2KeyDbo, M2KeyParams>) {
 
-export function Form({ action, params } : PostFormProps<M2KeyDbo, M2KeyParams>) {
     let { contains } = useFilter({ sensitivity: 'base' });
 
-    const initialItems= useListData<M2KeyBase>({
-        initialItems: [],
+    const initialItems= useListData({
+        initialItems: item?.compatibleKeys,
         getKey: (k) => k.id
     });
 
     const items = useListData({
-        initialItems: params?.keys,
+        initialItems: params?.keys.filter(({ id }) => !(initialItems.getItem(id) || id === item?.id)),
         getKey: (k) => k.id,
         filter: (k, filterText) => contains(k.name, filterText)
     });
 
-    const [name, setName] = useState<string>()
+    const [name, setName] = useState(item?.name)
 
     return (
-        <PostBody name="bracket"
+        <PutBody name="bracket"
                  submitAction={async () => await action({ name, compatibleKeyIDs: initialItems.items.map(({ id }) => id) })}>
             <Module title="PCIe bracket details" subtitle="View and modify this PCIe bracket's details.">
                 <Content>
                     <Row>
+                        <NumberField value={item?.id} label="ID" isReadOnly />
                         <TextField label="Name" name="name" value={name} onChange={setName} grow isRequired />
                     </Row>
                 </Content>
@@ -41,6 +42,6 @@ export function Form({ action, params } : PostFormProps<M2KeyDbo, M2KeyParams>) 
                     <M2KeysListBuilder initialItems={initialItems} items={items} />
                 </Content>
             </Module>
-        </PostBody>
+        </PutBody>
     )
 }

@@ -1,8 +1,8 @@
 'use client';
-import s from './select.module.scss';
+import s from './index.module.scss';
 import {
     Button,
-    ListBox,
+    ListBox, ListBoxItem as AriaListBoxItem, ListBoxItemProps,
     Popover,
     Select as AriaSelect,
     SelectProps as AriaSelectProps,
@@ -40,5 +40,11 @@ export function Select<T extends object>({ label, description, errorMessage, chi
                 </ListBox>
             </Popover>
         </AriaSelect>
+    );
+}
+
+export function SelectItem(props: ListBoxItemProps) {
+    return (
+        <AriaListBoxItem className={s.listBoxItem} {...props} />
     );
 }

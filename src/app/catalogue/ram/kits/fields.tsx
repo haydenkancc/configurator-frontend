@@ -1,4 +1,4 @@
-import {Select, SelectProps} from '@/components/ui/select/select';
+import {Select, SelectProps} from '@/components/ui/select';
 import {MemoryKitParams, PCIeSlotParams} from '@/server/models';
 import SelectItem from '@/components/ui/select-item';
 import {ComboBox, ComboBoxItem, ComboBoxProps} from '@/components/ui/combo-box';

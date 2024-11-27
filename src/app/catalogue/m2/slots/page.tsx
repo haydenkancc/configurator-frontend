@@ -1,25 +1,16 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {M2SlotColumns, M2SlotRow, PaginatedList, SearchParams} from '@/server/models';
+import {M2SlotRow, PaginatedList, M2SlotColumns, SearchParams} from '@/server/models';
 import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
-import {revalidatePath, revalidateTag} from 'next/cache';
+import {revalidateTag} from 'next/cache';
+import {deleteComponentAction, getComponents} from '@/server/catalogue/test';
 
 
 export default async function Page({ searchParams } : { searchParams: SearchParams}) {
-    async function listM2Slots(pageIndex: number, pageSize: number) {
-        'use server'
-        const response = await configuratorApiClient.Get<PaginatedList<M2SlotRow>>(`api/M2/M2Slots?pageIndex=${pageIndex}&pageSize=${pageSize}`, ['M2Slots'])
-        return response.data;
-    }
-
-    async function deleteM2Slot(id: number) {
-        'use server'
-        const response = await configuratorApiClient.Delete<null>(`api/M2/M2Slots/id/${id}`);
-        revalidateTag('M2Slots');
-    }
+    const endpoint = '/api/M2/M2Slots'
 
     const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
-    const paginatedList = await listM2Slots(pageIndex, pageSize);
-
+    const paginatedList = await getComponents<M2SlotRow>(endpoint, pageIndex, pageSize, ['M2Slots']);
+    const deleteAction = await deleteComponentAction(endpoint, ['M2Slots'])
     return (
         <Body>
             <Controls>
@@ -27,7 +18,7 @@ export default async function Page({ searchParams } : { searchParams: SearchPara
                     Create new slot
                 </CreateButton>
             </Controls>
-            <Table columns={M2SlotColumns} rows={paginatedList?.items} deleteAction={deleteM2Slot}/>
+            <Table columns={M2SlotColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
             <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )

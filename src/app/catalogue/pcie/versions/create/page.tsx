@@ -1,24 +1,15 @@
 import { Form } from './form';
-import {PCIeVersion, PCIeVersionDbo} from '@/server/models';
+import {PCIeVersionDbo, PCIeVersion } from '@/server/models';
 import {configuratorApiClient} from '@/server/catalogue';
 import {revalidateTag} from 'next/cache';
 import {redirect} from 'next/navigation';
+import {getComponentParams, postComponentAction} from '@/server/catalogue/test';
 
-export default function Page() {
+export default async function Page() {
 
-    async function submitAction(name: string) {
-        'use server'
-        const version: PCIeVersionDbo = {
-            name: name,
-        };
-        const response = await configuratorApiClient.Post<PCIeVersion>('api/PCIe/PCIeVersions', version, ['PCIeVersions']);
-        console.log(response);
-        if (!response.error) {
-            revalidateTag('PCIeVersions');
-            redirect(`/catalogue/pcie/versions/${response.data?.id}`)
-        }
-    }
+    const endpoint = '/api/PCIe/PCIeVersions'
 
+    const submitAction = await postComponentAction(endpoint, '/catalogue/pcie/Versions', ['PCIeVersions'])
 
     return (
         <Form action={submitAction} />

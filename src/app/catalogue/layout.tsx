@@ -1,6 +1,7 @@
 import s from './layout.module.scss';
 import Breadcrumbs from './_components/breadcrumbs';
 import Navigation from './_components/navigation';
+import {ToastProvider} from '@/app/providers';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -14,7 +15,9 @@ export default function Template({children} : LayoutProps) {
             </div>
             <div className={s.content}>
                 <Breadcrumbs />
-                {children}
+                <ToastProvider>
+                    {children}
+                </ToastProvider>
             </div>
         </div>
     )

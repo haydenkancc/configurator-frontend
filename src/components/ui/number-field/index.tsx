@@ -21,7 +21,7 @@ interface MyNumberFieldProps extends NumberFieldProps {
     grow?: boolean;
 }
 
-export default function NumberField({ label, description, errorMessage, className, isRequired, isReadOnly, grow = false, ...props }: MyNumberFieldProps) {
+export function NumberField({ label, description, errorMessage, className, isRequired, isReadOnly, grow = false, ...props }: MyNumberFieldProps) {
     return (
         <AriaNumberField isRequired={isRequired} className={`${s.numberField} ${grow && s.grow} ${className}`} isReadOnly={isReadOnly} {...props}>
             <Label isRequired={isRequired}>{label}</Label>

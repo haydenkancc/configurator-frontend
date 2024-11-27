@@ -1,15 +1,17 @@
 'use client'
+import { CircleNotch } from '@phosphor-icons/react/dist/ssr';
 import s from './index.module.scss';
 
 import {Button as AriaButton, ButtonProps, Link as AriaLink, LinkProps} from 'react-aria-components';
 
 interface MyButtonProps extends ButtonProps {
     variant?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'plain' | 'trash',
+    isLoading?: boolean
 }
 
 
-export function Button({children, className, variant, ...props} : MyButtonProps) {
-    let variantClass = "";
+export function Button({children, className, variant, isLoading = false, isDisabled, ...props} : MyButtonProps) {
+    let variantClass: string ='';
     switch (variant) {
         case 'primary':
             variantClass = s.primary;
@@ -35,8 +37,14 @@ export function Button({children, className, variant, ...props} : MyButtonProps)
     }
 
     return (
-        <AriaButton className={`${s.button} ${className} ${variantClass}`} {...props}>
-            {children}
+        <AriaButton className={`
+        ${s.button} 
+        ${className} 
+        ${variantClass}`} {...props} isDisabled={isDisabled || isLoading} data-loading={isLoading}>
+            <>
+                {children}
+                {isLoading && <div className={s.loaderWrapper}><div className={s.loader}/></div>}
+            </>
         </AriaButton>
     )
 }

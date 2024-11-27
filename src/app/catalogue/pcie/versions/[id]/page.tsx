@@ -1,44 +1,19 @@
-import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
 import {configuratorApiClient} from '@/server/catalogue';
 import {PCIeVersion, PCIeVersionDbo} from '@/server/models';
 import {revalidateTag} from 'next/cache';
-import {redirect} from 'next/navigation';
-import {Details} from './forms';
-
+import {Form} from './form';
+import {getComponent, getComponentParams, putComponentAction} from '@/server/catalogue/test';
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
+    const endpoint = '/api/PCIe/PCIeVersions'
 
-    async function getVersion(id: number) {
-        const response = await configuratorApiClient.Get<PCIeVersion>(`api/PCIe/PCIeVersions/id/${id}`, ['PCIeVersions'])
-        return response.data;
-    }
+    const version = (await getComponent<PCIeVersion>(endpoint, id, ['PCIeVersions'])).data;
 
-    async function submitDetailsAction(name: string) {
-        'use server'
-        if (name)
-        {
-            const response = await configuratorApiClient.Put<PCIeVersionDbo>(`api/PCIe/PCIeVersions/id/${id}`,
-                {
-                    name,
-                })
-            console.log(response);
-            if(!response.error) {
-                revalidateTag('PCIeVersions');
-                redirect(`/catalogue/pcie/versions/${id}`)
-            }
-        }
-    }
-
-    const version = (await getVersion(id))!;
+    const action = await putComponentAction(endpoint, id, ['PCIeVersions'])
 
     return (
-        <Body>
-            <Controls>
-                <BackLink />
-            </Controls>
-            <Details version={version} action={submitDetailsAction}/>
-        </Body>
+        <Form item={version} action={action}/>
     )
 }

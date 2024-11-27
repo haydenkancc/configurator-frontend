@@ -1,5 +1,18 @@
 export type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
+export interface PutFormProps<T, R, Q = {}> {
+    item: T | null;
+    action: (body: Partial<R>) => Promise<boolean>;
+    params?: Q | null;
+}
+
+export interface PostFormProps<R, Q = {}> {
+    action: (body: Partial<R>) => Promise<number | null>
+    params?: Q | null;
+}
+
+
+
 export interface PaginatedList<T> {
     pageIndex: number;
     totalPages: number;
@@ -143,7 +156,6 @@ export interface PCIeSlot {
 }
 
 export interface PCIeSlotDbo {
-    id: number;
     versionID: number;
     physicalSizeID: number;
     laneSizeID: number;

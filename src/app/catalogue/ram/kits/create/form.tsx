@@ -9,12 +9,12 @@ import {FormFactorSelect, ManufacturerComboBox, SizeComboBox, TypeSelect} from '
 import {MemoryKitParams} from '@/server/models';
 import {Key} from 'react-aria-components';
 
-interface FormParams {
+interface FormProps {
     kitParams?: MemoryKitParams
     action: (sku: string, name: string, displayName: string, regularPrice: number | null | undefined, salePrice: number | null, onSale: boolean, saleable: boolean, manufacturerID: Key | null, formFactorID: Key | null, typeID: Key | null, size: Key | null, height: number | null | undefined, clockFrequency: number | null | undefined, isECC: boolean, isBuffered: boolean, moduleCount: number | null | undefined, casLatency: number | null, firstWordLatency: number | null | undefined, voltage: number | null, timing: string) => Promise<void>
 }
 
-export function Form({ kitParams, action } : FormParams) {
+export function Form({ kitParams, action } : FormProps) {
 
     const [ sku, setSKU ] = useState('');
     const [ name, setName ] = useState('');
