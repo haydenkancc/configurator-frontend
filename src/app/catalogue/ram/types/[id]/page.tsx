@@ -1,43 +1,17 @@
-import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
-import {configuratorApiClient} from '@/server/catalogue';
-import {MemoryType, MemoryTypeDbo} from '@/server/models';
-import {revalidateTag} from 'next/cache';
-import {redirect} from 'next/navigation';
-import {Details} from './forms';
+import {MemoryType} from '@/server/models/components';
+import {Form} from './form';
+import {getComponent, putComponentAction} from '@/server/controllers/test';
 
 
-
-export default async function Page({ params } : { params: Promise<{ id: string }> }) {
+export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
+    const endpoint = '/api/Memory/MemoryTypes'
 
-    async function getType(id: number) {
-        const response = await configuratorApiClient.Get<MemoryType>(`api/Memory/MemoryTypes/id/${id}`, ['MemoryTypes'])
-        return response.data;
-    }
+    const type = (await getComponent<MemoryType>(endpoint, id, ['MemoryTypes'])).data;
 
-    async function submitDetailsAction(name: string) {
-        'use server'
-        if (name)
-        {
-            const response = await configuratorApiClient.Put<MemoryTypeDbo>(`api/Memory/MemoryTypes/id/${id}`,
-                {
-                    name,
-                })
-            if(!response.error) {
-                revalidateTag('MemoryTypes');
-                redirect(`/catalogue/ram/types/${id}`)
-            }
-        }
-    }
-
-    const type = (await getType(id))!;
+    const action = await putComponentAction(endpoint, id, ['MemoryTypes'])
 
     return (
-        <Body>
-            <Controls>
-                <BackLink />
-            </Controls>
-            <Details type={type} action={submitDetailsAction}/>
-        </Body>
+        <Form item={type} action={action}/>
     )
 }

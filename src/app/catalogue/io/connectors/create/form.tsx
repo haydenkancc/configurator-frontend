@@ -1,75 +1,45 @@
 'use client'
-import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
+import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
 import React, {useState} from 'react';
 import {useFilter} from '@react-aria/i18n';
-import {ListData, useListData} from 'react-stately';
-import {IOConnector, IOConnectorBase, IOConnectorParams} from '@/server/models';
-import {
-    ListBuilder,
-    ListBuilderAddButton,
-    ListBuilderComboBox, ListBuilderComboBoxItem,
-    ListBuilderList,
-    ListBuilderListItem,
-    ListBuilderRow,
-    ListBuilderTrashButton
-} from '@/components/ui/list-builder';
+import {useListData} from 'react-stately';
+import {PostFormProps} from '@/server/models'
+import {IOConnectorBase, IOConnectorDbo, IOConnectorParams} from '@/server/models/components';
+import {IOConnectorsListBuilder} from '../fields';
 
-interface FormProps {
-    connectorParams: IOConnectorParams | undefined;
-    action: (name: string, compatibleConnectors: IOConnectorBase[]) => Promise<void>
-}
-export function Form({ connectorParams, action } : FormProps) {
-    const [name, setName ] = useState('');
 
+export function Form({ action, params } : PostFormProps<IOConnectorDbo, IOConnectorParams>) {
     let { contains } = useFilter({ sensitivity: 'base' });
 
-    const initialItems: ListData<IOConnectorBase> = useListData({
+    const initialItems= useListData<IOConnectorBase>({
         initialItems: [],
-        getKey: (item: IOConnectorBase) => item.id,
+        getKey: (k) => k.id
     });
 
     const items = useListData({
-        initialItems: connectorParams?.connectors,
-        getKey: (item) => item.id,
-        filter: (item, filterText) => contains(item.name, filterText)
+        initialItems: params?.connectors,
+        getKey: (k) => k.id,
+        filter: (k, filterText) => contains(k.name, filterText)
     });
 
+    const [name, setName] = useState<string>()
+
     return (
-        <FormBody action={async () => await action(name, initialItems.items)}>
-            <Controls>
-                <BackLink />
-                <Button variant="primary" type="submit">
-                    Create connector
-                </Button>
-            </Controls>
-            <Module title="I/O connector details" subtitle="Specify details for a new I/O connector.">
+        <PostBody name="connector"
+                 submitAction={async () => await action({ name, compatibleConnectorIDs: initialItems.items.map(({ id }) => id) })}>
+            <Module title="I/O connector details" subtitle="View and modify this I/O connector's details.">
                 <Content>
                     <Row>
-                        <TextField label="Name" name="name" onChange={setName} grow isRequired />
+                        <TextField label="Name" name="name" value={name} onChange={setName} grow isRequired />
                     </Row>
                 </Content>
             </Module>
             <Module title="Compatible I/O connectors" subtitle="Specify which connectors are compatible with this connector.">
                 <Content>
-                    <ListBuilder initialItems={initialItems} items={items}>
-                        <ListBuilderList<IOConnectorBase>>
-                            {item =><ListBuilderListItem>{item.name}<ListBuilderTrashButton /></ListBuilderListItem>}
-                        </ListBuilderList>
-                        <ListBuilderRow>
-                            <ListBuilderComboBox<IOConnectorBase>>
-                                {item =>
-                                    <ListBuilderComboBoxItem>
-                                        {item.name}
-                                    </ListBuilderComboBoxItem>
-                                }
-                            </ListBuilderComboBox>
-                            <ListBuilderAddButton />
-                        </ListBuilderRow>
-                    </ListBuilder>
+                    <IOConnectorsListBuilder gridListItems={initialItems} comboBoxItems={items} />
                 </Content>
             </Module>
-        </FormBody>
+        </PostBody>
     )
 }

@@ -1,35 +1,28 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {ManufacturerRow, PaginatedList, ManufacturerColumns, SearchParams} from '@/server/models';
-import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
-import {revalidateTag} from 'next/cache';
+import {SearchParams} from '@/server/models'
+import {ManufacturerColumns, ManufacturerRow} from '@/server/models/components';
+import {ReadPaginationData} from '@/server/controllers';
+import {deleteComponentAction, getComponents} from '@/server/controllers/test';
 
 
-export default async function Page({ searchParams } : { searchParams: SearchParams}) {
+export default async function Page({searchParams}: { searchParams: SearchParams }) {
 
-    async function listManufacturers(pageIndex: number, pageSize: number) {
-        'use server'
-        const response = await configuratorApiClient.Get<PaginatedList<ManufacturerRow>>(`api/Manufacturers?pageIndex=${pageIndex}&pageSize=${pageSize}`, ['Manufacturers'])
-        return response.data;
-    }
+    const endpoint = '/api/Manufacturers'
 
-    async function deleteManufacturer(id: number) {
-        'use server'
-        const response = await configuratorApiClient.Delete<null>(`api/Manufacturers/id/${id}`);
-        revalidateTag('Manufacturers');
-    }
-
-    const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
-    const paginatedList = await listManufacturers(pageIndex, pageSize);
+    const [pageIndex, pageSize] = await ReadPaginationData(searchParams);
+    const paginatedList = await getComponents<ManufacturerRow>(endpoint, pageIndex, pageSize, ['Manufacturers']);
+    const deleteAction = await deleteComponentAction(endpoint, ['Manufacturers'])
 
     return (
         <Body>
             <Controls>
                 <CreateButton>
-                    Specify new manufacturer
+                    Create new manufacturer
                 </CreateButton>
             </Controls>
-            <Table columns={ManufacturerColumns} rows={paginatedList?.items} deleteAction={deleteManufacturer}/>
-            <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
+            <Table columns={ManufacturerColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
+            <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex}
+                        hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage}/>
         </Body>
     )
 }

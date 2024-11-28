@@ -1,13 +1,13 @@
 'use client'
-import {BackLink, Content, Controls, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
+import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
-import {PCIeBracketDbo, PostFormProps} from '@/server/models';
+import {PostFormProps} from '@/server/models'
+import {PCIeBracketDbo} from '@/server/models/components';
 
-export function Form({ action } : PostFormProps<PCIeBracketDbo>) {
+export function Form({action}: PostFormProps<PCIeBracketDbo>) {
 
-    const [ name, setName ] = useState('')
+    const [name, setName] = useState('')
 
 
     return (
@@ -15,7 +15,7 @@ export function Form({ action } : PostFormProps<PCIeBracketDbo>) {
             <Module title="PCIe bracket details" subtitle="Specify details for a new PCIe bracket.">
                 <Content>
                     <Row>
-                        <TextField label="Name" value={name} onChange={setName} grow isRequired />
+                        <TextField label="Name" value={name} onChange={setName} grow isRequired/>
                     </Row>
                 </Content>
             </Module>

@@ -1,6 +1,5 @@
-import {Select, SelectProps} from '@/components/ui/select';
-import {MemoryKitParams, PCIeSlotParams} from '@/server/models';
-import SelectItem from '@/components/ui/select-item';
+import {Select, SelectItem, SelectProps} from '@/components/ui/select';
+import {MemoryKitParams, PCIeSlotParams} from '@/server/models/components';
 import {ComboBox, ComboBoxItem, ComboBoxProps} from '@/components/ui/combo-box';
 
 
@@ -34,9 +33,9 @@ export function TypeSelect({...props } : SelectProps<MemoryKitParams["types"][nu
     )
 }
 
-export function SizeComboBox({...props} : ComboBoxProps<MemoryKitParams["sizes"][number]>) {
+export function SizeComboBox({...props} : ComboBoxProps<MemoryKitParams["capacities"][number]>) {
     return (
-        <ComboBox label="Size per module (GB)" grow isRequired {...props}>
+        <ComboBox label="Capacity per module (GB)" grow isRequired {...props}>
             {size => (
                 <ComboBoxItem id={size.size} textValue={`${size.size}`}>{size.size}</ComboBoxItem>
             )}

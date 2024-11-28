@@ -1,17 +1,16 @@
 'use client';
-import {PCIeSize, PCIeSizeDbo, PutFormProps} from '@/server/models';
-import {Content, Footer, Module, Row, Controls, BackLink, PutBody} from '@/app/catalogue/_templates/view';
+import {PutFormProps} from '@/server/models'
+import {PCIeSize, PCIeSizeDbo} from '@/server/models/components';
+import {Content, Module, PutBody, Row} from '@/app/catalogue/_templates/view';
 import {NumberField} from '@/components/ui/number-field';
-import {TextField} from '@/components/ui/text-field';
-import {Button} from '@/components/ui/button';
 import {useState} from 'react';
 
-export function Form({ item, action } : PutFormProps<PCIeSize, PCIeSizeDbo>) {
+export function Form({item, action}: PutFormProps<PCIeSize, PCIeSizeDbo>) {
 
-    const [ laneCount, setLaneCount ] = useState<number | undefined>(item?.laneCount)
+    const [laneCount, setLaneCount] = useState<number | undefined>(item?.laneCount)
 
     return (
-        <PutBody name="size" submitAction={async () => await action({ laneCount: laneCount })}>
+        <PutBody name="size" submitAction={async () => await action({laneCount: laneCount})}>
             <Module title="PCIe size details" subtitle="View and modify this PCIe size's details.">
                 <Content>
                     <Row>

@@ -1,59 +1,47 @@
 'use client'
-import {BackLink, Content, Controls, FormBody, Module, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
+import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
-import NumberField from '@/components/ui/number-field';
-import {Checkbox} from '@/components/ui/checkbox';
-import {FormFactorSelect, ManufacturerComboBox, SizeComboBox, TypeSelect} from '@/app/catalogue/ram/kits/fields';
-import {MemoryKitParams} from '@/server/models';
+import {PostFormProps} from '@/server/models'
+import {MemoryKitDbo, MemoryKitParams} from '@/server/models/components';
 import {Key} from 'react-aria-components';
+import {FormFactorSelect, ManufacturerComboBox, SizeComboBox, TypeSelect} from '@/app/catalogue/ram/kits/fields';
+import {Checkbox} from '@/components/ui/checkbox';
+import {NumberField} from '@/components/ui/number-field';
 
-interface FormProps {
-    kitParams?: MemoryKitParams
-    action: (sku: string, name: string, displayName: string, regularPrice: number | null | undefined, salePrice: number | null, onSale: boolean, saleable: boolean, manufacturerID: Key | null, formFactorID: Key | null, typeID: Key | null, size: Key | null, height: number | null | undefined, clockFrequency: number | null | undefined, isECC: boolean, isBuffered: boolean, moduleCount: number | null | undefined, casLatency: number | null, firstWordLatency: number | null | undefined, voltage: number | null, timing: string) => Promise<void>
-}
+export function Form({action, params}: PostFormProps<MemoryKitDbo, MemoryKitParams>) {
 
-export function Form({ kitParams, action } : FormProps) {
-
-    const [ sku, setSKU ] = useState('');
-    const [ name, setName ] = useState('');
-    const [ displayName, setDisplayName ] = useState('');
-    const [ regularPrice, setRegularPrice ] = useState<number | null>();
-    const [ salePrice, setSalePrice ] = useState<number | null>(0);
-    const [ onSale, setOnSale ] = useState(false);
-    const [ saleable, setSaleable ] = useState(false);
-    const [ manufacturerID, setManufacturerID ] = useState<Key | null>(null);
+    const [ sku, setSKU ] = useState<string | undefined>();
+    const [ name, setName ] = useState<string | undefined>();
+    const [ displayName, setDisplayName ] = useState<string | undefined>();
+    const [ regularPrice, setRegularPrice ] = useState<number | undefined>();
+    const [ salePrice, setSalePrice ] = useState<number | undefined>();
+    const [ onSale, setOnSale ] = useState<boolean>(false);
+    const [ saleable, setSaleable ] = useState<boolean>(false);
+    const [ manufacturerID, setManufacturerID ] = useState<number | undefined>();
 
 
-    const [ formFactorID, setFormFactorID ] = useState<Key | null>(null);
-    const [ typeID, setTypeID ] = useState<Key | null>(null);
-    const [ size, setSize ] = useState<Key | null>(null);
-    const [ height, setHeight ] = useState<number | null>();
-    const [ clockFrequency, setClockFrequency ] = useState<number | null>();
+    const [ formFactorID, setFormFactorID ] = useState<number>();
+    const [ typeID, setTypeID ] = useState<number>();
+    const [ capacityID, setCapacityID ] = useState<number>();
+    const [ height, setHeight ] = useState<number>();
+    const [ clockFrequency, setClockFrequency ] = useState<number>();
     const [ isECC, setIsECC ] = useState(false);
     const [ isBuffered, setIsBuffered ] = useState(false);
-    const [ moduleCount, setModuleCount ] = useState<number | null>();
-    const [ casLatency, setCASLatency ] = useState<number | null>(0);
-    const [ firstWordLatency, setFirstWordLatency ] = useState<number | null>();
-    const [ voltage, setVoltage ] = useState<number | null>(0);
-    const [ timing, setTiming ] = useState('');
+    const [ moduleCount, setModuleCount ] = useState<number>();
+    const [ casLatency, setCASLatency ] = useState<number>();
+    const [ firstWordLatency, setFirstWordLatency ] = useState<number>();
+    const [ voltage, setVoltage ] = useState<number>();
+    const [ timing, setTiming ] = useState<string>();
 
     return (
-        <FormBody onSubmit={async (e) =>
-            {
-                e.preventDefault();
-                await action(sku, name, displayName, regularPrice, salePrice, onSale, saleable, manufacturerID, formFactorID,
-                typeID, size, height, clockFrequency, isECC, isBuffered, moduleCount, casLatency, firstWordLatency, voltage, timing)
-            }
-        }
+        <PostBody name="kit"
+                  submitAction={async () => await action({
+                      sku, name, displayName, regularPrice, salePrice, onSale, saleable, manufacturerID,
+                      formFactorID, typeID, capacityID, clockFrequency, height, isECC, isBuffered, moduleCount,
+                      casLatency, firstWordLatency, voltage, timing
+                  })}
         >
-            <Controls>
-                <BackLink />
-                <Button variant="primary" type="submit">
-                    Create kit
-                </Button>
-            </Controls>
             <Module title="General component information" subtitle="Provide general information about this component.">
                 <Content>
                     <Row>
@@ -66,7 +54,7 @@ export function Form({ kitParams, action } : FormProps) {
                         <TextField label="Display name" onChange={setDisplayName} grow isRequired />
                     </Row>
                     <Row>
-                        <ManufacturerComboBox grow onSelectionChange={setManufacturerID} defaultItems={kitParams?.manufacturers} />
+                        <ManufacturerComboBox grow onSelectionChange={(key) => setManufacturerID(key as number)} defaultItems={params?.manufacturers} />
                     </Row>
                     <Row>
                         <NumberField label="Price ($)" grow isRequired onChange={setRegularPrice} />
@@ -82,13 +70,13 @@ export function Form({ kitParams, action } : FormProps) {
                 <Content>
                     <Row>
                         <NumberField isRequired onChange={setModuleCount} label="Number of modules"/>
-                        <SizeComboBox onSelectionChange={setSize} defaultItems={kitParams?.sizes} />
+                        <SizeComboBox onSelectionChange={(key) => setCapacityID(key as number)} defaultItems={params?.capacities} />
                     </Row>
                     <Row>
-                        <FormFactorSelect onSelectionChange={setFormFactorID} items={kitParams?.formFactors} />
+                        <FormFactorSelect onSelectionChange={(key) => setFormFactorID(key as number)} items={params?.formFactors} />
                     </Row>
                     <Row>
-                        <TypeSelect onSelectionChange={setTypeID} items={kitParams?.types} />
+                        <TypeSelect onSelectionChange={(key) => setTypeID(key as number)} items={params?.types} />
                     </Row>
                     <Row>
                         <NumberField onChange={setClockFrequency} label="Clock frequency (MHz)" grow isRequired />
@@ -108,6 +96,6 @@ export function Form({ kitParams, action } : FormProps) {
                     </Row>
                 </Content>
             </Module>
-        </FormBody>
+        </PostBody>
     )
 }

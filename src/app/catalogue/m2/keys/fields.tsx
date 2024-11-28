@@ -1,20 +1,21 @@
 import {
     ListBuilder,
     ListBuilderAddButton,
-    ListBuilderComboBox, ListBuilderComboBoxItem,
+    ListBuilderComboBox,
+    ListBuilderComboBoxItem,
     ListBuilderList,
     ListBuilderListItem,
     ListBuilderRow,
     ListBuilderTrashButton
 } from '@/components/ui/list-builder';
-import {M2KeyBase} from '@/server/models';
+import {M2KeyBase} from '@/server/models/components';
 import React from 'react';
 import {ListData} from 'react-stately';
 
 
-export function M2KeysListBuilder({ initialItems, items } : { initialItems: ListData<M2KeyBase>, items: ListData<M2KeyBase>}) {
+export function M2KeysListBuilder({ gridListItems, comboBoxItems } : { gridListItems: ListData<M2KeyBase>, comboBoxItems: ListData<M2KeyBase>}) {
     return (
-        <ListBuilder initialItems={initialItems} items={items}>
+        <ListBuilder gridListItems={gridListItems} comboBoxItems={comboBoxItems}>
             <ListBuilderList<M2KeyBase> aria-label="selected keys">
                 {item =><ListBuilderListItem textValue={item.name}>{item.name}<ListBuilderTrashButton /></ListBuilderListItem>}
             </ListBuilderList>

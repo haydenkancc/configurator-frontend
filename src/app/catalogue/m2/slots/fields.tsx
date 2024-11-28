@@ -1,10 +1,11 @@
 import {Select, SelectItem, SelectProps} from '@/components/ui/select';
-import {M2FormFactor, M2SlotParams} from '@/server/models';
+import {M2FormFactor, M2SlotParams} from '@/server/models/components';
 import {ListData} from 'react-stately';
 import {
     ListBuilder,
     ListBuilderAddButton,
-    ListBuilderComboBox, ListBuilderComboBoxItem,
+    ListBuilderComboBox,
+    ListBuilderComboBoxItem,
     ListBuilderList,
     ListBuilderListItem,
     ListBuilderRow,
@@ -36,9 +37,9 @@ export function M2LaneSizeSelect({...props } : SelectProps<M2SlotParams["laneSiz
     )
 }
 
-export function M2FormFactorsListBuilder({ initialItems, items } : { initialItems: ListData<M2FormFactor>, items: ListData<M2FormFactor> }) {
+export function M2FormFactorsListBuilder({ gridListItems, comboBoxItems } : { gridListItems: ListData<M2FormFactor>, comboBoxItems: ListData<M2FormFactor> }) {
     return (
-        <ListBuilder initialItems={initialItems} items={items}>
+        <ListBuilder gridListItems={gridListItems} comboBoxItems={comboBoxItems}>
             <ListBuilderList<M2FormFactor>>
                 {item =><ListBuilderListItem>{item.name}<ListBuilderTrashButton /></ListBuilderListItem>}
             </ListBuilderList>

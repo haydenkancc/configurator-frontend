@@ -1,34 +1,26 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {MemoryFormFactorRow, PaginatedList, MemoryFormFactorColumns, SearchParams} from '@/server/models';
-import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
-import {revalidateTag} from 'next/cache';
+import {SearchParams} from '@/server/models'
+import {MemoryFormFactorColumns, MemoryFormFactorRow} from '@/server/models/components';
+import {ReadPaginationData} from '@/server/controllers';
+import {deleteComponentAction, getComponents} from '@/server/controllers/test';
 
 
 export default async function Page({ searchParams } : { searchParams: SearchParams}) {
-
-    async function listMemoryFormFactors(pageIndex: number, pageSize: number) {
-        'use server'
-        const response = await configuratorApiClient.Get<PaginatedList<MemoryFormFactorRow>>(`api/Memory/MemoryFormFactors?pageIndex=${pageIndex}&pageSize=${pageSize}`, ['MemoryFormFactors'])
-        return response.data;
-    }
-
-    async function deleteMemoryFormFactor(id: number) {
-        'use server'
-        const response = await configuratorApiClient.Delete<null>(`api/Memory/MemoryFormFactors/id/${id}`);
-        revalidateTag('MemoryFormFactors');
-    }
+    
+    const endpoint = '/api/Memory/MemoryFormFactors'
 
     const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
-    const paginatedList = await listMemoryFormFactors(pageIndex, pageSize);
+    const paginatedList = await getComponents<MemoryFormFactorRow>(endpoint, pageIndex, pageSize, ['MemoryFormFactors']);
+    const deleteAction = await deleteComponentAction(endpoint, ['MemoryFormFactors'])
 
     return (
         <Body>
             <Controls>
                 <CreateButton>
-                    Specify new form factor
+                    Create new form factor
                 </CreateButton>
             </Controls>
-            <Table columns={MemoryFormFactorColumns} rows={paginatedList?.items} deleteAction={deleteMemoryFormFactor}/>
+            <Table columns={MemoryFormFactorColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
             <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
         </Body>
     )

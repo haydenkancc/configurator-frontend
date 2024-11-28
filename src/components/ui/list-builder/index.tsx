@@ -12,7 +12,6 @@ import {
     Provider, ToggleButton, ToggleButtonContext, ToggleButtonProps, useContextProps, useSlottedContext
 } from 'react-aria-components';
 import {ComboBox, ComboBoxItem, ComboBoxProps} from '@/components/ui/combo-box';
-import SelectItem from '@/components/ui/select-item';
 import {Plus, TrashSimple} from '@phosphor-icons/react/dist/ssr';
 import {ListData, useListData} from 'react-stately';
 import React, {createContext, ReactNode, useContext, useState} from 'react';
@@ -20,44 +19,14 @@ import {useFilter} from '@react-aria/i18n';
 import {GridListContext, ListBoxContext, DEFAULT_SLOT} from 'react-aria-components';
 
 const RemoveFromListContext = createContext((key: Key | null) => {});
-const DeleteItemContext = createContext(() => {});
-
-let keys = [
-        { id: 1, name: 'A' },
-        { id: 2, name: 'B' },
-        { id: 3, name: 'C' },
-        { id: 4, name: 'D' },
-        { id: 5, name: 'E' },
-        { id: 6, name: 'A+E'},
-        { id: 7, name: 'F' },
-        { id: 8, name: 'G' },
-        { id: 9, name: 'H' },
-        { id: 10, name: 'J' },
-        { id: 11, name: 'K' },
-        { id: 12, name: 'L' },
-        { id: 13, name: 'M' },
-        { id: 14, name: 'B+M' }
-]
-
-let key = {
-    id: 6, name: 'A+E'
-}
-
-let compatibleKeys = [
-    { id: 1, name: 'A' },
-    { id: 5, name: 'E' },
-]
 
 export interface ListBuilderProps<T extends { id: number }> {
-    items: ListData<T>;
-    initialItems: ListData<T>;
+    comboBoxItems: ListData<T>;
+    gridListItems: ListData<T>;
     children?: React.ReactNode | React.ReactNode[];
 }
 
-export function ListBuilder<T extends { id: number; }>({ items, initialItems, children } : ListBuilderProps<T>) {
-
-    const gridListItems = initialItems;
-    const comboBoxItems = items;
+export function ListBuilder<T extends { id: number; }>({ comboBoxItems, gridListItems, children } : ListBuilderProps<T>) {
 
     const [ selectedKey, setSelectedKey ] = useState<Key | null>(null)
 

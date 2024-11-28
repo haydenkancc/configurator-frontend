@@ -1,13 +1,13 @@
 'use client'
-import {BackLink, Content, Controls, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
+import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
-import {PCIeVersion, PCIeVersionDbo, PostFormProps} from '@/server/models';
+import {PostFormProps} from '@/server/models'
+import {PCIeVersionDbo} from '@/server/models/components';
 
-export function Form({ action } : PostFormProps<PCIeVersionDbo>) {
+export function Form({action}: PostFormProps<PCIeVersionDbo>) {
 
-    const [ name, setName ] = useState('')
+    const [name, setName] = useState('')
 
 
     return (
@@ -15,7 +15,7 @@ export function Form({ action } : PostFormProps<PCIeVersionDbo>) {
             <Module title="PCIe version details" subtitle="Specify details for a new PCIe version.">
                 <Content>
                     <Row>
-                        <TextField label="Name" value={name} onChange={setName} grow isRequired />
+                        <TextField label="Name" value={name} onChange={setName} grow isRequired/>
                     </Row>
                 </Content>
             </Module>

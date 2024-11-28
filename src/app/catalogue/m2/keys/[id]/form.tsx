@@ -1,11 +1,11 @@
 'use client';
-import {M2Key, M2KeyDbo, M2KeyParams, PCIeBracket, PCIeBracketDbo, PutFormProps} from '@/server/models';
-import {Content, Footer, Module, Row, Controls, BackLink, PutBody} from '@/app/catalogue/_templates/view';
+import {PutFormProps} from '@/server/models'
+import {M2Key, M2KeyDbo, M2KeyParams} from '@/server/models/components';
+import {Content, Module, PutBody, Row} from '@/app/catalogue/_templates/view';
 import {NumberField} from '@/components/ui/number-field';
 import {TextField} from '@/components/ui/text-field';
-import {Button} from '@/components/ui/button';
 import React, {useState} from 'react';
-import {M2KeysListBuilder} from '@/app/catalogue/m2/keys/fields';
+import {M2KeysListBuilder} from '../fields';
 import {useFilter} from '@react-aria/i18n';
 import {useListData} from 'react-stately';
 
@@ -27,9 +27,9 @@ export function Form({ item, action, params } : PutFormProps<M2Key, M2KeyDbo, M2
     const [name, setName] = useState(item?.name)
 
     return (
-        <PutBody name="bracket"
+        <PutBody name="key"
                  submitAction={async () => await action({ name, compatibleKeyIDs: initialItems.items.map(({ id }) => id) })}>
-            <Module title="PCIe bracket details" subtitle="View and modify this PCIe bracket's details.">
+            <Module title="M.2 key details" subtitle="View and modify this M.2 key's details.">
                 <Content>
                     <Row>
                         <NumberField value={item?.id} label="ID" isReadOnly />
@@ -39,7 +39,7 @@ export function Form({ item, action, params } : PutFormProps<M2Key, M2KeyDbo, M2
             </Module>
             <Module title="Compatible M.2 keys" subtitle="Specify which keys are compatible with this key.">
                 <Content>
-                    <M2KeysListBuilder initialItems={initialItems} items={items} />
+                    <M2KeysListBuilder gridListItems={initialItems} comboBoxItems={items} />
                 </Content>
             </Module>
         </PutBody>

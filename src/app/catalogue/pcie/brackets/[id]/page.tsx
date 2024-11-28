@@ -1,11 +1,9 @@
-import {configuratorApiClient} from '@/server/catalogue';
-import {PCIeBracket, PCIeBracketDbo} from '@/server/models';
-import {revalidateTag} from 'next/cache';
+import {PCIeBracket} from '@/server/models/components';
 import {Form} from './form';
-import {getComponent, getComponentParams, putComponentAction} from '@/server/catalogue/test';
+import {getComponent, putComponentAction} from '@/server/controllers/test';
 
 
-export default async function Page({ params } : { params: Promise<{ id: string }> }) {
+export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
     const endpoint = '/api/PCIe/PCIeBrackets'
 

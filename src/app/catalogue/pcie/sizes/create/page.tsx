@@ -1,17 +1,13 @@
-import { Form } from './form';
-import {PCIeSizeDbo, PCIeSize } from '@/server/models';
-import {configuratorApiClient} from '@/server/catalogue';
-import {revalidateTag} from 'next/cache';
-import {redirect} from 'next/navigation';
-import {getComponentParams, postComponentAction} from '@/server/catalogue/test';
+import {Form} from './form';
+import {postComponentAction} from '@/server/controllers/test';
 
 export default async function Page() {
 
     const endpoint = '/api/PCIe/PCIeSizes'
 
-    const submitAction = await postComponentAction(endpoint, '/catalogue/pcie/Sizes', ['PCIeSizes'])
+    const submitAction = await postComponentAction(endpoint, ['PCIeSizes'])
 
     return (
-        <Form action={submitAction} />
+        <Form action={submitAction}/>
     )
 }

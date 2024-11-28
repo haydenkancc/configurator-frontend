@@ -1,33 +1,15 @@
 import {Form} from './form';
-import {IOConnector, IOConnectorBase, IOConnectorDbo, IOConnectorParams} from '@/server/models';
-import {configuratorApiClient} from '@/server/catalogue';
-import {revalidateTag} from 'next/cache';
-import {redirect} from 'next/navigation';
+import {IOConnectorParams} from '@/server/models/components';
+import {getComponentParams, postComponentAction} from '@/server/controllers/test';
 
 export default async function Page() {
+    const endpoint = '/api/IO/IOConnectors'
 
-    async function getConnectorParams() {
-        'use server';
-        const response = await configuratorApiClient.Get<IOConnectorParams>('api/IO/IOConnectors/params', ['IOConnectors']);
-        return response.data;
-    }
+    const connectorParams = (await getComponentParams<IOConnectorParams>(endpoint, ['IOConnectors'])).data;
 
-    async function submitAction(name: string, compatibleConnectors: IOConnectorBase[]) {
-        'use server'
-        const connector: IOConnectorDbo = {
-            name: name,
-            compatibleConnectorIDs: compatibleConnectors.map(({id}) => id),
-        };
-        const response = await configuratorApiClient.Post<IOConnector>(`api/IO/IOConnectors`, connector);
-        if(!response.error) {
-            revalidateTag('IOConnectors');
-            redirect(`/catalogue/io/connectors/${response.data?.id}`)
-        }
-    }
-
-    const connectorParams = await getConnectorParams() ?? undefined;
+    const submitAction = await postComponentAction(endpoint, ['IOConnectors'])
 
     return (
-        <Form action={submitAction} connectorParams={connectorParams} />
+        <Form params={connectorParams} action={submitAction} />
     )
 }

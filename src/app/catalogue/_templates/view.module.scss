@@ -18,6 +18,15 @@
   gap: 1rem;
 }
 
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  & > * {
+    flex: 0 1 100%;
+  }
+}
+
 .module {
   display: flex;
   flex-direction: column;

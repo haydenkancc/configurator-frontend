@@ -131,6 +131,12 @@ export function Row({ children } : Readonly<{children : React.ReactNode}>) {
     )
 }
 
+export function Grid({ children } : Readonly<{children : React.ReactNode}>) {
+    return (
+        <div className={s.grid}>{children}</div>
+    )
+}
+
 export function Footer({ children } : Readonly<{ children: React.ReactNode }>) {
     return (
         <div className={s.footer}>

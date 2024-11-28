@@ -1,7 +1,6 @@
-import {M2FormFactor, M2FormFactorDbo} from '@/server/models';
-import {revalidateTag} from 'next/cache';
+import {M2FormFactor} from '@/server/models/components';
 import {Form} from './form';
-import {getComponent, getComponentParams, putComponentAction} from '@/server/catalogue/test';
+import {getComponent, putComponentAction} from '@/server/controllers/test';
 
 
 export default async function Page({ params } : { params: Promise<{ id: string }> }) {

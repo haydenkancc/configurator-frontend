@@ -1,43 +1,17 @@
-import {BackButton, Content, Controls, Body, FormModule, Footer, Row, BackLink} from '@/app/catalogue/_templates/view';
-import {configuratorApiClient} from '@/server/catalogue';
-import {Manufacturer, ManufacturerDbo} from '@/server/models';
-import {revalidateTag} from 'next/cache';
-import {redirect} from 'next/navigation';
-import {Details} from './forms';
+import {Manufacturer} from '@/server/models/components';
+import {Form} from './form';
+import {getComponent, putComponentAction} from '@/server/controllers/test';
 
 
-
-export default async function Page({ params } : { params: Promise<{ id: string }> }) {
+export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
+    const endpoint = '/api/Manufacturers'
 
-    async function getFormFactor(id: number) {
-        const response = await configuratorApiClient.Get<Manufacturer>(`api/Manufacturers/id/${id}`, ['Manufacturers'])
-        return response.data;
-    }
+    const manufacturer = (await getComponent<Manufacturer>(endpoint, id, ['Manufacturers'])).data;
 
-    async function submitDetailsAction(name: string) {
-        'use server'
-        if (name)
-        {
-            const response = await configuratorApiClient.Put<ManufacturerDbo>(`api/Manufacturers/id/${id}`,
-                {
-                    name,
-                })
-            if(!response.error) {
-                revalidateTag('Manufacturers');
-                redirect(`/catalogue/general/manufacturers/${id}`)
-            }
-        }
-    }
-
-    const manufacturer = (await getFormFactor(id))!;
+    const action = await putComponentAction(endpoint, id, ['Manufacturers'])
 
     return (
-        <Body>
-            <Controls>
-                <BackLink />
-            </Controls>
-            <Details manufacturer={manufacturer} action={submitDetailsAction}/>
-        </Body>
+        <Form item={manufacturer} action={action}/>
     )
 }

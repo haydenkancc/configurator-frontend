@@ -1,12 +1,9 @@
-import {configuratorApiClient} from '@/server/catalogue';
-import {PCIeSlot, PCIeSlotDbo, PCIeSlotParams} from '@/server/models';
-import {revalidateTag} from 'next/cache';
+import {PCIeSlot, PCIeSlotParams} from '@/server/models/components';
 import {Form} from './form';
-import {redirect} from 'next/navigation';
-import {getComponent, getComponentParams, putComponentAction} from '@/server/catalogue/test';
+import {getComponent, getComponentParams, putComponentAction} from '@/server/controllers/test';
 
 
-export default async function Page({ params } : { params: Promise<{ id: string }> }) {
+export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
     const endpoint = '/api/PCIe/PCIeSlots'
 

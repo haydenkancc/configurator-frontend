@@ -1,37 +1,30 @@
-import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {MemoryKitRow, PaginatedList, MemoryKitColumns, SearchParams} from '@/server/models';
-import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
-import {revalidateTag} from 'next/cache';
+import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home'
+import {SearchParams} from '@/server/models';
+import {MemoryKitColumns, MemoryKitRow} from '@/server/models/components';
+import {ReadPaginationData} from '@/server/controllers';
+import {deleteComponentAction, getComponents} from '@/server/controllers/test';
 
 
-export default async function Page({ searchParams } : { searchParams: SearchParams}) {
+export default async function Page({searchParams}: { searchParams: SearchParams }) {
 
-    async function listMemoryKits(pageIndex: number, pageSize: number) {
-        'use server'
-        const response = await configuratorApiClient.Get<PaginatedList<MemoryKitRow>>(`api/Memory/MemoryKits?pageIndex=${pageIndex}&pageSize=${pageSize}`, ['MemoryKits'])
-        return response.data;
-    }
+    const endpoint = '/api/Memory/MemoryKits'
 
-    async function deleteMemoryKit(id: number) {
-        'use server'
-        const response = await configuratorApiClient.Delete<null>(`api/Memory/MemoryKits/id/${id}`);
-        revalidateTag('MemoryKits');
-    }
-
-    const [ pageIndex, pageSize ] = await ReadPaginationData(searchParams);
-    const paginatedList = await listMemoryKits(pageIndex, pageSize);
-
-    console.log(paginatedList);
+    const [pageIndex, pageSize] = await ReadPaginationData(searchParams);
+    const paginatedList = await getComponents<MemoryKitRow>(endpoint, pageIndex, pageSize, ['MemoryKits']);
+    const deleteAction = await deleteComponentAction(endpoint, ['MemoryKits'])
 
     return (
         <Body>
             <Controls>
                 <CreateButton>
-                    Specify new kit
+                    Create new kit
                 </CreateButton>
             </Controls>
-            <Table columns={MemoryKitColumns} rows={paginatedList?.items} deleteAction={deleteMemoryKit}/>
-            <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex} hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage} />
+            <Table columns={MemoryKitColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
+            <Pagination
+                pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex}
+                hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage}
+            />
         </Body>
     )
 }

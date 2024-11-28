@@ -1,8 +1,8 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
-import {M2KeyRow, PaginatedList, M2KeyColumns, SearchParams} from '@/server/models';
-import {configuratorApiClient, ReadPaginationData} from '@/server/catalogue';
-import {revalidateTag} from 'next/cache';
-import {deleteComponentAction, getComponents} from '@/server/catalogue/test';
+import {SearchParams} from '@/server/models'
+import {M2KeyColumns, M2KeyRow} from '@/server/models/components';
+import {ReadPaginationData} from '@/server/controllers';
+import {deleteComponentAction, getComponents} from '@/server/controllers/test';
 
 
 export default async function Page({ searchParams } : { searchParams: SearchParams}) {

@@ -1,13 +1,12 @@
 'use client'
-import {BackLink, Content, Controls, Module, PostBody, PutBody, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
+import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
 import React, {useState} from 'react';
 import {useFilter} from '@react-aria/i18n';
-import {ListData, useListData} from 'react-stately';
-import {M2Key, M2KeyBase, M2KeyDbo, M2KeyParams, PostFormProps} from '@/server/models';
-import {M2KeysListBuilder} from '@/app/catalogue/m2/keys/fields';
-import {NumberField} from '@/components/ui/number-field';
+import {useListData} from 'react-stately';
+import {PostFormProps} from '@/server/models'
+import {M2KeyBase, M2KeyDbo, M2KeyParams} from '@/server/models/components';
+import {M2KeysListBuilder} from '../fields';
 
 
 export function Form({ action, params } : PostFormProps<M2KeyDbo, M2KeyParams>) {
@@ -27,9 +26,9 @@ export function Form({ action, params } : PostFormProps<M2KeyDbo, M2KeyParams>) 
     const [name, setName] = useState<string>()
 
     return (
-        <PostBody name="bracket"
+        <PostBody name="key"
                  submitAction={async () => await action({ name, compatibleKeyIDs: initialItems.items.map(({ id }) => id) })}>
-            <Module title="PCIe bracket details" subtitle="View and modify this PCIe bracket's details.">
+            <Module title="M.2 key details" subtitle="View and modify this M.2 key's details.">
                 <Content>
                     <Row>
                         <TextField label="Name" name="name" value={name} onChange={setName} grow isRequired />
@@ -38,7 +37,7 @@ export function Form({ action, params } : PostFormProps<M2KeyDbo, M2KeyParams>) 
             </Module>
             <Module title="Compatible M.2 keys" subtitle="Specify which keys are compatible with this key.">
                 <Content>
-                    <M2KeysListBuilder initialItems={initialItems} items={items} />
+                    <M2KeysListBuilder gridListItems={initialItems} comboBoxItems={items} />
                 </Content>
             </Module>
         </PostBody>

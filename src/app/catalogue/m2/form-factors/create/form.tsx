@@ -1,9 +1,9 @@
 'use client'
-import {BackLink, Content, Controls, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
-import {Button} from '@/components/ui/button';
+import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
-import {M2FormFactorDbo, PostFormProps} from '@/server/models';
+import {PostFormProps} from '@/server/models'
+import {M2FormFactorDbo} from '@/server/models/components';
 
 export function Form({ action } : PostFormProps<M2FormFactorDbo>) {
 

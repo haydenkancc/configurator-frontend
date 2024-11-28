@@ -1,10 +1,10 @@
 'use client'
 
-import {PCIeSlotParams} from '@/server/models';
+import {PCIeSlotParams} from '@/server/models/components';
 import {Select, SelectItem, SelectProps} from '@/components/ui/select';
 
 
-export function PCIeSizeSelect( {...props } : SelectProps<PCIeSlotParams["sizes"][number]>) {
+export function PCIeSizeSelect({...props}: SelectProps<PCIeSlotParams["sizes"][number]>) {
     return (
         <Select {...props} placeholder="Select a size">
             {size => <SelectItem id={size.laneCount} textValue={`${size.laneCount}`}>x{size.laneCount}</SelectItem>}
@@ -12,7 +12,7 @@ export function PCIeSizeSelect( {...props } : SelectProps<PCIeSlotParams["sizes"
     )
 }
 
-export function PCIeVersionSelect( {...props } : SelectProps<PCIeSlotParams["versions"][number]>) {
+export function PCIeVersionSelect({...props}: SelectProps<PCIeSlotParams["versions"][number]>) {
     return (
         <Select {...props} placeholder="Select a version">
             {version => <SelectItem>{version.name}</SelectItem>}
