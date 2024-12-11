@@ -1,6 +1,6 @@
-import {CentralProcessorUnit} from '@/server/models/components';
+import {CentralProcessorUnit, CentralProcessorUnitParams} from '@/server/models/components';
 import {Form} from './form';
-import {getComponent, putComponentAction} from '@/server/controllers/test';
+import {getComponent, getComponentParams, putComponentAction} from '@/server/controllers/test';
 
 
 export default async function Page({params}: { params: Promise<{ id: string }> }) {
@@ -11,7 +11,9 @@ export default async function Page({params}: { params: Promise<{ id: string }> }
 
     const action = await putComponentAction(endpoint, id, ['CentralProcessorUnits'])
 
+    const unitParams = (await getComponentParams<CentralProcessorUnitParams>(endpoint, ['Manufacturers', 'CentralProcessorSockets', 'CentralProcessorSeries', 'CentralProcessorChannels', 'CentralProcessorCoreFamilies', 'MemoryCapacities'])).data
+
     return (
-        <Form item={unit} action={action}/>
+        <Form item={unit} action={action} params={unitParams} />
     )
 }

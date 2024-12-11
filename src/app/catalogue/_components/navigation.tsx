@@ -50,15 +50,15 @@ const items = [
     },
     {
         id: 6,
-        title: 'Fans',
-        href: 'fan',
-        icon: <Fan weight="fill" />,
-    },
-    {
-        id: 7,
         title: 'Processors',
         href: 'cpu',
         icon: <Cpu weight="fill" />,
+    },
+    {
+        id: 7,
+        title: 'Fans',
+        href: 'fan',
+        icon: <Fan weight="fill" />,
     },
     {
         id: 8,
@@ -68,28 +68,27 @@ const items = [
     },
     {
         id: 9,
-        title: 'Storage',
-        href: 'storage',
-        icon: <HardDrives weight="fill" />,
-    },
-    {
-        id: 10,
-        title: 'Motherboards',
-        href: 'mobo',
-        icon: <Circuitry weight="fill" />,
-    },
-
-    {
-        id: 11,
         title: 'Graphics Cards',
         href: 'gpu',
         icon: <GraphicsCard weight="fill" />,
     },
     {
-        id: 12,
+        id: 10,
+        title: 'Storage',
+        href: 'storage',
+        icon: <HardDrives weight="fill" />,
+    },
+    {
+        id: 11,
         title: 'Coolers',
         href: 'cooler',
         icon: <Snowflake weight="fill" />,
+    },
+    {
+        id: 12,
+        title: 'Motherboards',
+        href: 'mobo',
+        icon: <Circuitry weight="fill" />,
     },
     {
         id: 13,

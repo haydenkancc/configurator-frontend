@@ -1,24 +1,23 @@
 'use client'
 import {Content, Module, PostBody, PutBody, Row} from '@/app/catalogue/_templates/view';
 import {TextField} from '@/components/ui/text-field';
-import {useState} from 'react';
+import {useReducer, useState} from 'react';
 import {PutFormProps} from '@/server/models'
 import {MemoryKit, MemoryKitDbo, MemoryKitParams} from '@/server/models/components';
 import {Key} from 'react-aria-components';
-import {FormFactorSelect, ManufacturerComboBox, SizeComboBox, TypeSelect} from '@/app/catalogue/ram/kits/fields';
 import {Checkbox} from '@/components/ui/checkbox';
 import {NumberField} from '@/components/ui/number-field';
+import {
+    ComponentModule,
+    componentModuleReducer,
+    MemoryCapacityComboBox, MemoryFormFactorComboBox,
+    MemoryTypeComboBox, TransformComponentToDbo
+} from '@/app/catalogue/_templates/forms';
 
 export function Form({item, action, params}: PutFormProps<MemoryKit, MemoryKitDbo, MemoryKitParams>) {
 
-    const [ sku, setSKU ] = useState(item?.sku);
-    const [ name, setName ] = useState(item?.name);
-    const [ displayName, setDisplayName ] = useState(item?.displayName);
-    const [ regularPrice, setRegularPrice ] = useState(item?.regularPrice);
-    const [ salePrice, setSalePrice ] = useState(item?.salePrice);
-    const [ onSale, setOnSale ] = useState(item?.onSale);
-    const [ saleable, setSaleable ] = useState(item?.saleable);
-    const [ manufacturerID, setManufacturerID ] = useState(item?.manufacturer.id);
+    const [componentState, componentDispatch] =
+        useReducer(componentModuleReducer, TransformComponentToDbo(item?.component))
 
 
     const [ formFactorID, setFormFactorID ] = useState(item?.formFactor.id);
@@ -37,46 +36,23 @@ export function Form({item, action, params}: PutFormProps<MemoryKit, MemoryKitDb
     return (
         <PutBody name="kit"
                   submitAction={async () => await action({
-                      sku, name, displayName, regularPrice, salePrice, onSale, saleable, manufacturerID,
                       formFactorID, typeID, capacityID, clockFrequency, height, isECC, isBuffered, moduleCount,
-                      casLatency, firstWordLatency, voltage, timing
+                      casLatency, firstWordLatency, voltage, timing,
+                      component: componentState,
                   })}
         >
-            <Module title="General component information" subtitle="Provide general information about this component.">
-                <Content>
-                    <Row>
-                        <TextField label="SKU" value={sku} onChange={setSKU} grow isRequired />
-                    </Row>
-                    <Row>
-                        <TextField label="Name" value={name} onChange={setName} grow isRequired />
-                    </Row>
-                    <Row>
-                        <TextField label="Display name" value={displayName} onChange={setDisplayName} grow isRequired />
-                    </Row>
-                    <Row>
-                        <ManufacturerComboBox grow selectedKey={manufacturerID} onSelectionChange={(key) => setManufacturerID(key as number)} defaultItems={params?.manufacturers} />
-                    </Row>
-                    <Row>
-                        <NumberField label="Price ($)" grow isRequired value={regularPrice} onChange={setRegularPrice} />
-                        <NumberField label="Sale price ($)" grow value={salePrice} onChange={setSalePrice} />
-                    </Row>
-                    <Row>
-                        <Checkbox isSelected={onSale} onChange={setOnSale}>On sale</Checkbox>
-                        <Checkbox isSelected={saleable} onChange={setSaleable}>Saleable</Checkbox>
-                    </Row>
-                </Content>
-            </Module>
+            <ComponentModule state={componentState} dispatch={componentDispatch} params={params?.component} />
             <Module title="Memory kit details" subtitle="Specify details for a new memory kit.">
                 <Content>
                     <Row>
                         <NumberField isRequired value={moduleCount} onChange={setModuleCount} label="Number of modules"/>
-                        <SizeComboBox selectedKey={capacityID} onSelectionChange={(key) => setCapacityID(key as number)} defaultItems={params?.capacities} />
+                        <MemoryCapacityComboBox label="Capacity per module (GB)" selectedKey={capacityID} onSelectionChange={(key) => setCapacityID(key as number)} defaultItems={params?.capacities} />
                     </Row>
                     <Row>
-                        <FormFactorSelect selectedKey={formFactorID} onSelectionChange={(key) => setFormFactorID(key as number)} items={params?.formFactors} />
+                        <MemoryFormFactorComboBox selectedKey={formFactorID} onSelectionChange={(key) => setFormFactorID(key as number)} items={params?.formFactors} />
                     </Row>
                     <Row>
-                        <TypeSelect selectedKey={typeID} onSelectionChange={(key) => setTypeID(key as number)} items={params?.types} />
+                        <MemoryTypeComboBox label="Type" selectedKey={typeID} onSelectionChange={(key) => setTypeID(key as number)} items={params?.types} />
                     </Row>
                     <Row>
                         <NumberField value={clockFrequency} onChange={setClockFrequency} label="Clock frequency (MHz)" grow isRequired />

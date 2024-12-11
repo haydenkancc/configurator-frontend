@@ -12,7 +12,7 @@ export function Form({item, action}: PutFormProps<Manufacturer, ManufacturerDbo>
 
     return (
         <PutBody name="manufacturer" submitAction={async () => await action({name})}>
-            <Module title="Manufacturer details" subtitle="View and modify this manufacturer's details.">
+            <Module title="General details" subtitle="View and modify this manufacturer's details.">
                 <Content>
                     <Row>
                         <NumberField value={item?.id} label="ID" isReadOnly/>

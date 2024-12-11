@@ -27,7 +27,7 @@ export async function deleteComponentAction(endpoint: string, tags?: string[]) {
     return async function deleteComponent(id: number) {
         'use server'
         const response = await apiClient.Delete<null>(endpoint + `/id/${id}`);
-        // console.log(response);
+        console.log(response);
         if(response.ok)
         {
             if (tags) {
@@ -45,7 +45,8 @@ export async function deleteComponentAction(endpoint: string, tags?: string[]) {
 export async function postComponentAction(endpoint: string, tags?: string[]) {
     return async function postComponent(body: unknown) {
         'use server'
-        const response = await apiClient.Post<{ id: number }>(endpoint, body);
+        console.log(body);
+        const response = await apiClient.Post<{ id?: number, componentID?: number, }>(endpoint, body);
         console.log(response);
         if (response.ok) {
             if (tags) {
@@ -53,7 +54,7 @@ export async function postComponentAction(endpoint: string, tags?: string[]) {
                     revalidateTag(tag);
                 }
             }
-            return response.data?.id ?? null;
+            return response.data?.componentID ?? response.data?.id ?? null;
         } else {
             return null;
         }
@@ -63,8 +64,9 @@ export async function postComponentAction(endpoint: string, tags?: string[]) {
 export async function putComponentAction(endpoint: string, id: number, tags?: string[]) {
     return async function putComponent(body: unknown) {
         'use server'
+        console.log(body);
         const response = await apiClient.Put<null>(endpoint + `/id/${id}`, body);
-        // console.log(response);
+        console.log(response);
         if (response.ok) {
             if (tags) {
                 for(const tag of tags) {

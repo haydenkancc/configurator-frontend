@@ -2,7 +2,7 @@ import {BaseLayout} from '@/app/catalogue/_templates/layouts';
 
 export default function Layout({ children } : Readonly<{ children: React.ReactNode }>) {
     return (
-        <BaseLayout title="Processor" tabs={[{id: "units"}, {id: "sockets"}, {id: "series"}, {id: "channels"}, {id: "core-families"}, {id: "microarchitectures"}]}>
+        <BaseLayout title="Processors" tabs={[{id: "units"}, {id: "sockets"}, {id: "series"}, {id: "core-families"}, {id: "microarchitectures"}, {id: "channels"}]}>
             {children}
         </BaseLayout>
 

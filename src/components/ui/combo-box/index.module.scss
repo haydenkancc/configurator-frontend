@@ -1,13 +1,14 @@
 @use '@/app/variables';
 
 .comboBox {
+  position: relative;
   display: flex;
   flex-direction: column;
   color: variables.$palette-neutral-outlinedColor;
   min-width: 10rem;
 
-  &[data-focused] .container {
-    outline: variables.$palette-focusVisible auto 1px;
+  &[data-focused] .container::before {
+    @include variables.focus-ring-active
   }
 }
 
@@ -24,6 +25,9 @@
   border: 1px solid variables.$palette-neutral-outlinedBorder;
   background-color: variables.$palette-background-surface;
   @include variables.box-shadow;
+  &::before {
+    @include variables.focus-ring;
+  }
 }
 
 .input {

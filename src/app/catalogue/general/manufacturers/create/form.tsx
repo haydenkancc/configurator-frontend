@@ -12,7 +12,7 @@ export function Form({action}: PostFormProps<ManufacturerDbo>) {
 
     return (
         <PostBody name="manufacturer" submitAction={async () => await action({name})}>
-            <Module title="Manufacturer details" subtitle="Specify details for a new manufacturer.">
+            <Module title="General details" subtitle="Specify details for a new manufacturer.">
                 <Content>
                     <Row>
                         <TextField label="Name" value={name} onChange={setName} grow isRequired/>

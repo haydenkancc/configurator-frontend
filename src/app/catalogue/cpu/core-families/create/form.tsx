@@ -4,7 +4,7 @@ import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
 import {PostFormProps} from '@/server/models'
 import {CentralProcessorCoreFamilyDbo, CentralProcessorCoreFamilyParams} from '@/server/models/components';
-import {MicroarchitectureComboBox} from '@/app/catalogue/cpu/core-families/fields';
+import {CentralProcessorMicroarchitectureComboBox} from '@/app/catalogue/_templates/forms';
 
 export function Form({action, params}: PostFormProps<CentralProcessorCoreFamilyDbo, CentralProcessorCoreFamilyParams>) {
 
@@ -20,10 +20,10 @@ export function Form({action, params}: PostFormProps<CentralProcessorCoreFamilyD
                         <TextField label="Name" value={name} onChange={setName} grow isRequired/>
                     </Row>
                     <Row>
-                        <MicroarchitectureComboBox
+                        <CentralProcessorMicroarchitectureComboBox
                             selectedKey={microarchitectureID}
                             onSelectionChange={(key) => setMicroarchitectureID(key as number)}
-                            items={params?.microarchitectures}
+                            defaultItems={params?.microarchitectures}
                         />
                     </Row>
                 </Content>

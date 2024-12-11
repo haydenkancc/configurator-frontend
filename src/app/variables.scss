@@ -256,10 +256,33 @@ $shadowOpacity: var(--joy-shadowOpacity);
 
 @mixin focus {
   outline: none;
+  position: relative;
 
-  &[data-focus-visible] {
-    outline: $palette-focusVisible auto 1px;
+
+  &[data-focus-visible]::before {
+    --Input-focused: 1;
   }
+
+  &::before {
+
+  }
+}
+
+@mixin focus-ring-active {
+  --Input-focused: 1;
+}
+
+@mixin focus-ring($variant-borderWidth: 0px) {
+  box-sizing: border-box;
+  content: "";
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  margin: calc($variant-borderWidth * -1);
+  box-shadow: var(--Input-focusedInset, inset) 0 0 0 calc(var(--Input-focused) * 2px) $palette-focusVisible;
 }
 
 @mixin box-shadow {

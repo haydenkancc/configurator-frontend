@@ -117,17 +117,25 @@ export function Module({children, title, subtitle} : ModuleProps) {
     )
 }
 
-export function Content({ children } : Readonly<{ children: React.ReactNode }>) {
+export function Content({ children, isNested = false } : Readonly<{ children?: React.ReactNode, isNested?: boolean }>) {
     return (
-        <div className={s.content}>
+        <div className={`${s.content} ${isNested ? s.content__nested : ''}`}>
             {children}
         </div>
     )
 }
 
-export function Row({ children } : Readonly<{children : React.ReactNode}>) {
+export function Row({ children, justify } : Readonly<{children?: React.ReactNode, justify?: 'start' | 'center' | 'end' }>) {
     return (
-        <div className={s.row}>{children}</div>
+        <div className={`${s.row} 
+            ${justify === 'start' ? s.row__start : justify === 'center' ? s.row__center : justify === 'end' ? s.row__end : ''}
+        `}>{children}</div>
+    )
+}
+
+export function Block({ children } : Readonly<{children : React.ReactNode}>) {
+    return (
+        <div className={s.block}>{children}</div>
     )
 }
 

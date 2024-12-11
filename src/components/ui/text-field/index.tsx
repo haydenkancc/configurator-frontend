@@ -22,7 +22,9 @@ export function TextField({ label, description, errorMessage, className, isRequi
     return (
         <AriaTextField isRequired={isRequired} className={`${s.textField} ${grow && s.grow} ${className}`} {...props}>
             <Label isRequired={isRequired}>{label}</Label>
-            <Input className={s.input}/>
+            <div className={s.inputWrapper}>
+                <Input className={s.input}/>
+            </div>
             {description && <Text slot="description">{description}</Text>}
             <FieldError>{errorMessage}</FieldError>
         </AriaTextField>

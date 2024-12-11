@@ -10,20 +10,45 @@ const nextConfig: NextConfig = {
     redirects: async () => {
         return [
             {
-                source: '/controllers/pcie',
-                destination: '/controllers/pcie/slots',
+                source: '/catalogue/pcie',
+                destination: '/catalogue/pcie/slots',
                 permanent: false,
             },
             {
-                source: '/controllers/m2',
-                destination: '/controllers/m2/slots',
+                source: '/catalogue/m2',
+                destination: '/catalogue/m2/slots',
                 permanent: false,
             },
             {
-                source: '/controllers/io',
-                destination: '/controllers/io/connectors',
+                source: '/catalogue/io',
+                destination: '/catalogue/io/connectors',
                 permanent: false,
             },
+            {
+                source: '/catalogue/ram',
+                destination: '/catalogue/ram/kits',
+                permanent: false,
+            },
+            {
+                source: '/catalogue/cpu',
+                destination: '/catalogue/cpu/units',
+                permanent: false,
+            },
+            {
+                source: '/catalogue/fan',
+                destination: '/catalogue/fan/packs',
+                permanent: false,
+            },
+            {
+                source: '/catalogue/psu',
+                destination: '/catalogue/psu/units',
+                permanent: false,
+            },
+            {
+                source: '/catalogue/gpu',
+                destination: '/catalogue/gpu/units',
+                permanent: false,
+            }
         ]
     },
 };

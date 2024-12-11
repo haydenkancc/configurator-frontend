@@ -25,8 +25,7 @@ export interface MyTableProps extends TableProps {
 }
 
 export interface MyColumnProps extends ColumnProps {
-    spacer?: boolean;
-    size?: 'small' | 'medium' | 'large' | 'unset';
+    size?: 'small' | 'medium' | 'large' | 'max';
 }
 
 export function Table({ children, ...props } : MyTableProps) {
@@ -68,13 +67,13 @@ export function Row<T extends object>({ id, columns, children, className, ...pro
     );
 }
 
-export function Column({children, className, size, spacer = false, ...props} : MyColumnProps) {
+export function Column({children, className, size, ...props} : MyColumnProps) {
     return(
-        <AriaColumn className={`${s.column} ${spacer ? s.spacingColumn : ''} 
+        <AriaColumn className={`${s.column}
         ${size === 'small' ? s.smallColumn : ''} 
         ${size === 'medium' ? s.mediumColumn : ''} 
         ${size === 'large' ? s.largeColumn : ''} 
-        ${size === 'unset' ? s.unsetColumn : ''} 
+        ${size === 'max' ? s.maxColumn : ''}
         ${className}`} {...props}>
             {children}
         </AriaColumn>
@@ -94,9 +93,12 @@ export function Checkbox({children, ...props} : CheckboxProps) {
     )
 }
 
-export function Cell({children, className, ...props} : CellProps) {
+interface MyCellProps extends CellProps {
+    checkbox?: boolean;
+}
+export function Cell({children, className, checkbox = false, ...props} : MyCellProps) {
     return (
-        <AriaCell className={`${s.cell} ${className}`} {...props}>
+        <AriaCell className={`${s.cell} ${className} ${checkbox ? s.checkboxCell : ""}`} {...props}>
             {children}
         </AriaCell>
     )

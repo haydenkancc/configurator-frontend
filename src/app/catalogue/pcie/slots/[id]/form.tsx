@@ -4,8 +4,7 @@ import {PCIeSlot, PCIeSlotDbo, PCIeSlotParams} from '@/server/models/components'
 import {Content, Module, PutBody, Row} from '@/app/catalogue/_templates/view';
 import {NumberField} from '@/components/ui/number-field';
 import {useState} from 'react';
-import {PCIeSizeSelect, PCIeVersionSelect} from '@/app/catalogue/pcie/slots/fields';
-
+import {PCIeSizeComboBox, PCIeVersionComboBox} from '@/app/catalogue/_templates/forms';
 
 export function Form({item, action, params}: PutFormProps<PCIeSlot, PCIeSlotDbo, PCIeSlotParams>) {
 
@@ -21,17 +20,17 @@ export function Form({item, action, params}: PutFormProps<PCIeSlot, PCIeSlotDbo,
                         <NumberField grow value={item?.id} label="ID" isReadOnly/>
                     </Row>
                     <Row>
-                        <PCIeVersionSelect grow isRequired label="Version" selectedKey={versionID}
-                                           onSelectionChange={(key) => setVersionID(key as number)}
-                                           items={params?.versions}/>
+                        <PCIeVersionComboBox grow isRequired label="Version" selectedKey={versionID}
+                                             onSelectionChange={(key) => setVersionID(key as number)}
+                                             defaultItems={params?.versions}/>
                     </Row>
                     <Row>
-                        <PCIeSizeSelect grow isRequired label="Physical size" selectedKey={physicalSizeID}
-                                        onSelectionChange={(key) => setPhysicalSizeID(key as number)}
-                                        items={params?.sizes}/>
-                        <PCIeSizeSelect grow isRequired label="Lane size" selectedKey={laneSizeID}
-                                        onSelectionChange={(key) => setLaneSizeID(key as number)}
-                                        items={params?.sizes}/>
+                        <PCIeSizeComboBox grow isRequired label="Physical size" selectedKey={physicalSizeID}
+                                          onSelectionChange={(key) => setPhysicalSizeID(key as number)}
+                                          defaultItems={params?.sizes}/>
+                        <PCIeSizeComboBox grow isRequired label="Lane size" selectedKey={laneSizeID}
+                                          onSelectionChange={(key) => setLaneSizeID(key as number)}
+                                          defaultItems={params?.sizes}/>
                     </Row>
                 </Content>
             </Module>

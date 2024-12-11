@@ -1,0 +1,338 @@
+@use '@/app/variables';
+
+.tree {
+  display: flex;
+  flex-direction: column;
+}
+
+.margin {
+  margin-left: 2rem;
+}
+
+.dropdownWrapper {
+  & > .dropdownOpen ~ .dropdownChildren > .dropdownWrapper:last-child > .dropdown {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+}
+
+.dropdownChildren {
+  margin-bottom: 0.75rem;
+
+  & > .new{
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+
+  & > .dropdownWrapper:has(> .dropdownOpen) + .new {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+  }
+
+
+  & > .dropdownWrapper:has(> .dropdownOpen) {
+
+
+    & + .dropdownWrapper > .dropdown{
+      border-top-color: variables.$palette-neutral-outlinedBorder;
+      border-top-left-radius: 0.375rem;
+      border-top-right-radius: 0.375rem;
+    }
+  }
+
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  min-height: 2rem;
+  border-left: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-right: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-bottom: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-top: 1px solid variables.$palette-neutral-outlinedBorder;
+  position: relative;
+  outline: none;
+  margin-left: calc(2.25rem * var(--tree-builder-indent));
+
+  &:focus::before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring(1px);
+  }
+
+  & + .new {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+
+
+  &:has(+ .noNew) {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+
+}
+
+.dropdownRoot {
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+
+  &.dropdownClosed {
+    border-bottom-right-radius: 0.375rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.dropdownChild {
+  border-top-color: transparent;
+}
+
+.dropdownOpen {
+  border-bottom-left-radius: 0.375rem;
+}
+
+.noNew {
+
+  & + .new {
+    border-radius: 0.375rem;
+  }
+}
+
+.dropdownCaret {
+  position: relative;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: variables.$palette-text-icon;
+  outline: none;
+
+  &[data-focus-visible]::before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring();
+  }
+
+  &[data-hovered] {
+    background-color: variables.$palette-neutral-plainHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-neutral-plainActiveBg;
+  }
+}
+
+
+.dropdownContent {
+  flex: 1 0 auto;
+  padding-inline: 0.25rem 0;
+  display: flex;
+  gap: 0.5rem;
+  text-wrap: nowrap;
+  align-items: center;
+
+  & > svg {
+    flex: 0 0 auto;
+    width: 0.875rem;
+    height: 0.875rem;
+    align-self: center;
+    fill: variables.$palette-text-icon;
+  }
+}
+
+.dropdownTrash {
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid variables.$palette-neutral-outlinedBorder;
+  color: variables.$palette-danger-plainColor;
+}
+
+.branch {
+  margin-left: calc(2.25rem * var(--tree-builder-indent));
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-top-color: transparent;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+
+  position: relative;
+  outline: none;
+
+  &:focus::before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring(1px);
+  }
+
+  & + .new {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+
+  &:has(+ .noNew) {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+}
+
+.branchContent {
+  flex: 1 0 auto;
+  display: flex;
+  gap: 0.5rem;
+
+  & > svg {
+    flex: 0 0 auto;
+    width: 0.875rem;
+    height: 0.875rem;
+    align-self: center;
+    fill: variables.$palette-text-icon;
+  }
+}
+
+.trash {
+  position: relative;
+  flex: 0 0 auto;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  color: variables.$palette-danger-plainColor;
+
+  &[data-focus-visible]::before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring();
+  }
+
+  &[data-hovered] {
+    background-color: variables.$palette-danger-plainHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-danger-plainActiveBg;
+  }
+
+  &[data-disabled] {
+    color: transparent;
+  }
+}
+
+.new {
+  position: relative;
+  display: flex;
+  margin-left: calc(2.25rem * var(--tree-builder-indent));
+  cursor: pointer;
+  background-color: variables.$palette-primary-solidBg;
+
+  outline: none;
+
+  &[data-focus-visible]::before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring();
+  }
+
+  &[data-hovered] {
+    background-color: variables.$palette-primary-solidHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-primary-solidActiveBg;
+  }
+
+  & + .dropdown {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+    border-top-color: variables.$palette-neutral-outlinedBorder;
+  }
+
+  & + .new {
+    border-radius: 0.375rem;
+  }
+}
+
+.newRoot {
+}
+
+.newHasDropdownChildren {
+
+}
+
+.buttonNew {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2rem;
+  padding-inline: 0.75rem;
+  border-radius: inherit;
+  gap: 0.375rem;
+  color: variables.$palette-primary-solidColor;
+  box-sizing: content-box;
+
+  outline: none;
+
+  &[data-focus-visible]::before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring();
+  }
+
+  &[data-hovered] {
+    background-color: variables.$palette-primary-solidHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-primary-solidActiveBg;
+  }
+}
+
+.treeNew {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.treeNewButton {
+  display: flex;
+  align-items: center;
+  border-radius: 0.375rem;
+  min-height: 2rem;
+  padding-inline: 0.75rem;
+  gap: 0.375rem;
+  background-color: variables.$palette-primary-solidBg;
+  color: variables.$palette-primary-solidColor;
+  box-sizing: content-box;
+
+  &[data-hovered] {
+    background-color: variables.$palette-primary-solidHoverBg;
+  }
+
+  &[data-pressed] {
+    background-color: variables.$palette-primary-solidActiveBg;
+  }
+}

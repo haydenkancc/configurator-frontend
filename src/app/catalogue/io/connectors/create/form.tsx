@@ -6,7 +6,7 @@ import {useFilter} from '@react-aria/i18n';
 import {useListData} from 'react-stately';
 import {PostFormProps} from '@/server/models'
 import {IOConnectorBase, IOConnectorDbo, IOConnectorParams} from '@/server/models/components';
-import {IOConnectorsListBuilder} from '../fields';
+import {IOConnectorsListBuilder} from '@/app/catalogue/_templates/forms';
 
 
 export function Form({ action, params } : PostFormProps<IOConnectorDbo, IOConnectorParams>) {

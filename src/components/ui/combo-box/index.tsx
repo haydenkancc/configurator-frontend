@@ -22,16 +22,17 @@ export interface ComboBoxProps<T extends object>
     description?: string | null;
     errorMessage?: (validation: ValidationResult) => string;
     children?: React.ReactNode | ((item: T) => React.ReactNode)
+    placeholder?: string;
     grow?: boolean;
 }
 
-export function ComboBox<T extends object>({ label, description, errorMessage, children, isRequired, className, grow = false, ...props }: ComboBoxProps<T>) {
+export function ComboBox<T extends object>({ label, description, placeholder, errorMessage, children, isRequired, className, grow = false, ...props }: ComboBoxProps<T>) {
 
     return (
         <AriaComboBox  isRequired={isRequired} {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus" shouldFocusWrap>
             <Label isRequired={isRequired}>{label}</Label>
             <div className={s.container}>
-                <Input className={s.input}/>
+                <Input className={s.input} size={1} placeholder={placeholder}/>
                 <Button className={s.button}><CaretDown weight="fill" className={s.icon} /></Button>
             </div>
             {description && <Text slot="description">{description}</Text>}

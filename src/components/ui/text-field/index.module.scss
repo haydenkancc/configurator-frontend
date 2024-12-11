@@ -6,6 +6,9 @@
   color: variables.$palette-neutral-outlinedColor;
   min-width: 10rem;
 
+
+
+
   &[data-readonly] .input {
     background-color: variables.$palette-background-level1;
     color: variables.$palette-text-tertiary;
@@ -20,13 +23,30 @@
   color: variables.$palette-danger-plainColor;
 }
 
+.inputWrapper {
+  position: relative;
+  border-radius: 0.375rem;
+
+  &:has(.input[data-focused]):before {
+    @include variables.focus-ring-active;
+  }
+
+  &::before {
+    @include variables.focus-ring(1px);
+  }
+}
+
 .input {
   min-height: 2rem;
   padding-inline: 0.5rem;
+  width: 100%;
+  @include variables.box-shadow;
+  outline: none;
+
   border: 1px solid variables.$palette-neutral-outlinedBorder;
   background-color: variables.$palette-background-surface;
   border-radius: 0.375rem;
-  @include variables.box-shadow;
+
 }
 
 .fieldError {

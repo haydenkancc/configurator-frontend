@@ -9,7 +9,7 @@ import {Content, Module, PostBody, PutBody, Row} from '@/app/catalogue/_template
 import {NumberField} from '@/components/ui/number-field';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
-import {MicroarchitectureComboBox} from '@/app/catalogue/cpu/core-families/fields';
+import {CentralProcessorMicroarchitectureComboBox} from '@/app/catalogue/_templates/forms';
 
 export function Form({item, action, params}: PutFormProps<CentralProcessorCoreFamily, CentralProcessorCoreFamilyDbo, CentralProcessorCoreFamilyParams>) {
 
@@ -27,10 +27,10 @@ export function Form({item, action, params}: PutFormProps<CentralProcessorCoreFa
                         <TextField label="Name" value={name} onChange={setName} grow isRequired/>
                     </Row>
                     <Row>
-                        <MicroarchitectureComboBox
+                        <CentralProcessorMicroarchitectureComboBox
                             selectedKey={microarchitectureID}
                             onSelectionChange={(key) => setMicroarchitectureID(key as number)}
-                            items={params?.microarchitectures}
+                            defaultItems={params?.microarchitectures}
                         />
                     </Row>
                 </Content>

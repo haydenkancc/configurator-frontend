@@ -50,39 +50,40 @@
 }
 
 th.checkboxColumn {
-  width: 4rem;
+  width: unset;
+  padding: unset;
 }
 
 th.spacingColumn {
   width: unset;
+  padding: unset;
 }
 
 th.smallColumn {
-  width: 10rem;
+  width: 12.5%;
 }
 
 th.mediumColumn {
-  width: 12.5rem;
+  width: 25%
 }
 
 th.largeColumn {
-  width: 15rem;
+  width: 50%;
 }
 
-th.unsetColumn {
-  width: unset;
+th.maxColumn {
+  width: 100%;
 }
 
 th.operationsColumn {
-  width: 8.5rem;
 }
 
 .column {
-  padding: 0.75rem 0.375rem;
+  padding: 0.75rem 3rem 0.75rem 0;
   color: variables.$palette-text-secondary;
   @include variables.text-md;
   font-weight: 600;
-  width: 7.5rem;
+  width: unset;
   white-space: nowrap;
   text-align: start;
   background: variables.$palette-background-level1;
@@ -92,19 +93,29 @@ th.operationsColumn {
 
   &:first-child {
     border-radius: 0.3125rem 0 0 0;
+    width: 0;
   }
-  & .columnSpacer {
-    width: unset;
+
+  &:last-child {
+    width: 0;
   }
 }
 
 
 .row {
-  @include variables.focus;
   position: relative;
+  outline: none;
 
   &[data-hovered] {
     background-color: variables.$palette-background-level1;
+  }
+
+  &[data-focus-visible]::after {
+    @include variables.focus-ring-active;
+  }
+
+  &::after {
+    @include variables.focus-ring;
   }
 }
 
@@ -136,11 +147,22 @@ th.operationsColumn {
 
 .cell {
   height: 2rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 3rem 0.25rem 0;
   box-sizing: content-box;
   text-wrap: nowrap;
   border-bottom: 1px solid variables.$palette-neutral-outlinedBorder;
   @include variables.focus;
+
+  &:last-of-type {
+    padding: 0.25rem 1.5rem 0.25rem 1.5rem;
+  }
 }
 
+td.checkboxCell {
+  padding-inline: 1rem 1.5rem;
+}
+
+td.operationsCell {
+
+}
 

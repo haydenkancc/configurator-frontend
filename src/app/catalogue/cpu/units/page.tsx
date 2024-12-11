@@ -10,7 +10,7 @@ export default async function Page({searchParams}: { searchParams: SearchParams 
     const endpoint = '/api/CentralProcessor/CentralProcessorUnits'
 
     const [pageIndex, pageSize] = await ReadPaginationData(searchParams);
-    const paginatedList = await getComponents<CentralProcessorUnitRow>(endpoint, pageIndex, pageSize, ['CentralProcessorUnits']);
+    const paginatedList = await getComponents<CentralProcessorUnitRow>(endpoint, pageIndex, pageSize, ['CentralProcessorUnits', 'Manufacturers']);
     const deleteAction = await deleteComponentAction(endpoint, ['CentralProcessorUnits'])
 
     return (

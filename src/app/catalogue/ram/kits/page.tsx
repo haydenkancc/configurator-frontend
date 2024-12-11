@@ -10,7 +10,7 @@ export default async function Page({searchParams}: { searchParams: SearchParams 
     const endpoint = '/api/Memory/MemoryKits'
 
     const [pageIndex, pageSize] = await ReadPaginationData(searchParams);
-    const paginatedList = await getComponents<MemoryKitRow>(endpoint, pageIndex, pageSize, ['MemoryKits']);
+    const paginatedList = await getComponents<MemoryKitRow>(endpoint, pageIndex, pageSize, ['MemoryKits', 'Manufacturers']);
     const deleteAction = await deleteComponentAction(endpoint, ['MemoryKits'])
 
     return (

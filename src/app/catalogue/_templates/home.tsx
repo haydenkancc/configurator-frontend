@@ -61,7 +61,7 @@ interface HomeTableProps extends MyTableProps {
         name: string;
         id: string;
         isRowHeader?: boolean | undefined;
-        size?: 'small' | 'medium' | 'large' | 'unset';
+        size?: 'small' | 'medium' | 'large' | 'max';
     }[]
 }
 
@@ -71,7 +71,7 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
     return (
         <MyTable columns={columns} rows={rows}>
             <TableHeader columns={columns}>
-                <Column className={s.checkboxColumn} />
+                <Column />
                 <Collection items={columns} aria-label="columns">
                     {column => (
                         <Column isRowHeader={column.isRowHeader} size={column.size}>
@@ -79,13 +79,12 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
                         </Column>
                     )}
                 </Collection>
-                <Column spacer />
-                <Column className={s.operationsColumn} />
+                <Column />
             </TableHeader>
             <TableBody items={rows}>
                 {item => (
                     <Row>
-                        <Cell>
+                        <Cell checkbox>
                             <Checkbox slot="selection"/>
                         </Cell>
                         <Collection items={columns} aria-label="row cells">
@@ -95,7 +94,6 @@ export function Table({ columns, rows, deleteAction } : HomeTableProps) {
                                 </Cell>
                             )}
                         </Collection>
-                        <Cell />
                         <Cell>
                             <div className={s.operationsCell}>
                                 <AriaLink className={s.operationsCell__link} href={`${pathName}/${item.id}`}>Details</AriaLink>

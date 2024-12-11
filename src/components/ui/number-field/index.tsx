@@ -18,16 +18,17 @@ interface MyNumberFieldProps extends NumberFieldProps {
     label?: string;
     description?: string;
     errorMessage?: string | ((validation: ValidationResult) => string);
+    placeholder?: string;
     grow?: boolean;
 }
 
-export function NumberField({ label, description, errorMessage, className, isRequired, isReadOnly, grow = false, ...props }: MyNumberFieldProps) {
+export function NumberField({ label, placeholder, description, errorMessage, className, isRequired, isReadOnly, grow = false, ...props }: MyNumberFieldProps) {
     return (
         <AriaNumberField isRequired={isRequired} className={`${s.numberField} ${grow && s.grow} ${className}`} isReadOnly={isReadOnly} {...props}>
             <Label isRequired={isRequired}>{label}</Label>
             <Group className={s.group} data-readonly={isReadOnly}>
                 <Button className={s.button} slot="decrement"><Minus weight="bold" className={s.buttonIcon}/></Button>
-                <Input size={1} className={s.input}/>
+                <Input size={1} className={s.input} placeholder={placeholder}/>
                 <Button className={s.button} slot="increment"><Plus weight="bold" className={s.buttonIcon}/></Button>
             </Group>
             {description && <Text slot="description">{description}</Text>}

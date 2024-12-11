@@ -5,9 +5,9 @@ import {Content, Module, PutBody, Row} from '@/app/catalogue/_templates/view';
 import {NumberField} from '@/components/ui/number-field';
 import {TextField} from '@/components/ui/text-field';
 import React, {useState} from 'react';
-import {IOConnectorsListBuilder} from '../fields';
 import {useFilter} from '@react-aria/i18n';
 import {useListData} from 'react-stately';
+import {IOConnectorsListBuilder} from '@/app/catalogue/_templates/forms';
 
 export function Form({ item, action, params } : PutFormProps<IOConnector, IOConnectorDbo, IOConnectorParams>) {
 
