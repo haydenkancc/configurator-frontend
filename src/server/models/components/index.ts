@@ -9,6 +9,7 @@ export * from './fan';
 export * from './power-supply';
 export * from './graphics-processor';
 export * from './motherboard';
+export * from './storage';
 
 
 

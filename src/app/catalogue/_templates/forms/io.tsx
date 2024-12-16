@@ -1,11 +1,11 @@
 import {ListData} from 'react-stately';
-import {FanPackIOConnector, IOConnectorBase} from '@/server/models/components';
+import {FanPackIOConnector, IOConnector, IOConnectorBase} from '@/server/models/components';
 import React from 'react';
 import {Row} from '@/app/catalogue/_templates/view';
 import {Button} from '@/components/ui/button';
 import {Plus, X} from '@phosphor-icons/react/dist/ssr';
 import {TableBuilder, TableBuilderDeleteButton, TableBuilderRow} from '@/components/ui/table-builder';
-import {ComboBox, ComboBoxItem} from '@/components/ui/combo-box';
+import {ComboBox, ComboBoxItem, ComboBoxProps} from '@/components/ui/combo-box';
 import {NumberField} from '@/components/ui/number-field';
 import {
     ListBuilder, ListBuilderAddButton, ListBuilderComboBox, ListBuilderComboBoxItem,
@@ -66,5 +66,14 @@ export function IOConnectorsListBuilder({ gridListItems, comboBoxItems } : { gri
                 <ListBuilderAddButton />
             </ListBuilderRow>
         </ListBuilder>
+    )
+}
+
+export function IOConnectorComboBox({ ...props} : ComboBoxProps<IOConnectorBase>)
+{
+    return (
+        <ComboBox placeholder="Select a connector" label="Connector" isRequired {...props}>
+            {connector => <ComboBoxItem>{connector.name}</ComboBoxItem>}
+        </ComboBox>
     )
 }

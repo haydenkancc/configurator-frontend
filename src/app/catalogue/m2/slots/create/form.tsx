@@ -5,7 +5,12 @@ import {useFilter} from '@react-aria/i18n';
 import {ListData, useListData} from 'react-stately';
 import {PostFormProps} from '@/server/models'
 import {M2FormFactor, M2SlotDbo, M2SlotParams} from '@/server/models/components';
-import {M2FormFactorsListBuilder, M2KeySelect, M2LaneSizeSelect, M2VersionSelect} from '../fields';
+import {
+    M2FormFactorsListBuilder,
+    M2KeyComboBox,
+    PCIeSizeComboBox,
+    PCIeVersionComboBox
+} from '@/app/catalogue/_templates/forms';
 
 
 export function Form({ action, params } : PostFormProps<M2SlotDbo, M2SlotParams>) {
@@ -33,11 +38,11 @@ export function Form({ action, params } : PostFormProps<M2SlotDbo, M2SlotParams>
             <Module title="M.2 slot details" subtitle="Specify details for a new M.2 slot.">
                 <Content>
                     <Row>
-                        <M2KeySelect selectedKey={keyID} onSelectionChange={(key) => setKeyID(key as number)} grow items={params?.keys} />
+                        <M2KeyComboBox selectedKey={keyID} onSelectionChange={(key) => setKeyID(key as number)} grow defaultItems={params?.keys} />
                     </Row>
                     <Row>
-                        <M2VersionSelect selectedKey={versionID} onSelectionChange={(key) => setVersionID(key as number)} grow items={params?.versions} />
-                        <M2LaneSizeSelect selectedKey={laneSizeID} onSelectionChange={(key) => setLaneSizeID(key as number)} grow items={params?.laneSizes} />
+                        <PCIeVersionComboBox label="PCIe version" selectedKey={versionID} onSelectionChange={(key) => setVersionID(key as number)} grow defaultItems={params?.versions} />
+                        <PCIeSizeComboBox label="Lane size" selectedKey={laneSizeID} onSelectionChange={(key) => setLaneSizeID(key as number)} grow defaultItems={params?.laneSizes} />
                     </Row>
                 </Content>
             </Module>

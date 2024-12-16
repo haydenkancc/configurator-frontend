@@ -1,5 +1,12 @@
 import {TableColumn} from '@/server/models';
-import {PCIeSize, PCIeVersion} from '@/server/models/components';
+import {
+    IComponent,
+    IComponentDbo,
+    IComponentParams,
+    PCIeBracket,
+    PCIeSize,
+    PCIeVersion
+} from '@/server/models/components';
 
 export const M2KeyColumns: TableColumn[] = [
     { name: 'ID', id: 'id', isRowHeader: true, size: 'small'},
@@ -91,4 +98,36 @@ export interface M2SlotParams {
 export interface M2SlotSimple {
     id: number;
     name: string;
+}
+
+export interface IM2ExpansionCard {
+    expansionCard: M2ExpansionCard;
+}
+export interface M2ExpansionCard extends IComponent {
+    key: M2KeyBase;
+    formFactor: M2FormFactor;
+    version: PCIeVersion;
+    laneSize: PCIeSize;
+}
+
+export interface IM2ExpansionCardDbo {
+    expansionCard: M2ExpansionCardDbo;
+}
+
+export interface M2ExpansionCardDbo extends IComponentDbo {
+    keyID: number;
+    formFactorID: number;
+    versionID: number;
+    laneSizeID: number;
+}
+
+export interface IM2ExpansionCardParams {
+    expansionCard: M2ExpansionCardParams;
+}
+
+export interface M2ExpansionCardParams extends IComponentParams {
+    keys: M2Key[]
+    formFactors: M2FormFactor[]
+    laneSizes: PCIeSize[]
+    versions: PCIeVersion[]
 }

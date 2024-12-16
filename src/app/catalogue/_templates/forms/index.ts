@@ -8,3 +8,5 @@ export * from './io';
 export * from './memory';
 export * from './power-supply';
 export * from './motherboard';
+export * from './m2';
+export * from './storage';

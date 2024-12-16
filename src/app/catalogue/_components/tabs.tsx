@@ -7,11 +7,13 @@ import {usePathname} from 'next/navigation';
 export default function Tabs({ items } : { items: {id: string}[]}) {
     const paths = usePathname().split('/')
     const basePath = (paths.slice(0, 3)).join('/');
+
+    console.log(paths, basePath);
     return (
         <AriaTabs className={s.tabs} selectedKey={paths[3] ?? null}>
             <TabList aria-label="tabs" className={s.tabList} items={items}>
                 {item =>
-                    <Tab className={s.tab} id={item.id} href={`${basePath}/${item.id}`}>
+                    <Tab className={s.tab} id={item.id.toLowerCase()} href={`${basePath}/${item.id.toLowerCase()}`}>
                         {item.id.charAt(0).toUpperCase() + item.id.slice(1).replace('-', ' ')}
                     </Tab>
                 }

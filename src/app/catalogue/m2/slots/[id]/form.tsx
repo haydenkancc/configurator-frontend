@@ -6,7 +6,8 @@ import {ListData, useListData} from 'react-stately';
 import {Content, Module, PutBody, Row} from '@/app/catalogue/_templates/view';
 import React, {useState} from 'react';
 import {NumberField} from '@/components/ui/number-field';
-import {M2FormFactorsListBuilder, M2KeySelect, M2LaneSizeSelect, M2VersionSelect} from '../fields';
+import {M2KeyComboBox, PCIeSizeComboBox, PCIeVersionComboBox} from '@/app/catalogue/_templates/forms';
+import {M2FormFactorsListBuilder} from '@/app/catalogue/_templates/forms';
 
 export function Form({ item, action, params } : PutFormProps<M2Slot, M2SlotDbo, M2SlotParams>) {
 
@@ -36,11 +37,11 @@ export function Form({ item, action, params } : PutFormProps<M2Slot, M2SlotDbo, 
                         <NumberField grow isReadOnly value={item?.id} label="ID" />
                     </Row>
                     <Row>
-                        <M2KeySelect selectedKey={keyID} onSelectionChange={(key) => setKeyID(key as number)} grow items={params?.keys} />
+                        <M2KeyComboBox selectedKey={keyID} onSelectionChange={(key) => setKeyID(key as number)} grow defaultItems={params?.keys} />
                     </Row>
                     <Row>
-                        <M2VersionSelect selectedKey={versionID} onSelectionChange={(key) => setVersionID(key as number)} grow items={params?.versions} />
-                        <M2LaneSizeSelect selectedKey={laneSizeID} onSelectionChange={(key) => setLaneSizeID(key as number)} grow items={params?.laneSizes} />
+                        <PCIeVersionComboBox selectedKey={versionID} onSelectionChange={(key) => setVersionID(key as number)} grow defaultItems={params?.versions} />
+                        <PCIeSizeComboBox label="Lane size" selectedKey={laneSizeID} onSelectionChange={(key) => setLaneSizeID(key as number)} grow defaultItems={params?.laneSizes} />
                     </Row>
                 </Content>
             </Module>
