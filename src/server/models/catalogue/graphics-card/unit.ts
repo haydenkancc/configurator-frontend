@@ -37,8 +37,8 @@ export interface UnitParams {
 export interface UnitDbo {
     component: General.ComponentDbo;
     expansionCard: Pcie.ExpansionCardDbo;
-    chipsetId: number;
-    memoryTypeId: number;
+    chipsetID: number;
+    memoryTypeID: number;
     memoryCapacity: number;
     length: number;
     width: number;

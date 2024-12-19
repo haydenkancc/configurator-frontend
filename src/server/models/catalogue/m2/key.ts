@@ -20,5 +20,5 @@ export interface KeyDtoSimple {
 
 export interface KeyDbo {
     name: string;
-    compatibleKeyIds: number[];
+    compatibleKeyIDs: number[];
 }

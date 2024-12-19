@@ -33,8 +33,8 @@ export interface KitDto {
 
 export interface KitDbo {
     component: General.ComponentDbo;
-    formFactorId: number;
-    typeId: number;
+    formFactorID: number;
+    typeID: number;
     capacity: number;
     clockFrequency: number;
     height: number;

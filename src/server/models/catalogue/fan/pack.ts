@@ -30,7 +30,7 @@ export interface PackDto {
 export interface PackDbo {
     component: General.ComponentDbo;
     quantity: number;
-    sizeId: number;
+    sizeID: number;
     rpm: string;
     airflow: string;
     noiseLevel: string;

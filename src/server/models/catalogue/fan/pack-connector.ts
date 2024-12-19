@@ -7,6 +7,6 @@ export interface PackConnectorDto {
 }
 
 export interface PackConnectorDbo {
-    connectorId: number;
+    connectorID: number;
     connectorCount: number;
 }

@@ -9,18 +9,18 @@ export interface PaginatedList<T> {
 
 export type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
-export type RecursivePartial<T> = {
-    [P in keyof T]?: RecursivePartial<T[P]>;
+export type RecursiveNullable<T> = {
+    [P in keyof T]: RecursiveNullable<T[P]> | null;
 };
 
 export interface PutFormProps<T, R, Q = {}> {
     item: T | null;
-    action: (body: RecursivePartial<R>) => Promise<boolean>;
+    action: (body: RecursiveNullable<R>) => Promise<boolean>;
     params?: Q | null;
 }
 
 export interface PostFormProps<R, Q = {}> {
-    action: (body: RecursivePartial<R>) => Promise<number | null>
+    action: (body: RecursiveNullable<R>) => Promise<number | null>
     params?: Q | null;
 }
 

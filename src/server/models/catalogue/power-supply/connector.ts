@@ -20,5 +20,5 @@ export interface ConnectorDtoSimple {
 
 export interface ConnectorDbo {
     name: string;
-    compatibleConnectorIds: number[];
+    compatibleConnectorIDs: number[];
 }

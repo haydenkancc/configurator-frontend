@@ -1,15 +1,15 @@
-import {PCIeBracket} from '@/server/models/components';
+import {Pcie} from '@/server/models/catalogue';
 import {Form} from './form';
 import {getComponent, putComponentAction} from '@/server/controllers/test';
 
 
 export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const id = parseInt((await params).id);
-    const endpoint = '/api/PCIe/PCIeBrackets'
+    const endpoint = '/api/Pcie/Brackets'
 
-    const bracket = (await getComponent<PCIeBracket>(endpoint, id, ['PCIeBrackets'])).data;
+    const bracket = (await getComponent<Pcie.BracketDto>(endpoint, id, ['PcieBrackets'])).data;
 
-    const action = await putComponentAction(endpoint, id, ['PCIeBrackets'])
+    const action = await putComponentAction(endpoint, id, ['PcieBrackets'])
 
     return (
         <Form item={bracket} action={action}/>

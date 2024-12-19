@@ -1,17 +1,19 @@
 import {Body, Controls, CreateButton, Pagination, Table} from '@/app/catalogue/_templates/home';
 import {SearchParams} from '@/server/models'
-import {PCIeBracketColumns, PCIeBracketRow} from '@/server/models/components';
+import { Pcie } from '@/server/models/catalogue'
 import {ReadPaginationData} from '@/server/controllers';
 import {deleteComponentAction, getComponents} from '@/server/controllers/test';
 
 
 export default async function Page({searchParams}: { searchParams: SearchParams }) {
 
-    const endpoint = '/api/PCIe/PCIeBrackets'
+    const endpoint = '/api/Pcie/Brackets'
 
     const [pageIndex, pageSize] = await ReadPaginationData(searchParams);
-    const paginatedList = await getComponents<PCIeBracketRow>(endpoint, pageIndex, pageSize, ['PCIeBrackets']);
-    const deleteAction = await deleteComponentAction(endpoint, ['PCIeBrackets'])
+    const paginatedList = await getComponents<Pcie.BracketListItem>(endpoint, pageIndex, pageSize, ['PcieBrackets']);
+    const deleteAction = await deleteComponentAction(endpoint, ['PcieBrackets'])
+
+    console.log(paginatedList);
 
     return (
         <Body>
@@ -20,7 +22,7 @@ export default async function Page({searchParams}: { searchParams: SearchParams 
                     Create new bracket
                 </CreateButton>
             </Controls>
-            <Table columns={PCIeBracketColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
+            <Table columns={Pcie.BracketColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>
             <Pagination pageCount={paginatedList?.totalPages} pageIndex={paginatedList?.pageIndex}
                         hasNextPage={paginatedList?.hasNextPage} hasPreviousPage={paginatedList?.hasPreviousPage}/>
         </Body>

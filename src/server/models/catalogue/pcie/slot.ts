@@ -1,4 +1,11 @@
 import {SizeDto, VersionDto} from '.';
+import {TableColumn} from "@/server/models";
+
+export const PCIeSlotColumns: TableColumn[] = [
+    {name: 'ID', id: 'id', isRowHeader: true},
+    {name: 'Version', id: 'version' },
+    {name: 'Slot size', id: 'slotSize' },
+]
 
 export interface SlotParams {
     sizes: SizeDto[];
@@ -24,7 +31,7 @@ export interface SlotDto {
 }
 
 export interface SlotDbo {
-    laneSizeId: number;
-    physicalSizeId: number;
-    versionId: number;
+    laneSizeID: number;
+    physicalSizeID: number;
+    versionID: number;
 }

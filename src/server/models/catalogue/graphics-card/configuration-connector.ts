@@ -6,6 +6,6 @@ export interface ConfigurationConnectorDto {
 }
 
 export interface ConfigurationConnectorDbo {
-    connectorId: number;
+    connectorID: number;
     connectorCount: number;
 }

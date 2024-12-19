@@ -2,7 +2,7 @@ import type {NextConfig, Redirect} from "next";
 
 const nextConfig: NextConfig = {
     env: {
-        apiHost: "http://localhost:5274",
+        apiHost: "http://localhost:5173",
     },
     sassOptions: {
         silenceDeprecations: ['legacy-js-api'],

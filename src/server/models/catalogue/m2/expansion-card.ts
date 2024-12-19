@@ -17,8 +17,8 @@ export interface ExpansionCardDto {
 }
 
 export interface ExpansionCardDbo {
-    keyId: number;
-    formFactorId: number;
-    versionId: number;
-    laneSizeId: number;
+    keyID: number;
+    formFactorID: number;
+    versionID: number;
+    laneSizeID: number;
 }

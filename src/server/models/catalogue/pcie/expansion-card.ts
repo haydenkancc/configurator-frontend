@@ -15,9 +15,9 @@ export interface ExpansionCardDto {
 }
 
 export interface ExpansionCardDbo {
-    bracketId: number;
-    versionId: number;
-    laneSizeId: number;
-    physicalSizeId: number;
+    bracketID: number;
+    versionID: number;
+    laneSizeID: number;
+    physicalSizeID: number;
     expansionSlotWidth: number;
 }

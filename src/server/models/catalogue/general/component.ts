@@ -27,7 +27,7 @@ export interface ComponentDto {
 }
 
 export interface ComponentDbo {
-    manufacturerId: number;
+    manufacturerID: number;
     sku: string;
     partNumber: string;
     name: string;
@@ -36,5 +36,5 @@ export interface ComponentDbo {
     onSale: boolean;
     saleable: boolean;
     isColoured: boolean;
-    colourId: number | null;
+    colourID: number | null;
 }

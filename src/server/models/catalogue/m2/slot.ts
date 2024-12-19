@@ -30,8 +30,8 @@ export interface SlotDto {
 }
 
 export interface SlotDbo {
-    keyId: number;
-    laneSizeId: number;
-    versionId: number;
-    formFactorIds: number[];
+    keyID: number;
+    laneSizeID: number;
+    versionID: number;
+    formFactorIDs: number[];
 }
