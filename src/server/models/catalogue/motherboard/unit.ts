@@ -24,7 +24,6 @@ export interface UnitParams {
     powerSupplyConnectors: PowerSupply.ConnectorDtoSimple[];
     chipsets: ChipsetDto[];
     formFactors: FormFactorDto[];
-    channels: CentralProcessor.ChannelDto[];
     series: CentralProcessor.SeriesDto[];
     processors: CentralProcessor.UnitDtoSimple[];
     coreFamilies: CentralProcessor.CoreFamilyDto[];
@@ -40,7 +39,7 @@ export interface UnitDto {
     powerSupplyConnectors: UnitPowerSupplyConnectorDto[];
     chipset: ChipsetDto;
     formFactor: FormFactorDto;
-    channel: CentralProcessor.ChannelDto;
+    channelCount: number;
     memoryFormFactor: Memory.FormFactorDto;
     memoryType: Memory.TypeDto;
     memoryTotalCapacity: number;
@@ -59,7 +58,7 @@ export interface UnitDbo {
     powerSupplyConnectors: UnitPowerSupplyConnectorDbo[];
     chipsetID: number;
     formFactorID: number;
-    channelID: number;
+    channelCount: number;
     memoryFormFactorID: number;
     memoryTypeID: number;
     memoryTotalCapacity: number;

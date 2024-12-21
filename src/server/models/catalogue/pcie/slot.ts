@@ -1,7 +1,7 @@
 import {SizeDto, VersionDto} from '.';
 import {TableColumn} from "@/server/models";
 
-export const PCIeSlotColumns: TableColumn[] = [
+export const SlotColumns: TableColumn[] = [
     {name: 'ID', id: 'id', isRowHeader: true},
     {name: 'Version', id: 'version' },
     {name: 'Slot size', id: 'slotSize' },

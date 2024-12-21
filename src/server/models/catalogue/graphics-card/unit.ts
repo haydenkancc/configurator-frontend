@@ -1,5 +1,18 @@
 import { General, Pcie, Memory, PowerSupply } from '..';
 import {ChipsetDto, ConfigurationDbo, ConfigurationDto} from '.'
+import {TableColumn} from '@/server/models';
+
+export const UnitColumns : TableColumn[] = [
+    {name: 'Name', id: 'name', isRowHeader: true, size: 'medium'},
+    {name: 'Chipset', id: 'chipset', size: 'small'},
+    {name: 'Memory', id: 'memoryCapacity', size: 'small'},
+    {name: 'Core clock', id: 'coreClock', size: 'small'},
+    {name: 'Boost clock', id: 'boostClock', size: 'small'},
+    {name: 'Length', id: 'length', size: 'small'},
+    {name: 'Colour', id: 'colour', size: 'small'},
+    {name: 'Price', id: 'price', size: 'small'},
+]
+
 
 export interface UnitListItem {
     chipset: string;

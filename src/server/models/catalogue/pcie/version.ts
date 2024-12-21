@@ -1,6 +1,6 @@
 import {TableColumn} from "@/server/models";
 
-export const PCIeVersionColumns: TableColumn[] = [
+export const VersionColumns: TableColumn[] = [
     { name: 'ID', id: 'id', isRowHeader: true, size: 'small'},
     { name: 'Version', id: 'name', size: 'medium'},
     { name: '', id: 'SPACER'},

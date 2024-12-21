@@ -1,6 +1,16 @@
 import { General } from '..';
 import {FormFactorDto, TypeDto} from '.';
+import {TableColumn} from '@/server/models';
 
+export const KitColumns: TableColumn[] = [
+    {name: 'Name', id: 'name', isRowHeader: true, size: 'max'},
+    {name: 'Modules', id: 'modules', size: 'small'},
+    {name: 'Speed', id: 'speed', size: 'small'},
+    {name: 'CAS Latency', id: 'casLatency', size: 'small'},
+    {name: 'First Word Latency', id: 'firstWordLatency', size: 'small'},
+    {name: 'Colour', id: 'colour', size: 'small'},
+    {name: 'Price', id: 'price', size: 'small'},
+]
 
 export interface KitListItem extends General.ComponentListItem {
     modules: string;
@@ -20,7 +30,7 @@ export interface KitDto {
     capacity: number;
     clockFrequency: number;
     height: number;
-    isEcc: boolean;
+    isECC: boolean;
     isBuffered: boolean;
     moduleCount: number;
     casLatency: number;
@@ -38,7 +48,7 @@ export interface KitDbo {
     capacity: number;
     clockFrequency: number;
     height: number;
-    isEcc: boolean;
+    isECC: boolean;
     isBuffered: boolean;
     moduleCount: number;
     casLatency: number;

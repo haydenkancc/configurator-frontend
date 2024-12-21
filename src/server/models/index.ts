@@ -13,15 +13,15 @@ export type RecursiveNullable<T> = {
     [P in keyof T]: RecursiveNullable<T[P]> | null;
 };
 
-export interface PutFormProps<T, R, Q = {}> {
+export interface PutFormProps<T, R, Q> {
     item: T | null;
     action: (body: RecursiveNullable<R>) => Promise<boolean>;
-    params?: Q | null;
+    params: Q | null;
 }
 
-export interface PostFormProps<R, Q = {}> {
+export interface PostFormProps<R, Q> {
     action: (body: RecursiveNullable<R>) => Promise<number | null>
-    params?: Q | null;
+    params: Q | null;
 }
 
 export interface TableColumn {

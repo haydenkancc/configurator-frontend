@@ -14,17 +14,18 @@ import {Minus, Plus} from '@phosphor-icons/react/dist/ssr'
 import {FieldError} from '@/components/ui/field-error';
 
 
-interface MyNumberFieldProps extends NumberFieldProps {
+interface MyNumberFieldProps extends Omit<NumberFieldProps, "value"> {
     label?: string;
     description?: string;
     errorMessage?: string | ((validation: ValidationResult) => string);
     placeholder?: string;
     grow?: boolean;
+    value?: number | null;
 }
 
-export function NumberField({ label, placeholder, description, errorMessage, className, isRequired, isReadOnly, grow = false, ...props }: MyNumberFieldProps) {
+export function NumberField({ label, placeholder, description, errorMessage, className, isRequired, isReadOnly, grow = false, value, ...props }: MyNumberFieldProps) {
     return (
-        <AriaNumberField isRequired={isRequired} className={`${s.numberField} ${grow && s.grow} ${className}`} isReadOnly={isReadOnly} {...props}>
+        <AriaNumberField isRequired={isRequired} className={`${s.numberField} ${grow && s.grow} ${className}`} value={value ?? undefined} isReadOnly={isReadOnly} {...props}>
             <Label isRequired={isRequired}>{label}</Label>
             <Group className={s.group} data-readonly={isReadOnly}>
                 <Button className={s.button} slot="decrement"><Minus weight="bold" className={s.buttonIcon}/></Button>

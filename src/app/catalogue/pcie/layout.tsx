@@ -1,9 +1,9 @@
-import {BaseLayout} from '@/app/catalogue/_templates/layouts';
+import {BaseLayout} from '@/components/catalogue/views/global-view';
 
 export default function Layout({children}: Readonly<{ children: React.ReactNode }>) {
     return (
         <BaseLayout title="PCIe Specification"
-                    tabs={[{id: "slots"}, {id: "sizes"}, {id: "versions"}, {id: "brackets"}]}>
+                    tabs={[{title: "Slots", id: "slots"}, {title: "Sizes", id: "sizes"}, {title: "Versions", id: "versions"}, {title: "Brackets", id: "brackets"}]}>
             {children}
         </BaseLayout>
 

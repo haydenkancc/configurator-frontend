@@ -15,18 +15,20 @@ import {CaretUpDown} from '@phosphor-icons/react/dist/ssr';
 import {FieldError} from '@/components/ui/field-error';
 
 
-export interface SelectProps<T extends object>extends Omit<AriaSelectProps<T>, 'children'> {
+export interface SelectProps<T extends object>extends Omit<AriaSelectProps<T>, 'children' | 'onSelectionChange'> {
     label?: string;
     description?: string;
     errorMessage?: string | ((validation: ValidationResult) => string);
     items?: Iterable<T>;
     children?: React.ReactNode | ((item: T) => React.ReactNode);
     grow?: boolean;
+    onSelectionChange?: (key: number | null) => void;
+
 }
 
-export function Select<T extends object>({ label, description, errorMessage, children, className, isRequired, items, grow = false, ...props } : SelectProps<T>) {
+export function Select<T extends object>({ label, description, errorMessage, children, className, isRequired, onSelectionChange, items, grow = false, ...props } : SelectProps<T>) {
     return (
-        <AriaSelect isRequired={isRequired} {...props} className={`${s.select} ${grow && s.grow} ${className}`}>
+        <AriaSelect onSelectionChange={onSelectionChange ? (key) => onSelectionChange(key as number | null) : undefined} isRequired={isRequired} {...props} className={`${s.select} ${grow && s.grow} ${className}`}>
             <Label isRequired={isRequired}>{label}</Label>
             <Button className={s.button}>
                 <SelectValue className={s.value} />

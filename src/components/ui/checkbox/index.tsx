@@ -1,11 +1,14 @@
 import s from './index.module.scss';
 
-import {Checkbox as AriaCheckbox, CheckboxProps} from 'react-aria-components';
+import {Checkbox as AriaCheckbox, CheckboxProps as AriaCheckboxProps} from 'react-aria-components';
 import {Check} from '@phosphor-icons/react';
 
-export function Checkbox({children, isRequired, ...props} : CheckboxProps) {
+export interface CheckboxProps extends Omit<AriaCheckboxProps, "isSelected"> {
+    isSelected?: boolean | null;
+}
+export function Checkbox({children, isRequired, isSelected, ...props} : CheckboxProps) {
     return (
-        <AriaCheckbox className={s.checkbox} {...props}>
+        <AriaCheckbox className={s.checkbox} isSelected={isSelected ?? undefined} {...props}>
 
             {({isSelected}) => <>
                 <div className={s.checkboxBox}>

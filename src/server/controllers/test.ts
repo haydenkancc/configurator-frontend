@@ -8,7 +8,7 @@ const apiClient = new ApiClient(`${process.env.apiHost}`)
 
 export async function getComponentParams<T>(endpoint: string, tags?: string[]) {
     const response = await apiClient.Get<T>(endpoint + '/params', tags)
-    // console.log(response);
+    console.log(response)
     return response;
 }
 
@@ -46,6 +46,9 @@ export async function postComponentAction(endpoint: string, tags?: string[]) {
     return async function postComponent(body: unknown) {
         'use server'
         console.log(body);
+
+        body = replaceNulls(body, 0);
+
         const response = await apiClient.Post<{ id?: number, componentID?: number, }>(endpoint, body);
         console.log(response);
         if (response.ok) {
@@ -65,6 +68,9 @@ export async function putComponentAction(endpoint: string, id: number, tags?: st
     return async function putComponent(body: unknown) {
         'use server'
         console.log(body);
+
+        body = replaceNulls(body, 0);
+
         const response = await apiClient.Put<null>(endpoint + `/id/${id}`, body);
         console.log(response);
         if (response.ok) {
@@ -78,3 +84,19 @@ export async function putComponentAction(endpoint: string, id: number, tags?: st
         return false;
     }
 }
+
+function replaceNulls(obj: any, replacement: any): any {
+    if (obj === null) {
+        return replacement;
+    } else if (Array.isArray(obj)) {
+        return obj.map((item) => replaceNulls(item, replacement));
+    } else if (typeof obj === "object") {
+        return Object.entries(obj).reduce((acc, [key, value]) => {
+            acc[key] = replaceNulls(value, replacement);
+            return acc;
+        }, {} as Record<string, any>);
+    } else {
+        return obj;
+    }
+}
+

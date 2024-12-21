@@ -1,17 +1,19 @@
 'use client'
-import {Content, Module, PostBody, Row} from '@/app/catalogue/_templates/view';
+import {Content, Module, PostBody, Row} from '@/components/catalogue/views/item-view';
 import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
 import {PostFormProps} from '@/server/models'
 import { Pcie } from '@/server/models/catalogue';
 
-export function Form({action}: PostFormProps<Pcie.BracketDbo>) {
+export function Form({action}: PostFormProps<Pcie.BracketDbo, null>) {
 
-    const [name, setName] = useState('')
+    const [name, setName] = useState<string>("");
 
 
     return (
-        <PostBody name="bracket" submitAction={async () => await action({name})}>
+        <PostBody name="bracket" submitAction={async () => await action({
+            name: name,
+        })}>
             <Module title="PCIe bracket details" subtitle="Specify details for a new PCIe bracket.">
                 <Content>
                     <Row>

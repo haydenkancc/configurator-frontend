@@ -1,4 +1,3 @@
-'use client'
 import s from './index.module.scss';
 import {
     Button,
@@ -17,19 +16,20 @@ import {useComboBoxState} from 'react-stately';
 import {FieldError} from '@/components/ui/field-error';
 
 export interface ComboBoxProps<T extends object>
-    extends Omit<AriaComboBoxProps<T>, 'children'> {
+    extends Omit<AriaComboBoxProps<T>, "children" | "onSelectionChange"> {
     label?: string;
     description?: string | null;
     errorMessage?: (validation: ValidationResult) => string;
     children?: React.ReactNode | ((item: T) => React.ReactNode)
     placeholder?: string;
     grow?: boolean;
+    onSelectionChange?: (key: number | null) => void;
 }
 
-export function ComboBox<T extends object>({ label, description, placeholder, errorMessage, children, isRequired, className, grow = false, ...props }: ComboBoxProps<T>) {
+export function ComboBox<T extends object>({ label, description, placeholder, errorMessage, children, isRequired, className, onSelectionChange, grow = false, ...props }: ComboBoxProps<T>) {
 
     return (
-        <AriaComboBox  isRequired={isRequired} {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus" shouldFocusWrap>
+        <AriaComboBox onSelectionChange={onSelectionChange ? (key) => onSelectionChange(key as number | null) : undefined} isRequired={isRequired} {...props} className={`${s.comboBox} ${grow && s.grow} ${className}`} menuTrigger="focus" shouldFocusWrap>
             <Label isRequired={isRequired}>{label}</Label>
             <div className={s.container}>
                 <Input className={s.input} size={1} placeholder={placeholder}/>

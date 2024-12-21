@@ -1,5 +1,5 @@
 import s from './index.module.scss';
-import {Content, Grid, Module} from '@/app/catalogue/_templates/view';
+import {Content, Grid, Module} from '@/components/catalogue/views/item-view';
 import {CaretDown, Plus, TrashSimple} from '@phosphor-icons/react/dist/ssr';
 import {
     Button,

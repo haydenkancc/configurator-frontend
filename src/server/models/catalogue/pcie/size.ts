@@ -12,10 +12,10 @@ export interface SizeListItem {
 }
 
 export interface SizeDto {
+    id: number;
     laneCount: number;
 }
 
 export interface SizeDbo {
-    id: number;
     laneCount: number;
 }

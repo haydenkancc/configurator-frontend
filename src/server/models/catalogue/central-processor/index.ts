@@ -1,4 +1,3 @@
-export * from './channel';
 export * from './core-family';
 export * from './series';
 export * from './microarchitecture';

@@ -1,6 +1,6 @@
 import s from './layout.module.scss';
-import Breadcrumbs from './_components/breadcrumbs';
-import Navigation from './_components/navigation';
+import Breadcrumbs from '../../components/catalogue/global/breadcrumbs';
+import Navigation from '../../components/catalogue/global/navigation';
 import {ToastProvider} from '@/app/providers';
 
 interface LayoutProps {
