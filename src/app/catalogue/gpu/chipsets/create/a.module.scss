@@ -1,0 +1,22 @@
+@use '@/app/variables';
+
+.hello {
+  border: 1px solid variables.$palette-neutral-outlinedBorder;
+  border-radius: 0.375rem;
+}
+
+.card {
+  padding: 0.5rem 0.75rem;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  color: variables.$palette-text-secondary;
+}
+
+.content {
+  padding: 0.5rem 0.75rem;
+  display:flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

@@ -1,4 +1,4 @@
-'use client';
+    'use client';
 import {PutFormProps} from '@/server/models'
 import { Memory } from '@/server/models/catalogue';
 import {Content, Module, PostBody, PutBody, Row} from '@/components/catalogue/views/item-view';

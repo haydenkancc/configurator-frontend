@@ -4,23 +4,11 @@ import {TextField} from '@/components/ui/text-field';
 import {forwardRef, useState} from 'react';
 import {PostFormProps} from '@/server/models'
 import { GraphicsCard } from '@/server/models/catalogue';
-import {
-    RichTreeView,
-    TreeItem2,
-    TreeItem2Checkbox, TreeItem2Content,
-    TreeItem2DragAndDropOverlay,
-    TreeItem2GroupTransition,
-    TreeItem2Icon,
-    TreeItem2IconContainer,
-    TreeItem2Label, TreeItem2Props,
-    TreeItem2Provider,
-    TreeItem2Root,
-    TreeViewBaseItem,
-    useTreeItem2,
-    UseTreeItem2Parameters, useTreeItem2Utils
-} from '@mui/x-tree-view';
-import {Avatar, Box, styled} from '@mui/material';
-import {Button} from '@/components/ui/button';
+import s from './a.module.scss';
+import {CaretDown} from "@phosphor-icons/react/dist/ssr";
+import {PowerSupplyConnectorsListBuilder} from "@/components/catalogue/views/forms";
+import {useListData} from "react-stately";
+import {Heading, Disclosure, DisclosurePanel, Button} from 'react-aria-components';
 
 export function Form({action}: PostFormProps<GraphicsCard.ChipsetDbo, null>) {
 
@@ -38,6 +26,46 @@ export function Form({action}: PostFormProps<GraphicsCard.ChipsetDbo, null>) {
                     </Row>
                 </Content>
             </Module>
+            <Module title="Power configurations" subtitle="Specify power connector configurations for this graphics card.">
+                <Content>
+                    <Poop>
+
+                    </Poop>
+                </Content>
+            </Module>
         </PostBody>
+    )
+}
+
+export function Poop() {
+    const poop = useListData({})
+    return (
+        <Disclosure className={s.hello} defaultExpanded={false}>
+            <Heading>
+                <Button slot="trigger" className={s.card}>
+                    Configuration 1
+                    <CaretDown weight="bold"/>
+                </Button>
+            </Heading>
+            <DisclosurePanel>
+                <div className={s.content}>
+                    hello
+                    <PowerSupplyConnectorsListBuilder compatibleConnectors={poop}/>
+                    <Disclosure className={s.hello}>
+                        <Heading className={s.card}>
+                            <Heading>
+                                <Button slot="trigger" className={s.card}>
+                                    Configuration 1
+                                    <CaretDown weight="bold"/>
+                                </Button>
+                            </Heading>
+                        </Heading>
+                        <DisclosurePanel>
+                            <PowerSupplyConnectorsListBuilder compatibleConnectors={poop}/>
+                        </DisclosurePanel>
+                    </Disclosure>
+                </div>
+            </DisclosurePanel>
+        </Disclosure>
     )
 }
