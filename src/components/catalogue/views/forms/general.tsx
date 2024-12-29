@@ -20,22 +20,26 @@ enum ComponentModuleActionType {
     SET_COLOUR_ID = "colourID",
 }
 
-const record: Record<ComponentModuleActionType, keyof General.ComponentDbo> = {
-    [ComponentModuleActionType.SET_MANUFACTURER_ID]: "manufacturerID",
-    [ComponentModuleActionType.SET_SKU]: "sku",
-    [ComponentModuleActionType.SET_PART_NUMBER]: "partNumber",
-    [ComponentModuleActionType.SET_NAME]: "name",
-    [ComponentModuleActionType.SET_REGULAR_PRICE]: "regularPrice",
-    [ComponentModuleActionType.SET_SALE_PRICE]: "salePrice",
-    [ComponentModuleActionType.SET_ON_SALE]: "onSale",
-    [ComponentModuleActionType.SET_SALEABLE]: "saleable",
-    [ComponentModuleActionType.SET_IS_COLOURED]: "isColoured",
-    [ComponentModuleActionType.SET_COLOUR_ID]: "colourID",
-}
+type ComponentDboMapping = {
+    [K in ComponentModuleActionType]: K
+};
+
+const record: ComponentDboMapping = {
+    [ComponentModuleActionType.SET_MANUFACTURER_ID]: ComponentModuleActionType.SET_MANUFACTURER_ID,
+    [ComponentModuleActionType.SET_SKU]: ComponentModuleActionType.SET_SKU,
+    [ComponentModuleActionType.SET_PART_NUMBER]: ComponentModuleActionType.SET_PART_NUMBER,
+    [ComponentModuleActionType.SET_NAME]: ComponentModuleActionType.SET_NAME,
+    [ComponentModuleActionType.SET_REGULAR_PRICE]: ComponentModuleActionType.SET_REGULAR_PRICE,
+    [ComponentModuleActionType.SET_SALE_PRICE]: ComponentModuleActionType.SET_SALE_PRICE,
+    [ComponentModuleActionType.SET_ON_SALE]: ComponentModuleActionType.SET_ON_SALE,
+    [ComponentModuleActionType.SET_SALEABLE]: ComponentModuleActionType.SET_SALEABLE,
+    [ComponentModuleActionType.SET_IS_COLOURED]: ComponentModuleActionType.SET_IS_COLOURED,
+    [ComponentModuleActionType.SET_COLOUR_ID]: ComponentModuleActionType.SET_COLOUR_ID,
+};
 
 type ComponentModuleAction<K extends ComponentModuleActionType> = {
     type: K,
-    payload: General.ComponentDbo[typeof record[K]]
+    payload: General.ComponentDbo[ComponentDboMapping[K]]
 }
 
 export function componentModuleReducer<K extends ComponentModuleActionType>(state: RecursiveNullable<General.ComponentDbo>, action: ComponentModuleAction<K>): RecursiveNullable<General.ComponentDbo> {

@@ -7,20 +7,26 @@ import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
 import {useListData} from 'react-stately';
 import {useFilter} from '@react-aria/i18n';
-import {IOConnectorsListBuilder} from '@/components/catalogue/views/forms';
+import {
+    IOConnectorsListBuilder,
+    transformIOConnectorsDtoToMap,
+    transformIOConnectorsMapToDbo
+} from '@/components/catalogue/views/forms';
+import {useImmer} from 'use-immer';
+import {enableMapSet} from 'immer';
+
+enableMapSet();
 
 export function Form({item, action, params}: PutFormProps<IO.ConnectorDto, IO.ConnectorDbo, IO.ConnectorParams>) {
 
     const [name, setName] = useState<string>(item?.name ?? "")
 
-    const compatibleConnectors= useListData<IO.ConnectorDtoSimple>({
-        initialItems: item?.compatibleConnectors,
-    });
+    const [compatibleConnectors, setCompatibleConnectors] = useImmer(transformIOConnectorsDtoToMap(item?.compatibleConnectors ?? null));
 
     return (
         <PutBody name="connector" submitAction={async () => await action({
             name: name,
-            compatibleConnectorIDs: compatibleConnectors.items.map(({id}) => id)
+            compatibleConnectorIDs: transformIOConnectorsMapToDbo(compatibleConnectors)
         })}>
             <Module title="Connector details" subtitle="View and modify this connector's details.">
                 <Content>
@@ -32,7 +38,7 @@ export function Form({item, action, params}: PutFormProps<IO.ConnectorDto, IO.Co
             </Module>
             <Module title="Compatible connectors" subtitle="Specify which connectors are compatible with this connector.">
                 <Content>
-                    <IOConnectorsListBuilder compatibleConnectors={compatibleConnectors} connectors={params?.connectors} connectorID={item?.id} />
+                    <IOConnectorsListBuilder compatibleConnectors={compatibleConnectors} setCompatibleConnectors={setCompatibleConnectors} connectors={params?.connectors} connectorID={item?.id} />
                 </Content>
             </Module>
         </PutBody>

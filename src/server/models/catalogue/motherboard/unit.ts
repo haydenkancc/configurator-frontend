@@ -1,6 +1,6 @@
 import { General, IO, M2, Pcie, PowerSupply, CentralProcessor, Memory } from '..'
 import {
-    ChipsetDto,
+    ChipsetDto, ChipsetDtoSimple,
     FormFactorDto,
     UnitIOConnectorDbo,
     UnitIOConnectorDto,
@@ -8,6 +8,16 @@ import {
     UnitM2SlotDto, UnitPcieSlotDbo,
     UnitPcieSlotDto, UnitPowerSupplyConnectorDbo, UnitPowerSupplyConnectorDto
 } from '.';
+import {TableColumn} from '@/server/models';
+
+export const UnitColumns : TableColumn[] = [
+    { name: 'Name', id: 'name', isRowHeader: true },
+    { name: 'Socket', id: 'socket' },
+    { name: 'Form Factor', id: 'formFactor' },
+    { name: 'Max Memory', id: 'memoryTotalCapacity' },
+    { name: 'Memory Slots', id: 'memorySlotCount'},
+    { name: 'Price', id: 'price' }
+]
 
 export interface UnitListItem extends General.ComponentListItem {
     socket: string;
@@ -22,11 +32,11 @@ export interface UnitParams {
     m2Slots: M2.SlotDtoSimple[];
     pcieSlots: Pcie.SlotDtoSimple[];
     powerSupplyConnectors: PowerSupply.ConnectorDtoSimple[];
-    chipsets: ChipsetDto[];
+    chipsets: ChipsetDtoSimple[];
     formFactors: FormFactorDto[];
     series: CentralProcessor.SeriesDto[];
     processors: CentralProcessor.UnitDtoSimple[];
-    coreFamilies: CentralProcessor.CoreFamilyDto[];
+    coreFamilies: CentralProcessor.CoreFamilyDtoSimple[];
     memoryFormFactors: Memory.FormFactorDto[];
     memoryTypes: Memory.TypeDto[];
 }

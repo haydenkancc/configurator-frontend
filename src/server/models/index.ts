@@ -10,8 +10,16 @@ export interface PaginatedList<T> {
 export type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
 export type RecursiveNullable<T> = {
-    [P in keyof T]: RecursiveNullable<T[P]> | null;
+    [P in keyof T]: T[P] extends (number | string | boolean | symbol) ? T[P] | null :  RecursiveNullable<T[P]>
 };
+
+export type RecursiveNullableNoIterable<T> = {
+    [P in keyof T]: T[P] extends (number | string | boolean | symbol) ? T[P] | null : T[P] extends Iterable<any> ? T[P] : RecursiveNullableNoIterable<T[P]>
+}
+
+export type RecursiveMap<T> = Map<number, {
+    [P in keyof T]: T[P] extends Iterable<any> ? T[P] extends string ? T[P] : RecursiveMap<T[P][any]> : T[P]
+}>
 
 export interface PutFormProps<T, R, Q> {
     item: T | null;

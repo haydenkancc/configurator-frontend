@@ -7,9 +7,19 @@
 }
 
 .gridList {
+  position: relative;
   border: 1px solid variables.$palette-neutral-outlinedBorder;
   border-radius: 0.375rem;
+  outline: none;
   @include variables.box-shadow;
+
+  &[data-focus-visible] {
+    @include variables.focus-ring-active;
+  }
+
+  &:after {
+    @include variables.focus-ring;
+  }
 }
 
 .gridListEmpty {
@@ -22,23 +32,44 @@
 }
 
 .gridListItem {
+  position: relative;
   min-height: 2rem;
   display: flex;
   align-items: center;
   padding-inline: 0.5rem 0.25rem;
-  border-style: solid;
   border-width: 1px;
   border-color: transparent;
   border-left: none;
   border-right: none;
+  outline: none;
+
+  &:first-child {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+
   &:not(:last-of-type) {
     border-bottom-color: variables.$palette-neutral-outlinedBorder;
+  }
+
+  &[data-focus-visible] {
+    @include variables.focus-ring-active;
+  }
+
+  &::after {
+    @include variables.focus-ring(1px)
   }
 }
 
 
 
 .trashButton {
+  position: relative;
   width: 1.5rem;
   height: 1.5rem;
   margin-left: auto;
@@ -46,21 +77,27 @@
   justify-content: center;
   align-items: center;
   border-radius: 0.25rem;
+  color: variables.$palette-danger-solidBg;
+  outline: none;
+  @include variables.focus-ring-inactive;
 
-  @include variables.focus;
-
-  &[data-hovered], &[data-focus-visible] {
+  &[data-hovered] {
     background-color: variables.$palette-danger-plainHoverBg;
   }
 
   &[data-pressed] {
     background-color: variables.$palette-danger-plainActiveBg;
   }
+
+  &[data-focus-visible] {
+    @include variables.focus-ring-active;
+  }
+
+  &::after {
+    @include variables.focus-ring;
+  }
 }
 
-.trashButtonIcon {
-  color: variables.$palette-danger-plainColor;
-}
 
 .row {
   display: flex;
@@ -71,23 +108,29 @@
   flex: 0 0 auto;
   width: 2rem;
   height: 2rem;
-  padding-inline: 0.0625rem;
   margin-left: auto;
   display: flex;
   justify-content: center;
+  position: relative;
+  outline: none;
   align-items: center;
   border-radius: 0.375rem;
-  color: variables.$palette-primary-solidColor;
-  background-color: variables.$palette-primary-solidBg;
+  color: variables.$palette-primary-plainColor;
   box-sizing: content-box;
 
-  @include variables.focus;
-
-  &[data-hovered], &[data-focus-visible] {
-    background-color: variables.$palette-primary-solidHoverBg;
+  &[data-hovered] {
+    background-color: variables.$palette-primary-plainHoverBg;
   }
 
   &[data-pressed] {
-    background-color: variables.$palette-primary-solidActiveBg;
+    background-color: variables.$palette-primary-plainActiveBg;
+  }
+
+  &[data-focus-visible] {
+    @include variables.focus-ring-active;
+  }
+
+  &::after {
+    @include variables.focus-ring();
   }
 }

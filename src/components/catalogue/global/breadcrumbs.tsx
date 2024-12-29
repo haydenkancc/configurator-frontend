@@ -37,7 +37,7 @@ const breadcrumbMap = new Map([
     ["modularities", "Modularities"],
     ["gpu", "Graphics Card"],
     ["chipsets", "Chipsets"],
-
+    ["mobo", "Motherboard"],
 ]
 );
 

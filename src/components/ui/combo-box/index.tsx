@@ -53,7 +53,7 @@ function Input({...props} : InputProps) {
         <AriaInput {...props} onKeyDown={(e)=> {
             if (e.key == 'Enter') {
                 e.preventDefault();
-                if(context.selectionManager.focusedKey === null) {
+                if(context?.selectionManager.focusedKey === null) {
                     context.selectionManager.setFocusedKey(context.collection.getFirstKey());
                     context.setSelectedKey(context.collection.getFirstKey());
                     context.commit();

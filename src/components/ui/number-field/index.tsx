@@ -12,6 +12,7 @@ import {
 import Label from '../label';
 import {Minus, Plus} from '@phosphor-icons/react/dist/ssr'
 import {FieldError} from '@/components/ui/field-error';
+import {memo} from 'react';
 
 
 interface MyNumberFieldProps extends Omit<NumberFieldProps, "value"> {

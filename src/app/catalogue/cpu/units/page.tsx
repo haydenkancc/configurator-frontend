@@ -18,7 +18,7 @@ export default async function Page({searchParams}: { searchParams: SearchParams 
         <Body>
             <Controls>
                 <CreateButton>
-                    Create new kit
+                    Create new unit
                 </CreateButton>
             </Controls>
             <Table columns={CentralProcessor.UnitColumns} rows={paginatedList?.items} deleteAction={deleteAction}/>

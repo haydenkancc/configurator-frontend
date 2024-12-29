@@ -6,3 +6,5 @@ export * from './memory';
 export * from './central-processor';
 export * from './fan'
 export * from './power-supply'
+export * from './graphics-card';
+export * from './motherboard';

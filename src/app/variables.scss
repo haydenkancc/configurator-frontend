@@ -272,6 +272,10 @@ $shadowOpacity: var(--joy-shadowOpacity);
   --Input-focused: 1;
 }
 
+@mixin focus-ring-inactive {
+  --Input-focused: 0;
+}
+
 @mixin focus-ring($variant-borderWidth: 0px) {
   box-sizing: border-box;
   content: "";
@@ -282,7 +286,7 @@ $shadowOpacity: var(--joy-shadowOpacity);
   z-index: 1;
   border-radius: inherit;
   margin: calc($variant-borderWidth * -1);
-  box-shadow: var(--Input-focusedInset, inset) 0 0 0 calc(var(--Input-focused) * 2px) $palette-focusVisible;
+  box-shadow: var(--Input-focusedInset, inset) 0 0 0 calc(var(--Input-focused) * 1.5px) $palette-focusVisible;
 }
 
 @mixin box-shadow {

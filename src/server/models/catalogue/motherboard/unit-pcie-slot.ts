@@ -1,12 +1,21 @@
 import { Pcie, CentralProcessor } from '..';
 
 export interface UnitPcieSlotDto {
-    slot: Pcie.SlotDto;
+    slot: Pcie.SlotDtoSimple;
     slotPosition: number;
     configurationNumber: number;
     series: CentralProcessor.SeriesDto[];
     processors: CentralProcessor.UnitDtoSimple[];
-    coreFamilies: CentralProcessor.CoreFamilyDto[];
+    coreFamilies: CentralProcessor.CoreFamilyDtoSimple[];
+}
+
+export interface UnitPcieSlotFrontend {
+    slotID: number;
+    slotPosition: number;
+    configurationNumber: number;
+    series: CentralProcessor.SeriesDto[];
+    processors: CentralProcessor.UnitDtoSimple[];
+    coreFamilies: CentralProcessor.CoreFamilyDtoSimple[];
 }
 
 export interface UnitPcieSlotDbo {

@@ -8,7 +8,7 @@ const apiClient = new ApiClient(`${process.env.apiHost}`)
 
 export async function getComponentParams<T>(endpoint: string, tags?: string[]) {
     const response = await apiClient.Get<T>(endpoint + '/params', tags)
-    console.log(response)
+    // console.log(response)
     return response;
 }
 
@@ -46,7 +46,6 @@ export async function postComponentAction(endpoint: string, tags?: string[]) {
     return async function postComponent(body: unknown) {
         'use server'
         console.log(body);
-
         body = replaceNulls(body, 0);
 
         const response = await apiClient.Post<{ id?: number, componentID?: number, }>(endpoint, body);

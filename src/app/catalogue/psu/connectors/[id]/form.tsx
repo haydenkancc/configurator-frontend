@@ -7,7 +7,6 @@ import {TextField} from '@/components/ui/text-field';
 import {useState} from 'react';
 import {useListData} from 'react-stately';
 import {useFilter} from '@react-aria/i18n';
-import {PowerSupplyConnectorsListBuilder} from '@/components/catalogue/views/forms';
 
 export function Form({item, action, params}: PutFormProps<PowerSupply.ConnectorDto, PowerSupply.ConnectorDbo, PowerSupply.ConnectorParams>) {
 
@@ -32,7 +31,6 @@ export function Form({item, action, params}: PutFormProps<PowerSupply.ConnectorD
             </Module>
             <Module title="Compatible connectors" subtitle="Specify which connectors are compatible with this connector.">
                 <Content>
-                    <PowerSupplyConnectorsListBuilder compatibleConnectors={compatibleConnectors} connectors={params?.connectors} connectorID={item?.id} />
                 </Content>
             </Module>
         </PutBody>

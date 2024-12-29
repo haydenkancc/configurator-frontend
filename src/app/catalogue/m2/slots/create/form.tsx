@@ -11,8 +11,9 @@ import {
     M2FormFactorsListBuilder,
     M2KeyComboBox,
     PcieSizeComboBox,
-    PcieVersionComboBox
+    PcieVersionComboBox, transformM2FormFactorsDtoToMap, transformM2FormFactorsMapToDbo
 } from '@/components/catalogue/views/forms';
+import { useImmer } from 'use-immer';
 
 export function Form({action, params}: PostFormProps<M2.SlotDbo, M2.SlotParams>) {
 
@@ -20,16 +21,14 @@ export function Form({action, params}: PostFormProps<M2.SlotDbo, M2.SlotParams>)
     const [versionID, setVersionID] = useState<number | null>(null);
     const [laneSizeID, setLaneSizeID] = useState<number | null>(null);
 
-    const compatibleFormFactors= useListData<M2.SlotDtoSimple>({
-        initialItems: [],
-    });
+    const [compatibleFormFactors, setCompatibleFormFactors] = useImmer(transformM2FormFactorsDtoToMap(null));
 
     return (
         <PostBody name="slot" submitAction={async () => await action({
             keyID: keyID,
             versionID: versionID,
             laneSizeID: laneSizeID,
-            formFactorIDs: compatibleFormFactors.items.map(({id}) => id),
+            formFactorIDs: transformM2FormFactorsMapToDbo(compatibleFormFactors),
         })}>
             <Module title="M.2 slot details" subtitle="Specify details for a new M.2 slot.">
                 <Content>
@@ -44,7 +43,7 @@ export function Form({action, params}: PostFormProps<M2.SlotDbo, M2.SlotParams>)
             </Module>
             <Module title="Compatible form factors" subtitle="Specify which form factors are compatible with this slot.">
                 <Content>
-                    <M2FormFactorsListBuilder compatibleFormFactors={compatibleFormFactors} formFactors={params?.formFactors} />
+                    <M2FormFactorsListBuilder compatibleFormFactors={compatibleFormFactors} setCompatibleFormFactors={setCompatibleFormFactors} formFactors={params?.formFactors} />
                 </Content>
             </Module>
         </PostBody>

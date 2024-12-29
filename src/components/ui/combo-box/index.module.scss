@@ -26,7 +26,7 @@
   background-color: variables.$palette-background-surface;
   @include variables.box-shadow;
   &::before {
-    @include variables.focus-ring;
+    @include variables.focus-ring(1px);
   }
 }
 

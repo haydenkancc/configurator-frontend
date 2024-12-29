@@ -9,12 +9,11 @@ export interface CheckboxProps extends Omit<AriaCheckboxProps, "isSelected"> {
 export function Checkbox({children, isRequired, isSelected, ...props} : CheckboxProps) {
     return (
         <AriaCheckbox className={s.checkbox} isSelected={isSelected ?? undefined} {...props}>
-
             {({isSelected}) => <>
                 <div className={s.checkboxBox}>
                     {isSelected && <Check weight="bold" className={s.checkboxIcon}/>}
                 </div>
-                {children} {isRequired && <span className={s.required}>*</span>}
+                {children as React.ReactNode} {isRequired && <span className={s.required}>*</span>}
             </>}
         </AriaCheckbox>
     )
